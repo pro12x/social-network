@@ -1,8 +1,9 @@
 package main
 
 import (
-	"backend/pkg"
 	"backend/pkg/db/sqlite"
+	"backend/pkg/middleware"
+	"backend/pkg/utils"
 	"errors"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
@@ -31,13 +32,18 @@ func StartServer(tab []string) error {
 	}
 
 	// Read the .env file
-	err := pkg.Environment()
+	err := utils.Environment()
 	if err != nil {
 		return err
 	}
 
-	_, err = sqlite.Connect()
+	db, err := sqlite.Connect()
 	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	if err := sqlite.Migrate(db.GetDB()); err != nil {
 		return err
 	}
 
@@ -70,10 +76,10 @@ func StartServer(tab []string) error {
 	})
 
 	// Add the middleware
-	wrappedMux := pkg.LoggingMiddleware(mux)
-	wrappedMux = pkg.CORSMiddleware(wrappedMux)
+	wrappedMux := middleware.LoggingMiddleware(mux)
+	wrappedMux = middleware.CORSMiddleware(wrappedMux)
 	// wrappedMux = pkg.AuthMiddleware(wrappedMux)
-	wrappedMux = pkg.ErrorMiddleware(wrappedMux)
+	wrappedMux = middleware.ErrorMiddleware(wrappedMux)
 
 	// Set the server structure
 	server := &http.Server{

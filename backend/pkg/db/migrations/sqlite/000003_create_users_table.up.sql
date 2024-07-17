@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    firstname VARCHAR(255) NOT NULL,
+    lastname VARCHAR(255) NOT NULL,
+    date_of_birth VARCHAR(255) NOT NULL,
+    avatar VARCHAR(255) DEFAULT 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_960_720.png',
+    nickname VARCHAR(255) UNIQUE,
+    about_me TEXT,
+    is_public BOOLEAN DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
