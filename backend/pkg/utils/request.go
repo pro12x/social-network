@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"crypto/rand"
+	"encoding/hex"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -19,4 +21,12 @@ func ExtractIDFromRequest(r *http.Request) (int, error) {
 		return 0, fmt.Errorf("invalid ID format")
 	}
 	return id, nil
+}
+
+func GenerateToken() (string, error) {
+	bytes := make([]byte, 16) // Adjust the length as needed
+	if _, err := rand.Read(bytes); err != nil {
+		return "", err
+	}
+	return hex.EncodeToString(bytes), nil
 }

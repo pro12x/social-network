@@ -9,11 +9,11 @@ import (
 )
 
 type UserServiceImpl struct {
-	repository repository.UserRepo
+	Repository repository.UserRepo
 }
 
 func (s *UserServiceImpl) GetUserById(id uint) (*dto.UserDTO, error) {
-	user, err := s.repository.FindByID(id)
+	user, err := s.Repository.FindByID(id)
 	if err != nil {
 		return nil, err
 	}
@@ -21,8 +21,12 @@ func (s *UserServiceImpl) GetUserById(id uint) (*dto.UserDTO, error) {
 }
 
 func (s *UserServiceImpl) CreateUser(user *dto.UserDTO) error {
-	isExisted, err := s.repository.FindByEmail(user.Email)
-	if isExisted != nil || err == nil {
+	isExisted, err := s.Repository.FindByEmail(user.Email)
+	if err != nil {
+		return err
+	}
+
+	if isExisted != nil {
 		return errors.New("user already existed")
 	}
 
@@ -31,11 +35,11 @@ func (s *UserServiceImpl) CreateUser(user *dto.UserDTO) error {
 		return err
 	}
 	user.Password = hashedPassword
-	return s.repository.Save(mapper.DTOToUser(user))
+	return s.Repository.Save(mapper.DTOToUser(user))
 }
 
 func (s *UserServiceImpl) Connection(email, password string) (*dto.UserDTO, error) {
-	user, err := s.repository.FindByEmail(email)
+	user, err := s.Repository.FindByEmail(email)
 	if err != nil {
 		return nil, errors.New("invalid credentials")
 	}
@@ -51,11 +55,42 @@ func (s *UserServiceImpl) Connection(email, password string) (*dto.UserDTO, erro
 func (s *UserServiceImpl) UpdateProfile(id uint, userDTO *dto.UserDTO) error {
 	user := mapper.DTOToUser(userDTO)
 	user.ID = id
-	return s.repository.Update(user)
+	return s.Repository.Update(user)
 }
 
 func (s *UserServiceImpl) GetProfile(id uint) (*dto.UserDTO, error) {
-	user, err := s.repository.FindByID(id)
+	user, err := s.Repository.FindByID(id)
 
 	return mapper.UserToDTO(user), err
+}
+
+func (s *UserServiceImpl) Follow(followerID, followingID uint) error {
+	return s.Repository.Follow(followerID, followingID)
+}
+
+func (s *UserServiceImpl) Unfollow(followerID, followingID uint) error {
+	return s.Repository.Unfollow(followerID, followingID)
+}
+
+func (s *UserServiceImpl) GetFollowers(userID uint) ([]*dto.UserDTO, error) {
+	users, err := s.Repository.GetFollowers(userID)
+	if err != nil {
+		return nil, err
+	}
+
+	userDTOs := make([]*dto.UserDTO, len(users))
+	for _, user := range users {
+		userDTOs = append(userDTOs, mapper.UserToDTO(user))
+	}
+
+	return userDTOs, nil
+}
+
+func (s *UserServiceImpl) CreateSession(user *dto.UserDTO) (string, error) {
+	token, err := utils.GenerateToken()
+	if err != nil {
+		return "", err
+	}
+	s.Repository.StoreSession(token, user.ID)
+	return token, nil
 }

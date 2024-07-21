@@ -3,7 +3,10 @@ package main
 import (
 	"backend/pkg/db/sqlite"
 	"backend/pkg/middleware"
+	"backend/pkg/repository"
+	"backend/pkg/service/impl"
 	"backend/pkg/utils"
+	"backend/pkg/web"
 	"errors"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
@@ -50,6 +53,22 @@ func StartServer(tab []string) error {
 	// Create a new ServerMux
 	mux := http.NewServeMux()
 
+	// Initializing repositories
+	userRepo := repository.NewUserRepoImpl(*db)
+
+	// Initializing services
+	userService := impl.UserServiceImpl{
+		Repository: userRepo,
+	}
+
+	// Initializing controllers
+	userController := web.UserController{
+		UserService: userService,
+	}
+
+	// Routes
+	mux = userController.RegisterRoutes(mux)
+
 	// Create a new handler
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/" {
@@ -58,18 +77,6 @@ func StartServer(tab []string) error {
 		}
 
 		_, err := w.Write([]byte("Hello Janel"))
-		if err != nil {
-			return
-		}
-	})
-
-	mux.HandleFunc("/posts", func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/posts" {
-			http.NotFound(w, r)
-			return
-		}
-
-		_, err := w.Write([]byte("Posts here"))
 		if err != nil {
 			return
 		}
