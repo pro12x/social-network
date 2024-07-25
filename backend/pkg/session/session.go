@@ -1,38 +1,94 @@
 package session
 
 import (
+	"errors"
+	"github.com/google/uuid"
 	"net/http"
 	"sync"
 	"time"
 )
 
-type SessionStore struct {
+type Session struct {
+	UserID    uint
+	ExpiresAt time.Time
+}
+
+var (
+	sessionStore    = map[string]*Session{}
+	mutex           = &sync.Mutex{}
+	sessionDuration = 24 * time.Hour
+)
+
+type StoreSessions struct {
 	session map[string]uint
 	mu      sync.Mutex
 }
 
 const sessionName = "session_token"
 
-func NewSessionStore() *SessionStore {
-	return &SessionStore{
+func NewSessionStore() *StoreSessions {
+	return &StoreSessions{
 		session: make(map[string]uint),
 	}
 }
 
-func (s *SessionStore) StoreSession(token string, userID uint) {
+func (s *StoreSessions) StoreSession(token string, userID uint) {
 	s.mu.Lock()
 	s.session[token] = userID
 	s.mu.Unlock()
 }
 
-func (s *SessionStore) GetUserID(token string) (uint, bool) {
+func CreateSession(userID uint) (string, error) {
+	sessionToken := uuid.NewString()
+	expiresAt := time.Now().Add(sessionDuration)
+
+	mutex.Lock()
+	sessionStore[sessionToken] = &Session{
+		UserID:    userID,
+		ExpiresAt: expiresAt,
+	}
+	mutex.Unlock()
+
+	return sessionToken, nil
+}
+
+func GetSession(token string) (*Session, error) {
+	mutex.Lock()
+	session, exists := sessionStore[token]
+	mutex.Unlock()
+
+	if !exists {
+		return nil, errors.New("session not found")
+	}
+	if session.ExpiresAt.Before(time.Now()) {
+		err := DeleteSession(token)
+		if err != nil {
+			return nil, err
+		}
+		return nil, errors.New("session expired")
+	}
+
+	return session, nil
+}
+
+func DeleteSession(token string) error {
+	if _, exists := sessionStore[token]; !exists {
+		return errors.New("session not found")
+	}
+	mutex.Lock()
+	delete(sessionStore, token)
+	mutex.Unlock()
+	return nil
+}
+
+func (s *StoreSessions) GetUserID(token string) (uint, bool) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	userID, exists := s.session[token]
 	return userID, exists
 }
 
-func (s *SessionStore) ClearSession(token string) {
+func (s *StoreSessions) ClearSession(token string) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	delete(s.session, token)
@@ -40,12 +96,19 @@ func (s *SessionStore) ClearSession(token string) {
 
 func SetSessionCookie(w http.ResponseWriter, token string) {
 	http.SetCookie(w, &http.Cookie{
-		Name:     sessionName,
+		Name:     "session_token",
 		Value:    token,
-		Expires:  time.Now().Add(24 * time.Hour),
+		Expires:  time.Now().Add(sessionDuration),
 		HttpOnly: true,
-		Path:     "/",
 	})
+}
+
+func GetSessionTokenFromRequest(r *http.Request) (string, error) {
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		return "", err
+	}
+	return cookie.Value, nil
 }
 
 func GetSessionCookie(r *http.Request) (string, error) {

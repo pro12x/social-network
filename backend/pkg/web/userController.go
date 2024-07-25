@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 )
 
 type UserController struct {
@@ -39,6 +40,7 @@ func (c *UserController) Register(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
 	err = c.UserService.CreateUser(&userDTO)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -83,7 +85,7 @@ func (c *UserController) Login(w http.ResponseWriter, r *http.Request) {
 	// I will add the token generation here
 	sessionToken, err := c.UserService.CreateSession(userDTO)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
@@ -114,7 +116,7 @@ func (c *UserController) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/profile/{id}" {
+	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/profile-update/{id}" {
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
 	}
@@ -291,6 +293,106 @@ func (c *UserController) GetFollowers(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (c *UserController) IsUserOnline(w http.ResponseWriter, r *http.Request) {
+	err := utils.Environment()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if r.Method != http.MethodGet {
+		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED"), http.StatusMethodNotAllowed)
+		return
+	}
+
+	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/is_online" {
+		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
+		return
+	}
+
+	token, err := session.GetSessionTokenFromRequest(r)
+	if err != nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
+	isOnline, err := c.UserService.IsUserOnline(token)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	response := map[string]bool{"is_online": isOnline}
+	w.WriteHeader(http.StatusOK)
+	err = json.NewEncoder(w).Encode(response)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func (c *UserController) Logout(w http.ResponseWriter, r *http.Request) {
+	token, err := session.GetSessionTokenFromRequest(r)
+	if err != nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
+	err = c.UserService.Logout(token)
+	if err != nil {
+		return
+	}
+
+	// Clear the session cookie
+	http.SetCookie(w, &http.Cookie{
+		Name:     "session_token",
+		Value:    "",
+		Expires:  time.Unix(0, 0), // Expire the cookie immediately
+		HttpOnly: true,
+	})
+
+	w.WriteHeader(http.StatusOK)
+	_, err = w.Write([]byte("Logged out successfully"))
+	if err != nil {
+		return
+	}
+}
+
+func (c *UserController) Users(w http.ResponseWriter, r *http.Request) {
+	err := utils.Environment()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if r.Method != http.MethodGet {
+		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED"), http.StatusMethodNotAllowed)
+		return
+	}
+
+	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/users" {
+		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
+		return
+	}
+
+	users, err := c.UserService.GetAllUsers()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
+	// err = json.NewEncoder(w).Encode(users)
+	err = json.NewEncoder(w).Encode(map[string]interface{}{
+		"users": users,
+	})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
 // RegisterRoutes Register routes
 func (c *UserController) RegisterRoutes(routes *http.ServeMux) *http.ServeMux {
 	err := utils.Environment()
@@ -301,11 +403,14 @@ func (c *UserController) RegisterRoutes(routes *http.ServeMux) *http.ServeMux {
 
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/register", c.Register)
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/login", c.Login)
+	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/users", c.Users)
+	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/logout", c.Logout)
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/profile/{id}", c.GetProfile)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/profile/update/{id}", c.UpdateProfile)
+	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/profile-update/{id}", c.UpdateProfile)
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/follow", c.Follow)
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/unfollow", c.Unfollow)
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/followers/{id}", c.GetFollowers)
+	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/is_online", c.IsUserOnline)
 
 	return routes
 }

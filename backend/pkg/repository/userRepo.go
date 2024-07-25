@@ -9,6 +9,7 @@ type UserRepo interface {
 	Update(user *entity.User) error
 	Follow(followerID, followingID uint) error
 	Unfollow(followerID, followingID uint) error
+	FindAllUsers() ([]*entity.User, error)
 	GetFollowers(userID uint) ([]*entity.User, error)
 	StoreSession(token string, userID uint)
 	GetUserID(token string) (uint, bool)

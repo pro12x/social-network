@@ -12,7 +12,7 @@ import (
 
 type UserRepoImpl struct {
 	db           sqlite.Database
-	sessionStore *session.SessionStore
+	sessionStore *session.StoreSessions
 }
 
 func NewUserRepoImpl(db sqlite.Database) *UserRepoImpl {
@@ -70,6 +70,32 @@ func (u *UserRepoImpl) Unfollow(followerID, followingID uint) error {
 	_, err := u.db.GetDB().Exec(`DELETE FROM follows WHERE follower_id = ? AND following_id = ?`, followerID, followingID)
 
 	return err
+}
+
+func (u *UserRepoImpl) FindAllUsers() ([]*entity.User, error) {
+	rows, err := u.db.GetDB().Query("SELECT * FROM users")
+	if err != nil {
+		return nil, err
+	}
+	defer func(rows *sql.Rows) {
+		err := rows.Close()
+		if err != nil {
+			log.Println("Error closing rows")
+			return
+		}
+	}(rows)
+
+	var users []*entity.User
+	for rows.Next() {
+		user := new(entity.User)
+		err := rows.Scan(&user.ID, &user.Email, &user.Password, &user.Firstname, &user.Lastname, &user.DateOfBirth, &user.Avatar, &user.Nickname, &user.AboutMe, &user.IsPublic, &user.CreatedAt, &user.UpdatedAt)
+		if err != nil {
+			return nil, err
+		}
+		users = append(users, user)
+	}
+
+	return users, nil
 }
 
 func (u *UserRepoImpl) GetFollowers(userID uint) ([]*entity.User, error) {

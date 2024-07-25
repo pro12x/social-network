@@ -4,19 +4,19 @@
 Our goal is to create a social network that allows users to create private post and group posts, follow other users, and see their posts. We will also implement notifications, profile, groups, private chat and group chat. We will use Golang for the backend and Angular for the frontend.
 
 ### Features
-- User registration
-- User login
-- User profile
-- User search
-- User follow/unfollow
-- User posts
-- User notifications
-- User groups
-- User chat
-- User settings
-- User logout
-- User delete account
-- User recover password
+- [x] User registration
+- [x] User login
+- [x] User profile
+- [ ] User search
+- [x] User follow/unfollow
+- [ ] User posts
+- [ ] User notifications
+- [ ] User groups
+- [ ] User chat
+- [ ] User settings
+- [x] User logout
+- [ ] User delete account
+- [ ] User recover password
 
 ### How to run
 1. Clone the repository `git clone [repository-url]`

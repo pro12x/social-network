@@ -12,4 +12,6 @@ type UserServcie interface {
 	Unfollow(followerID, followeeID uint) error
 	GetFollowers(userID uint) ([]*dto.UserDTO, error)
 	CreateSession(user *dto.UserDTO) (string, error)
+	IsUserOnline(token string) (bool, error)
+	GetAllUsers() ([]*dto.UserDTO, error)
 }

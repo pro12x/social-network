@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"backend/pkg/session"
 	"log"
 	"net/http"
 )
@@ -29,19 +30,37 @@ func ErrorMiddleware(next http.Handler) http.Handler {
 	})
 }
 
-func AuthMiddleware(next http.Handler) http.Handler {
+/*func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Check the Authentication
-		/*if r.Header.Get("Authorization") != "Bearer token" {
+		if r.Header.Get("Authorization") != "Bearer token" {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
-		}*/
+		}
 		if !isAuthenticated(r) {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
 
 		// Do something
+		next.ServeHTTP(w, r)
+	})
+}*/
+
+func AuthMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		token, err := session.GetSessionTokenFromRequest(r)
+		if err != nil || token == "" {
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			return
+		}
+
+		_, err = session.GetSession(token)
+		if err != nil {
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			return
+		}
+
 		next.ServeHTTP(w, r)
 	})
 }

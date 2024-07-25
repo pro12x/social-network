@@ -85,7 +85,7 @@ func StartServer(tab []string) error {
 	// Add the middleware
 	wrappedMux := middleware.LoggingMiddleware(mux)
 	wrappedMux = middleware.CORSMiddleware(wrappedMux)
-	// wrappedMux = pkg.AuthMiddleware(wrappedMux)
+	// wrappedMux = middleware.AuthMiddleware(wrappedMux)
 	wrappedMux = middleware.ErrorMiddleware(wrappedMux)
 
 	// Set the server structure
