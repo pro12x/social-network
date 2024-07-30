@@ -21,5 +21,5 @@ jobs:
                 run: |
                     cd frontend
                     npm install
-                    npm run test:headless
-                    npm run build:prod
+                    npm run test
+                    npm run build
