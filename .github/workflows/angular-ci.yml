@@ -18,10 +18,8 @@ jobs:
                     node-version: '20.x'
 
             -   name: Install dependencies
-                run: npm install
-
-            -   name: Run tests
-                run: npm run test:headless
-
-            -   name: Build
-                run: npm run build:prod
+                run: |
+                    cd frontend
+                    npm install
+                    npm run test:headless
+                    npm run build:prod
