@@ -3,14 +3,14 @@ package impl
 import (
 	"backend/pkg/dto"
 	"backend/pkg/mapper"
-	"backend/pkg/repository"
+	"backend/pkg/repository/interfaces"
 	"backend/pkg/session"
 	"backend/pkg/utils"
 	"errors"
 )
 
 type UserServiceImpl struct {
-	Repository repository.UserRepo
+	Repository interfaces.UserRepo
 }
 
 func (s *UserServiceImpl) GetUserById(id uint) (*dto.UserDTO, error) {
@@ -83,7 +83,7 @@ func (s *UserServiceImpl) GetProfile(id uint) (*dto.UserDTO, error) {
 	return mapper.UserToDTO(user), err
 }
 
-func (s *UserServiceImpl) Follow(followerID, followingID uint) error {
+/*func (s *UserServiceImpl) Follow(followerID, followingID uint) error {
 	return s.Repository.Follow(followerID, followingID)
 }
 
@@ -103,7 +103,7 @@ func (s *UserServiceImpl) GetFollowers(userID uint) ([]*dto.UserDTO, error) {
 	}
 
 	return userDTOs, nil
-}
+}*/
 
 /*func (s *UserServiceImpl) CreateSession(user *dto.UserDTO) (string, error) {
 	token, err := utils.GenerateToken()

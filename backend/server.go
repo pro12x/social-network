@@ -55,19 +55,19 @@ func StartServer(tab []string) error {
 
 	// Initializing repositories
 	userRepo := repository.NewUserRepoImpl(*db)
+	followRepo := repository.NewFollowRepoImpl(*db)
 
 	// Initializing services
-	userService := impl.UserServiceImpl{
-		Repository: userRepo,
-	}
+	userService := impl.UserServiceImpl{Repository: userRepo}
+	followService := impl.FollowServiceImpl{Repository: followRepo}
 
 	// Initializing controllers
-	userController := web.UserController{
-		UserService: userService,
-	}
+	userController := web.UserController{UserService: userService}
+	followController := web.FollowController{FollowService: followService}
 
 	// Routes
-	mux = userController.RegisterRoutes(mux)
+	mux = userController.UsersRoutes(mux)
+	mux = followController.FollowsRoutes(mux)
 
 	// Create a new handler
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

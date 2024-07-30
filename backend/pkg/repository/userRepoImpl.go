@@ -60,17 +60,17 @@ func (u *UserRepoImpl) Update(user *entity.User) error {
 	return err
 }
 
-func (u *UserRepoImpl) Follow(followerID, followingID uint) error {
-	_, err := u.db.GetDB().Exec(`INSERT INTO follows (follower_id, following_id, created_at) VALUES (?, ?, ?)`, followerID, followingID, time.Now())
-
-	return err
-}
-
-func (u *UserRepoImpl) Unfollow(followerID, followingID uint) error {
-	_, err := u.db.GetDB().Exec(`DELETE FROM follows WHERE follower_id = ? AND following_id = ?`, followerID, followingID)
-
-	return err
-}
+//func (u *UserRepoImpl) Follow(followerID, followingID uint) error {
+//	_, err := u.db.GetDB().Exec(`INSERT INTO follows (follower_id, following_id, created_at) VALUES (?, ?, ?)`, followerID, followingID, time.Now())
+//
+//	return err
+//}
+//
+//func (u *UserRepoImpl) Unfollow(followerID, followingID uint) error {
+//	_, err := u.db.GetDB().Exec(`DELETE FROM follows WHERE follower_id = ? AND following_id = ?`, followerID, followingID)
+//
+//	return err
+//}
 
 func (u *UserRepoImpl) FindAllUsers() ([]*entity.User, error) {
 	rows, err := u.db.GetDB().Query("SELECT * FROM users")
@@ -98,7 +98,7 @@ func (u *UserRepoImpl) FindAllUsers() ([]*entity.User, error) {
 	return users, nil
 }
 
-func (u *UserRepoImpl) GetFollowers(userID uint) ([]*entity.User, error) {
+/*func (u *UserRepoImpl) GetFollowers(userID uint) ([]*entity.User, error) {
 	rows, err := u.db.GetDB().Query(`SELECT u.* FROM users u JOIN follows f ON u.id = f.follower_id WHERE f.following_id = ?`, userID)
 	if err != nil {
 		return nil, err
@@ -122,7 +122,7 @@ func (u *UserRepoImpl) GetFollowers(userID uint) ([]*entity.User, error) {
 	}
 
 	return users, nil
-}
+}*/
 
 func (u *UserRepoImpl) StoreSession(token string, userID uint) {
 	u.sessionStore.StoreSession(token, userID)

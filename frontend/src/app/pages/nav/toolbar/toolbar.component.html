@@ -1,0 +1,34 @@
+<mat-toolbar>
+    <!--<button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>-->
+    <span>
+        <a routerLink="/">{{ title }}</a>
+    </span>
+
+    <!--<mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput placeholder="Search...">
+    </mat-form-field>-->
+    <span class="search">
+        <input matInput placeholder="Search...">
+    </span>
+
+    <!--<span class="example-spacer"></span>-->
+    <span class="button">
+        <button (click)="visibilityMessage()" [matBadgeHidden]="hiddenMessage" aria-label="Example icon-button with heart icon" class="example-icon" mat-icon-button
+                matBadge="12">
+            <mat-icon>chat</mat-icon>
+        </button>
+        <button (click)="visibilityNotif()" [matBadgeHidden]="hiddenNotif" aria-label="Example icon-button with heart icon" class="example-icon" mat-icon-button
+                matBadge="7">
+            <mat-icon>notifications</mat-icon>
+        </button>
+        <span>
+            {{ username }}
+        </span>
+        <button aria-label="Example icon-button with more icon" class="example-icon" mat-icon-button>
+            <img src="profile.png" width="64" height="64" alt="profile">
+        </button>
+    </span>
+</mat-toolbar>

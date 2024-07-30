@@ -1,0 +1,25 @@
+<mat-drawer-container class="example-container">
+    <mat-drawer mode="side" opened>
+        <mat-list *ngFor="let item of menuItems" role="list">
+            <mat-list-item role="listitem">
+                <a matListItemTitle routerLink="{{ item.route }}">
+                    <mat-icon>{{ item.icon }}</mat-icon>
+                    <span>{{ item.name }}</span>
+                </a>
+            </mat-list-item>
+        </mat-list>
+    </mat-drawer>
+    <mat-drawer mode="side" opened position="end">
+        <mat-list *ngFor="let item of menuItems" role="list">
+            <mat-list-item role="listitem">
+                <a matListItemTitle routerLink="{{ item.route }}">
+                    <mat-icon>{{ item.icon }}</mat-icon>
+                    <span>{{ item.name }}</span>
+                </a>
+            </mat-list-item>
+        </mat-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <router-outlet/>
+    </mat-drawer-content>
+</mat-drawer-container>

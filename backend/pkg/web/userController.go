@@ -9,7 +9,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 	"time"
 )
 
@@ -179,7 +178,7 @@ func (c *UserController) GetProfile(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (c *UserController) Follow(w http.ResponseWriter, r *http.Request) {
+/*func (c *UserController) Follow(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -189,7 +188,7 @@ func (c *UserController) Follow(w http.ResponseWriter, r *http.Request) {
 	/*if r.Method != http.MethodPost {
 		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED), http.StatusMethodNotAllowed)
 		return
-	}*/
+	}*./
 
 	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/follow/{id}" {
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
@@ -227,7 +226,7 @@ func (c *UserController) Unfollow(w http.ResponseWriter, r *http.Request) {
 	/*if r.Method != http.MethodPost {
 		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED), http.StatusMethodNotAllowed)
 		return
-	}*/
+	}*./
 
 	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/unfollow/{id}" {
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
@@ -291,7 +290,7 @@ func (c *UserController) GetFollowers(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-}
+}*/
 
 func (c *UserController) IsUserOnline(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
@@ -393,8 +392,8 @@ func (c *UserController) Users(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RegisterRoutes Register routes
-func (c *UserController) RegisterRoutes(routes *http.ServeMux) *http.ServeMux {
+// UsersRoutes Register routes
+func (c *UserController) UsersRoutes(routes *http.ServeMux) *http.ServeMux {
 	err := utils.Environment()
 	if err != nil {
 		log.Println(err)
@@ -405,12 +404,12 @@ func (c *UserController) RegisterRoutes(routes *http.ServeMux) *http.ServeMux {
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/login", c.Login)
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/users", c.Users)
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/logout", c.Logout)
+	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/is_online", c.IsUserOnline)
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/profile/{id}", c.GetProfile)
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/profile-update/{id}", c.UpdateProfile)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/follow", c.Follow)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/unfollow", c.Unfollow)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/followers/{id}", c.GetFollowers)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/is_online", c.IsUserOnline)
+	// routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/follow", c.Follow)
+	// routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/unfollow", c.Unfollow)
+	// routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/followers/{id}", c.GetFollowers)
 
 	return routes
 }
