@@ -103,27 +103,14 @@ func (f *FollowRepoImpl) GetFollowingCount(userID uint) (int, error) {
 	return count, nil
 }
 
-func (f *FollowRepoImpl) IsExistsFollow(followerID, followeeID uint) (bool, error) {
-	query := `SELECT COUNT(*) FROM follows WHERE follower_id = ? AND followee_id = ?`
-	row := f.db.GetDB().QueryRow(query, followerID, followeeID)
-
-	var count int
-	err := row.Scan(&count)
-	if err != nil {
-		return false, err
-	}
-
-	return count > 0, nil
-}
-
-func (f *FollowRepoImpl) FindFollow(followerID, followeeID uint) (bool, error) {
-	//user := new(entity.Follow)
-	err := f.db.GetDB().QueryRow(`SELECT id, email, password, firstname, lastname, date_of_birth, avatar, nickname, about_me, is_public, created_at, updated_at FROM users WHERE email = ?`).Scan()
+func (f *FollowRepoImpl) FindFollow(followerID, followeeID uint) (*entity.Follow, error) {
+	follow := new(entity.Follow)
+	err := f.db.GetDB().QueryRow(`SELECT id, follower_id, followee_id, status, created_at FROM follows WHERE (follower_id = ? AND followee_id = ?) OR (follower_id = ? AND followee_id = ?)`, followerID, followeeID, followeeID, followerID).Scan(&follow.ID, &follow.FollowerID, &follow.FolloweeID, &follow.Status, &follow.CreatedAt)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, nil // No user found
 		}
 		return nil, err // Some error occurred
 	}
-	return false, nil
+	return follow, nil
 }

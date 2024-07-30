@@ -5,6 +5,7 @@ import (
 	"backend/pkg/entity"
 	"backend/pkg/mapper"
 	"backend/pkg/repository/interfaces"
+	"errors"
 )
 
 type FollowServiceImpl struct {
@@ -12,6 +13,16 @@ type FollowServiceImpl struct {
 }
 
 func (f *FollowServiceImpl) FollowUser(followerID, followeeID uint) error {
+	// Check if the follow already exists
+	isExisted, err := f.Repository.FindFollow(followerID, followeeID)
+	if err != nil {
+		return err
+	}
+
+	if isExisted != nil {
+		return errors.New("you already followed this user")
+	}
+
 	follow := &entity.Follow{
 		FollowerID: followerID,
 		FolloweeID: followeeID,

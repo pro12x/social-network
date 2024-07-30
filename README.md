@@ -1,4 +1,4 @@
-# SOCIAL NETWORK
+# SOCIAL NETWORK (In progress)
 
 ### Objectives
 Our goal is to create a social network that allows users to create private post and group posts, follow other users, and see their posts. We will also implement notifications, profile, groups, private chat and group chat. We will use Golang for the backend and Angular for the frontend.
