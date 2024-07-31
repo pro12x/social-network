@@ -63,8 +63,9 @@ func (s *UserServiceImpl) GetAllUsers() ([]*dto.UserDTO, error) {
 		return nil, err
 	}
 
-	userDTOs := make([]*dto.UserDTO, len(users))
+	var userDTOs []*dto.UserDTO
 	for _, user := range users {
+		user.Password = ""
 		userDTOs = append(userDTOs, mapper.UserToDTO(user))
 	}
 

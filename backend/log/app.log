@@ -1,0 +1,6 @@
+INFO: 2024/07/31 22:38:37 server.go:20: Starting the server...
+INFO: 2024/07/31 22:38:37 sqlite.go:52: Connected to the database
+INFO: 2024/07/31 22:38:37 sqlite.go:78: Database migrated
+INFO: 2024/07/31 22:38:37 server.go:106: The server is listening at http://localhost:1111
+INFO: 2024/07/31 22:39:24 middleware.go:13: Request from [::1]:54406 to /api/v1/social-network/logout
+INFO: 2024/07/31 22:39:24 userController.go:370: 401 - Unauthorized

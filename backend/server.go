@@ -15,12 +15,19 @@ import (
 )
 
 func main() {
+	// Intialize the logger
+	utils.InitLogger()
+	utils.Logger.Println("Starting the server...")
+
 	// Start the server
 	err := StartServer(os.Args[1:])
 	if err != nil {
 		log.Println(err)
 		return
 	}
+
+	// Rotate the log file
+	utils.RotateLogFile()
 }
 
 func StartServer(tab []string) error {
@@ -96,6 +103,7 @@ func StartServer(tab []string) error {
 
 	// Start the server
 	log.Println("The server is listening at http://localhost:" + os.Getenv("PORT"))
+	utils.Logger.Println("The server is listening at http://localhost:" + os.Getenv("PORT"))
 	err = server.ListenAndServe()
 	return err
 }

@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"backend/pkg/session"
+	"backend/pkg/utils"
 	"log"
 	"net/http"
 )
@@ -9,6 +10,7 @@ import (
 func LoggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		log.Println("Request from", r.RemoteAddr, "to", r.URL)
+		utils.Logger.Println("Request from", r.RemoteAddr, "to", r.URL)
 
 		// Call the next handler
 		next.ServeHTTP(w, r)
@@ -21,6 +23,7 @@ func ErrorMiddleware(next http.Handler) http.Handler {
 		defer func() {
 			if err := recover(); err != nil {
 				log.Println(err)
+				utils.Logger.Println(err)
 				http.Error(w, "Internal server error", http.StatusInternalServerError)
 			}
 		}()
@@ -51,12 +54,14 @@ func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		token, err := session.GetSessionTokenFromRequest(r)
 		if err != nil || token == "" {
+			utils.Logger.Println(http.StatusUnauthorized, "Unauthorized")
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
 
 		_, err = session.GetSession(token)
 		if err != nil {
+			utils.Logger.Println(http.StatusUnauthorized, "Unauthorized")
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}

@@ -7,6 +7,7 @@ type FollowRepo interface {
 	UpdateFollowStatus(id uint, status string) error
 	DeleteFollow(followerID, followeeID uint) error
 	GetFollowers(userID uint) ([]*entity.User, error)
+	GetPendingFollowRequest(id uint) ([]*entity.Follow, error)
 	GetFollowings(userID uint) ([]*entity.User, error)
 	GetFollowerCount(userID uint) (int, error)
 	GetFollowingCount(userID uint) (int, error)

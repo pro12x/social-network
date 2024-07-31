@@ -4,9 +4,9 @@ import (
 	"backend/pkg/db/sqlite"
 	"backend/pkg/entity"
 	"backend/pkg/session"
+	"backend/pkg/utils"
 	"database/sql"
 	"errors"
-	"log"
 	"time"
 )
 
@@ -36,6 +36,7 @@ func (u *UserRepoImpl) FindByEmail(email string) (*entity.User, error) {
 	err := u.db.GetDB().QueryRow(`SELECT id, email, password, firstname, lastname, date_of_birth, avatar, nickname, about_me, is_public, created_at, updated_at FROM users WHERE email = ?`, email).Scan(&user.ID, &user.Email, &user.Password, &user.Firstname, &user.Lastname, &user.DateOfBirth, &user.Avatar, &user.Nickname, &user.AboutMe, &user.IsPublic, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
+			utils.Logger.Println("No user found")
 			return nil, nil // No user found
 		}
 		return nil, err // Some error occurred
@@ -47,7 +48,7 @@ func (u *UserRepoImpl) FindByEmail(email string) (*entity.User, error) {
 func (u *UserRepoImpl) Save(user *entity.User) error {
 	_, err := u.db.GetDB().Exec(`INSERT INTO users (email, password, firstname, lastname, date_of_birth, avatar, nickname, about_me) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, user.Email, user.Password, user.Firstname, user.Lastname, user.DateOfBirth, user.Avatar, user.Nickname, user.AboutMe)
 	if err != nil {
-		log.Println("Error saving user")
+		utils.Logger.Println("Error saving user")
 		return err
 	}
 
@@ -80,7 +81,7 @@ func (u *UserRepoImpl) FindAllUsers() ([]*entity.User, error) {
 	defer func(rows *sql.Rows) {
 		err := rows.Close()
 		if err != nil {
-			log.Println("Error closing rows")
+			utils.Logger.Println("Error closing rows")
 			return
 		}
 	}(rows)
