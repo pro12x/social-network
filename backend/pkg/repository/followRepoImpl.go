@@ -45,7 +45,7 @@ func (f *FollowRepoImpl) GetFollowers(userID uint) ([]*entity.User, error) {
 	defer func(rows *sql.Rows) {
 		err := rows.Close()
 		if err != nil {
-			utils.Logger.Println(err)
+			utils.LoggerInfo.Println(err)
 			return
 		}
 	}(rows)
@@ -72,7 +72,7 @@ func (f *FollowRepoImpl) GetPendingFollowRequest(id uint) ([]*entity.Follow, err
 	defer func(rows *sql.Rows) {
 		err := rows.Close()
 		if err != nil {
-			utils.Logger.Println(err)
+			utils.LoggerInfo.Println(err)
 			return
 		}
 	}(rows)
@@ -99,7 +99,7 @@ func (f *FollowRepoImpl) GetFollowings(userID uint) ([]*entity.User, error) {
 	defer func(rows *sql.Rows) {
 		err := rows.Close()
 		if err != nil {
-			utils.Logger.Println(err)
+			utils.LoggerInfo.Println(err)
 			return
 		}
 	}(rows)

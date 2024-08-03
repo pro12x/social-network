@@ -31,6 +31,15 @@ func (f *FollowServiceImpl) FollowUser(followerID, followeeID uint) error {
 }
 
 func (f *FollowServiceImpl) UnfollowUser(followerID, followeeID uint) error {
+	isExisted, err := f.Repository.FindFollow(followerID, followeeID)
+	if err != nil {
+		return err
+	}
+
+	if isExisted != nil {
+		return errors.New("you already followed this user")
+	}
+
 	return f.Repository.DeleteFollow(followerID, followeeID)
 }
 
@@ -39,7 +48,7 @@ func (f *FollowServiceImpl) AcceptFollowRequest(id uint) error {
 }
 
 func (f *FollowServiceImpl) DeclineFollowRequest(id uint) error {
-	return f.Repository.UpdateFollowStatus(id, "declined")
+	return f.Repository.UpdateFollowStatus(id, "rejected")
 }
 
 func (f *FollowServiceImpl) GetPendingFollowRequest(userID uint) ([]*entity.Follow, error) {

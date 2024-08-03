@@ -1,6 +1,60 @@
-INFO: 2024/07/31 22:38:37 server.go:20: Starting the server...
-INFO: 2024/07/31 22:38:37 sqlite.go:52: Connected to the database
-INFO: 2024/07/31 22:38:37 sqlite.go:78: Database migrated
-INFO: 2024/07/31 22:38:37 server.go:106: The server is listening at http://localhost:1111
-INFO: 2024/07/31 22:39:24 middleware.go:13: Request from [::1]:54406 to /api/v1/social-network/logout
-INFO: 2024/07/31 22:39:24 userController.go:370: 401 - Unauthorized
+INFO: 2024/08/01 15:06:14 log.go:61:        __                 __   __                               
+INFO: 2024/08/01 15:06:14 log.go:62:       / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____
+INFO: 2024/08/01 15:06:14 log.go:63:  __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/
+INFO: 2024/08/01 15:06:14 log.go:64: / /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    
+INFO: 2024/08/01 15:06:14 log.go:65: \____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     
+INFO: 2024/08/01 15:06:14 log.go:66:                                        /____//____/             
+INFO: 2024/08/01 15:06:14 server.go:23: Starting the server...
+INFO: 2024/08/01 15:06:14 sqlite.go:52: Connected to the database
+INFO: 2024/08/01 15:06:14 sqlite.go:78: Database migrated
+INFO: 2024/08/01 15:06:14 server.go:121: The server is listening at http://localhost:1111
+INFO: 2024/08/01 15:07:45 middleware.go:13: Request from [::1]:53208 to /api/v1/social-network/is_online
+INFO: 2024/08/01 15:07:45 userController.go:343: 401 - Unauthorized
+INFO: 2024/08/01 15:08:04 middleware.go:13: Request from [::1]:53208 to /api/v1/social-network/logout
+INFO: 2024/08/01 15:08:04 userController.go:370: 401 - Unauthorized
+INFO: 2024/08/01 15:08:24 log.go:70:    ________                    __
+INFO: 2024/08/01 15:08:24 log.go:71:   / ____/ /___  ________  ____/ /
+INFO: 2024/08/01 15:08:24 log.go:72:  / /   / / __ \/ ___/ _ \/ __  / 
+INFO: 2024/08/01 15:08:24 log.go:73: / /___/ / /_/ (__  )  __/ /_/ /  
+INFO: 2024/08/01 15:08:24 log.go:74: \____/_/\____/____/\___/\__,_/   
+INFO: 2024/08/01 15:16:22 log.go:61:        __                 __   __                               
+INFO: 2024/08/01 15:16:22 log.go:62:       / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____
+INFO: 2024/08/01 15:16:22 log.go:63:  __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/
+INFO: 2024/08/01 15:16:22 log.go:64: / /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    
+INFO: 2024/08/01 15:16:22 log.go:65: \____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     
+INFO: 2024/08/01 15:16:22 log.go:66:                                        /____//____/             
+INFO: 2024/08/01 15:16:22 server.go:23: Starting the server...
+INFO: 2024/08/01 15:16:22 sqlite.go:52: Connected to the database
+INFO: 2024/08/01 15:16:22 sqlite.go:78: Database migrated
+INFO: 2024/08/01 15:16:22 server.go:121: The server is listening at http://localhost:1111
+INFO: 2024/08/01 15:16:38 middleware.go:13: Request from [::1]:33538 to /api/v1/social-network/logout
+INFO: 2024/08/01 15:16:38 userController.go:370: 401 - Unauthorized
+INFO: 2024/08/01 15:29:14 log.go:61:        __                 __   __                               
+INFO: 2024/08/01 15:29:14 log.go:62:       / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____
+INFO: 2024/08/01 15:29:14 log.go:63:  __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/
+INFO: 2024/08/01 15:29:14 log.go:64: / /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    
+INFO: 2024/08/01 15:29:14 log.go:65: \____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     
+INFO: 2024/08/01 15:29:14 log.go:66:                                        /____//____/             
+INFO: 2024/08/01 15:29:14 server.go:23: Starting the server...
+INFO: 2024/08/01 15:29:14 sqlite.go:52: Connected to the database
+INFO: 2024/08/01 15:29:15 sqlite.go:78: Database migrated
+INFO: 2024/08/01 15:29:15 server.go:121: The server is listening at http://localhost:1111
+INFO: 2024/08/01 15:40:28 log.go:70:    ________                    __
+INFO: 2024/08/01 15:40:28 log.go:71:   / ____/ /___  ________  ____/ /
+INFO: 2024/08/01 15:40:28 log.go:72:  / /   / / __ \/ ___/ _ \/ __  / 
+INFO: 2024/08/01 15:40:28 log.go:73: / /___/ / /_/ (__  )  __/ /_/ /  
+INFO: 2024/08/01 15:40:28 log.go:74: \____/_/\____/____/\___/\__,_/   
+[34mINFO: 2024/08/01 23:16:34 log.go:66:        __                 __   __                               
+[34mINFO: 2024/08/01 23:16:34 log.go:67:       / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____
+[34mINFO: 2024/08/01 23:16:34 log.go:68:  __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/
+[34mINFO: 2024/08/01 23:16:34 log.go:69: / /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    
+[34mINFO: 2024/08/01 23:16:34 log.go:70: \____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     
+[34mINFO: 2024/08/01 23:16:34 log.go:71:                                        /____//____/             
+[34mINFO: 2024/08/01 23:16:34 server.go:23: Starting the server...
+[34mINFO: 2024/08/01 23:16:34 sqlite.go:52: Connected to the database
+[34mINFO: 2024/08/01 23:16:34 sqlite.go:78: Database migrated
+[34mINFO: 2024/08/01 23:16:34 server.go:121: The server is listening at http://localhost:1111
+[34mINFO: 2024/08/02 09:23:00 middleware.go:13: Request from [::1]:36194 to /api/v1/social-network/logout
+[34mINFO: 2024/08/02 09:23:00 userController.go:370: 401 - Unauthorized
+[34mINFO: 2024/08/02 10:18:49 middleware.go:13: Request from 127.0.0.1:41956 to /api/v1/social-network/users
+[34mINFO: 2024/08/02 10:18:49 userController.go:425: 200 - Users retrieved successfully

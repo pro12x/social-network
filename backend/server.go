@@ -12,22 +12,38 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
 	// Intialize the logger
 	utils.InitLogger()
-	utils.Logger.Println("Starting the server...")
+	utils.Welcome()
+	utils.LoggerInfo.Println("Starting the server...")
+
+	// signals channel
+	signals := make(chan os.Signal, 1)
+	signal.Notify(signals, os.Interrupt, os.Kill, syscall.SIGINT, syscall.SIGTERM)
+
+	// Goroutine to handle signals
+	go func() {
+		<-signals
+		utils.CleanUp()
+		os.Exit(0)
+	}()
+
+	// Rotate the log file
+	utils.RotateLogFile()
 
 	// Start the server
 	err := StartServer(os.Args[1:])
 	if err != nil {
 		log.Println(err)
+		utils.LoggerError.Println(err)
 		return
 	}
-
-	// Rotate the log file
-	utils.RotateLogFile()
+	select {}
 }
 
 func StartServer(tab []string) error {
@@ -102,8 +118,8 @@ func StartServer(tab []string) error {
 	}
 
 	// Start the server
-	log.Println("The server is listening at http://localhost:" + os.Getenv("PORT"))
-	utils.Logger.Println("The server is listening at http://localhost:" + os.Getenv("PORT"))
+	log.Println(utils.Info + "The server is listening at http://localhost:" + os.Getenv("PORT") + utils.Reset)
+	utils.LoggerInfo.Println(utils.Info + "The server is listening at http://localhost:" + os.Getenv("PORT") + utils.Reset)
 	err = server.ListenAndServe()
 	return err
 }
