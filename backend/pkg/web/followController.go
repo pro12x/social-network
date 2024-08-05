@@ -287,8 +287,8 @@ func (c *FollowController) GetPendingFollowRequest(w http.ResponseWriter, r *htt
 
 	userID, err := utils.ExtractIDFromRequest(r)
 	if err != nil {
-		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "- User ID is required", err.Error(), utils.Reset)
-		http.Error(w, "User ID is required", http.StatusBadRequest)
+		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", os.Getenv("USER_ID_REQUIRED"), err.Error(), utils.Reset)
+		http.Error(w, os.Getenv("USER_ID_REQUIRED"), http.StatusBadRequest)
 		return
 	}
 
@@ -299,7 +299,7 @@ func (c *FollowController) GetPendingFollowRequest(w http.ResponseWriter, r *htt
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	w.WriteHeader(http.StatusOK)
 	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Follow requests get"+utils.Reset)
 	if follows != nil {
@@ -346,8 +346,8 @@ func (c *FollowController) GetFollowers(w http.ResponseWriter, r *http.Request) 
 
 	userID, err := utils.ExtractIDFromRequest(r)
 	if err != nil {
-		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "- User ID is required", err.Error(), utils.Reset)
-		http.Error(w, "User ID is required", http.StatusBadRequest)
+		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", os.Getenv("USER_ID_REQUIRED"), err.Error(), utils.Reset)
+		http.Error(w, os.Getenv("USER_ID_REQUIRED"), http.StatusBadRequest)
 		return
 	}
 
@@ -358,7 +358,7 @@ func (c *FollowController) GetFollowers(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	w.WriteHeader(http.StatusOK)
 	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Followers get"+utils.Reset)
 	if followers != nil {
@@ -404,8 +404,8 @@ func (c *FollowController) GetFollowings(w http.ResponseWriter, r *http.Request)
 
 	userID, err := utils.ExtractIDFromRequest(r)
 	if err != nil {
-		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "- User ID is required", err.Error(), utils.Reset)
-		http.Error(w, "User ID is required", http.StatusBadRequest)
+		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", os.Getenv("USER_ID_REQUIRED"), err.Error(), utils.Reset)
+		http.Error(w, os.Getenv("USER_ID_REQUIRED"), http.StatusBadRequest)
 		return
 	}
 
@@ -416,7 +416,7 @@ func (c *FollowController) GetFollowings(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	w.WriteHeader(http.StatusOK)
 	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Followings get"+utils.Reset)
 	if followings != nil {
@@ -463,7 +463,7 @@ func (c *FollowController) GetFollowerCount(w http.ResponseWriter, r *http.Reque
 	userID, err := utils.ExtractIDFromRequest(r)
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "- User ID is required", err.Error(), utils.Reset)
-		http.Error(w, "User ID is required", http.StatusBadRequest)
+		http.Error(w, os.Getenv("USER_ID_REQUIRED"), http.StatusBadRequest)
 		return
 	}
 
@@ -474,7 +474,7 @@ func (c *FollowController) GetFollowerCount(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	w.WriteHeader(http.StatusOK)
 	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Follower count get"+utils.Reset)
 	err = json.NewEncoder(w).Encode(map[string]interface{}{
@@ -510,7 +510,7 @@ func (c *FollowController) GetFollowingCount(w http.ResponseWriter, r *http.Requ
 	userID, err := utils.ExtractIDFromRequest(r)
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "- User ID is required", err.Error(), utils.Reset)
-		http.Error(w, "User ID is required", http.StatusBadRequest)
+		http.Error(w, os.Getenv("USER_ID_REQUIRED"), http.StatusBadRequest)
 		return
 	}
 
@@ -521,7 +521,7 @@ func (c *FollowController) GetFollowingCount(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	w.WriteHeader(http.StatusOK)
 	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Following count get"+utils.Reset)
 	err = json.NewEncoder(w).Encode(map[string]interface{}{
@@ -561,7 +561,7 @@ func (c *FollowController) CountAllFollows(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	w.WriteHeader(http.StatusOK)
 	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Follow count get"+utils.Reset)
 	err = json.NewEncoder(w).Encode(map[string]interface{}{

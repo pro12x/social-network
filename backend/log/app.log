@@ -1,3 +1,0 @@
-INFO: 2024/08/05 13:46:40 sqlite.go:52: [34mConnected to the database[0m
-INFO: 2024/08/05 13:46:40 sqlite.go:78: Database migrated
-INFO: 2024/08/05 13:46:40 server.go:122: [34mThe server is listening at http://localhost:1111[0m

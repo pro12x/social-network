@@ -10,3 +10,4 @@ echo "NOT_FOUND=\"Not found\"" >> .env
 echo "INVALID_CREDS=\"Invalid credentials\"" >> .env
 echo "CONTENT_TYPE=\"Content-Type\"" >> .env
 echo "APPLICATION_JSON=\"application/json\"" >> .env
+echo "USER_ID_REQUIRED=\"User id is required\"" >> .env
