@@ -16,7 +16,7 @@ var (
 	Reset       = "\033[0m"
 )
 
-const maxFileSize = 10 * 1024
+const maxFileSize = 24 * 1024
 
 func InitLogger() {
 	var err error
