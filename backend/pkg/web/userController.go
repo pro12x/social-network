@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -19,26 +20,26 @@ type UserController struct {
 func (c *UserController) Register(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error()+utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	if r.Method != http.MethodPost {
-		utils.LoggerInfo.Println(http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED"))
+		utils.LoggerError.Println(utils.Error, http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED")+utils.Reset)
 		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED"), http.StatusMethodNotAllowed)
 		return
 	}
 
 	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/register" {
-		utils.LoggerInfo.Println(http.StatusNotFound, "-", os.Getenv("NOT_FOUND"))
+		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
 	}
 
 	var userDTO dto.UserDTO
 	if err := json.NewDecoder(r.Body).Decode(&userDTO); err != nil {
-		utils.LoggerInfo.Println(http.StatusBadRequest, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
@@ -50,25 +51,25 @@ func (c *UserController) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusCreated)
-	utils.LoggerInfo.Println(http.StatusCreated, "-", "User created successfully")
+	utils.LoggerInfo.Println(utils.Info, http.StatusCreated, "-", "User created successfully"+utils.Reset)
 }
 
 func (c *UserController) Login(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	if r.Method != http.MethodPost {
-		utils.LoggerInfo.Println(http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED"))
+		utils.LoggerError.Println(utils.Error, http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED")+utils.Reset)
 		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED"), http.StatusMethodNotAllowed)
 		return
 	}
 
 	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/login" {
-		utils.LoggerInfo.Println(http.StatusNotFound, "-", os.Getenv("NOT_FOUND"))
+		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
 	}
@@ -79,14 +80,14 @@ func (c *UserController) Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&credentials); err != nil {
-		utils.LoggerInfo.Println(http.StatusBadRequest, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	userDTO, err := c.UserService.Connection(credentials.Email, credentials.Password)
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusUnauthorized, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusUnauthorized, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
@@ -94,7 +95,7 @@ func (c *UserController) Login(w http.ResponseWriter, r *http.Request) {
 	// I will add the token generation here
 	sessionToken, err := c.UserService.CreateSession(userDTO)
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusUnauthorized, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusUnauthorized, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
@@ -110,7 +111,7 @@ func (c *UserController) Login(w http.ResponseWriter, r *http.Request) {
 		"user":   userDTO,
 	})
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -119,40 +120,53 @@ func (c *UserController) Login(w http.ResponseWriter, r *http.Request) {
 func (c *UserController) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	if r.Method != http.MethodPut {
-		utils.LoggerInfo.Println(http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED"))
+		utils.LoggerError.Println(utils.Error, http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED")+utils.Reset)
 		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED"), http.StatusMethodNotAllowed)
 		return
 	}
 
-	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/profile-update/{id}" {
-		utils.LoggerInfo.Println(http.StatusNotFound, "-", os.Getenv("NOT_FOUND"))
+	if !strings.HasPrefix(r.URL.Path, os.Getenv("DEFAULT_API_LINK")+"/profile-update/") {
+		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
 	}
 
 	id, err := utils.ExtractIDFromRequest(r)
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusBadRequest, "-", err.Error())
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "- User ID is required", err.Error(), utils.Reset)
+		http.Error(w, "User ID is required", http.StatusBadRequest)
+		return
+	}
+
+	limit, err := c.UserService.CountUsers()
+	if err != nil {
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if id > limit {
+		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", "Invalid Request", utils.Reset)
+		http.Error(w, "Invalid Request", http.StatusBadRequest)
 		return
 	}
 
 	var userDTO dto.UserDTO
 	if err := json.NewDecoder(r.Body).Decode(&userDTO); err != nil {
-		utils.LoggerInfo.Println(http.StatusBadRequest, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	err = c.UserService.UpdateProfile(uint(id), &userDTO)
+	err = c.UserService.UpdateProfile(id, &userDTO)
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -162,43 +176,54 @@ func (c *UserController) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 func (c *UserController) GetProfile(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	if r.Method != http.MethodGet {
-		utils.LoggerInfo.Println(http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED"))
+		utils.LoggerError.Println(utils.Error, http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED")+utils.Reset)
 		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED"), http.StatusMethodNotAllowed)
 		return
 	}
 
-	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/profile/{id}" {
-		utils.LoggerInfo.Println(http.StatusNotFound, "-", os.Getenv("NOT_FOUND"))
+	if !strings.HasPrefix(r.URL.Path, os.Getenv("DEFAULT_API_LINK")+"/profile/") {
+		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
 	}
 
 	id, err := utils.ExtractIDFromRequest(r)
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusBadRequest, "-", err.Error())
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "- User ID is required", err.Error(), utils.Reset)
+		http.Error(w, "User ID is required", http.StatusBadRequest)
 		return
 	}
 
-	userDTO, err := c.UserService.GetProfile(uint(id))
+	userDTO, err := c.UserService.GetProfile(id)
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	utils.LoggerInfo.Println(http.StatusOK, "-", "User profile retrieved successfully")
+	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "User profile retrieved successfully"+utils.Reset)
 	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
-	err = json.NewEncoder(w).Encode(userDTO)
+	//err = json.NewEncoder(w).Encode(userDTO)
+	if userDTO != nil {
+		err = json.NewEncoder(w).Encode(map[string]interface{}{
+			"status": http.StatusOK,
+			"user":   userDTO,
+		})
+	} else {
+		err = json.NewEncoder(w).Encode(map[string]interface{}{
+			"status":  http.StatusNoContent,
+			"message": "No user found",
+		})
+	}
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -321,44 +346,44 @@ func (c *UserController) GetFollowers(w http.ResponseWriter, r *http.Request) {
 func (c *UserController) IsUserOnline(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	if r.Method != http.MethodGet {
-		utils.LoggerInfo.Println(http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED"))
+		utils.LoggerError.Println(utils.Error, http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED")+utils.Reset)
 		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED"), http.StatusMethodNotAllowed)
 		return
 	}
 
 	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/is_online" {
-		utils.LoggerInfo.Println(http.StatusNotFound, "-", os.Getenv("NOT_FOUND"))
+		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
 	}
 
 	token, err := session.GetSessionTokenFromRequest(r)
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusUnauthorized, "-", "Unauthorized")
+		utils.LoggerError.Println(utils.Error, http.StatusUnauthorized, "-", "Unauthorized"+utils.Reset)
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
 
 	isOnline, err := c.UserService.IsUserOnline(token)
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusUnauthorized, "-", err.Error())
+		utils.LoggerInfo.Println(utils.Warn, http.StatusUnauthorized, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
 	response := map[string]bool{"is_online": isOnline}
 	w.WriteHeader(http.StatusOK)
-	utils.LoggerInfo.Println(http.StatusOK, "-", "User is online")
+	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "User is online"+utils.Reset)
 	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	err = json.NewEncoder(w).Encode(response)
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -367,7 +392,7 @@ func (c *UserController) IsUserOnline(w http.ResponseWriter, r *http.Request) {
 func (c *UserController) Logout(w http.ResponseWriter, r *http.Request) {
 	token, err := session.GetSessionTokenFromRequest(r)
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusUnauthorized, "-", "Unauthorized")
+		utils.LoggerError.Println(utils.Error, http.StatusUnauthorized, "-", "Unauthorized"+utils.Reset)
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
@@ -386,10 +411,10 @@ func (c *UserController) Logout(w http.ResponseWriter, r *http.Request) {
 	})
 
 	w.WriteHeader(http.StatusOK)
-	utils.LoggerInfo.Println(http.StatusOK, "-", "Logged out successfully")
+	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Logged out successfully"+utils.Reset)
 	_, err = w.Write([]byte("Logged out successfully"))
 	if err != nil {
-		utils.LoggerInfo.Println("Logged out failed")
+		utils.LoggerError.Println(utils.Error, "Logged out failed"+utils.Reset)
 		return
 	}
 }
@@ -397,39 +422,47 @@ func (c *UserController) Logout(w http.ResponseWriter, r *http.Request) {
 func (c *UserController) Users(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	if r.Method != http.MethodGet {
-		utils.LoggerInfo.Println(http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED"))
+		utils.LoggerError.Println(utils.Error, http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED")+utils.Reset)
 		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED"), http.StatusMethodNotAllowed)
 		return
 	}
 
 	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/users" {
-		utils.LoggerInfo.Println(http.StatusNotFound, "-", os.Getenv("NOT_FOUND"))
+		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
 	}
 
 	users, err := c.UserService.GetAllUsers()
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error()+utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	utils.LoggerInfo.Println(http.StatusOK, "-", "Users retrieved successfully")
+	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Users retrieved successfully"+utils.Reset)
 	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	// err = json.NewEncoder(w).Encode(users)
-	err = json.NewEncoder(w).Encode(map[string]interface{}{
-		"users": users,
-	})
+	if len(users) != 0 {
+		err = json.NewEncoder(w).Encode(map[string]interface{}{
+			"status": http.StatusOK,
+			"users":  users,
+		})
+	} else {
+		err = json.NewEncoder(w).Encode(map[string]interface{}{
+			"status":  http.StatusNoContent,
+			"message": "No users found",
+		})
+	}
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error()+utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -439,7 +472,7 @@ func (c *UserController) Users(w http.ResponseWriter, r *http.Request) {
 func (c *UserController) UsersRoutes(routes *http.ServeMux) *http.ServeMux {
 	err := utils.Environment()
 	if err != nil {
-		utils.LoggerInfo.Println(http.StatusInternalServerError, "-", err.Error())
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error()+utils.Reset)
 		return routes
 	}
 
@@ -448,8 +481,8 @@ func (c *UserController) UsersRoutes(routes *http.ServeMux) *http.ServeMux {
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/users", c.Users)
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/logout", c.Logout)
 	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/is_online", c.IsUserOnline)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/profile/{id}", c.GetProfile)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/profile-update/{id}", c.UpdateProfile)
+	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/profile/", c.GetProfile)
+	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/profile-update/", c.UpdateProfile)
 	// routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/follow", c.Follow)
 	// routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/unfollow", c.Unfollow)
 	// routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/followers/{id}", c.GetFollowers)

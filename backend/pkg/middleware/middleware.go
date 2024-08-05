@@ -10,7 +10,7 @@ import (
 func LoggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		log.Println("Request from", r.RemoteAddr, "to", r.URL)
-		utils.LoggerInfo.Println("Request from", r.RemoteAddr, "to", r.URL)
+		utils.LoggerInfo.Println(utils.Info+"Request from", r.RemoteAddr, "to", r.URL, utils.Reset)
 
 		// Call the next handler
 		next.ServeHTTP(w, r)
@@ -23,7 +23,7 @@ func ErrorMiddleware(next http.Handler) http.Handler {
 		defer func() {
 			if err := recover(); err != nil {
 				log.Println(err)
-				utils.LoggerInfo.Println(err)
+				utils.LoggerError.Println(err, utils.Reset)
 				http.Error(w, "Internal server error", http.StatusInternalServerError)
 			}
 		}()
@@ -54,14 +54,14 @@ func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		token, err := session.GetSessionTokenFromRequest(r)
 		if err != nil || token == "" {
-			utils.LoggerInfo.Println(http.StatusUnauthorized, "Unauthorized")
+			utils.LoggerError.Println(http.StatusUnauthorized, "Unauthorized"+utils.Reset)
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
 
 		_, err = session.GetSession(token)
 		if err != nil {
-			utils.LoggerInfo.Println(http.StatusUnauthorized, "Unauthorized")
+			utils.LoggerError.Println(http.StatusUnauthorized, "Unauthorized"+utils.Reset)
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}

@@ -27,7 +27,7 @@ func (d *Database) Close() {
 	err := d.GetDB().Close()
 	if err != nil {
 		log.Printf("Error closing database connection\nCaused by: %v", err)
-		utils.LoggerInfo.Println("Error closing database connection caused by: %v", err)
+		utils.LoggerError.Println(utils.Error+"Error closing database connection caused by: %v %v", err.Error(), utils.Reset)
 		return
 	}
 }
@@ -44,12 +44,12 @@ func Connect() (*Database, error) {
 		err := db.Close()
 		if err != nil {
 			log.Printf("Error closing database connection\nCaused by: %v", err)
-			utils.LoggerInfo.Println("Error closing database connection caused by: %v", err)
+			utils.LoggerError.Println(utils.Error+"Error closing database connection caused by: %v %v", err.Error(), utils.Reset)
 		}
 		return nil, err
 	}
 	log.Println("Connected to the database")
-	utils.LoggerInfo.Println("Connected to the database")
+	utils.LoggerInfo.Println(utils.Info + "Connected to the database" + utils.Reset)
 	return &Database{db: db}, nil
 }
 

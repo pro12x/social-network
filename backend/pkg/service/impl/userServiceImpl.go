@@ -84,6 +84,10 @@ func (s *UserServiceImpl) GetProfile(id uint) (*dto.UserDTO, error) {
 	return mapper.UserToDTO(user), err
 }
 
+func (s *UserServiceImpl) CountUsers() (uint, error) {
+	return s.Repository.CountUsers()
+}
+
 /*func (s *UserServiceImpl) Follow(followerID, followingID uint) error {
 	return s.Repository.Follow(followerID, followingID)
 }

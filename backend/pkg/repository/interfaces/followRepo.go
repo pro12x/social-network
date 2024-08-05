@@ -9,7 +9,9 @@ type FollowRepo interface {
 	GetFollowers(userID uint) ([]*entity.User, error)
 	GetPendingFollowRequest(id uint) ([]*entity.Follow, error)
 	GetFollowings(userID uint) ([]*entity.User, error)
-	GetFollowerCount(userID uint) (int, error)
-	GetFollowingCount(userID uint) (int, error)
+	GetFollowerCount(userID uint) (uint, error)
+	GetFollowingCount(userID uint) (uint, error)
+	CountAllFollows() (uint, error)
 	FindFollow(followerID, followeeID uint) (*entity.Follow, error)
+	FindByID(id uint) (*entity.Follow, error)
 }

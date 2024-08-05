@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func ExtractIDFromRequest(r *http.Request) (int, error) {
+func ExtractIDFromRequest(r *http.Request) (uint, error) {
 	pathSegments := strings.Split(r.URL.Path, "/")
 	if len(pathSegments) < 6 {
 		return 0, fmt.Errorf("ID is missing in parameters")
@@ -20,7 +20,7 @@ func ExtractIDFromRequest(r *http.Request) (int, error) {
 	if err != nil {
 		return 0, fmt.Errorf("invalid ID format")
 	}
-	return id, nil
+	return uint(id), nil
 }
 
 func GenerateToken() (string, error) {

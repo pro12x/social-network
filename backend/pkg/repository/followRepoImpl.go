@@ -37,7 +37,7 @@ func (f *FollowRepoImpl) DeleteFollow(followerID, followeeID uint) error {
 }
 
 func (f *FollowRepoImpl) GetFollowers(userID uint) ([]*entity.User, error) {
-	query := `SELECT u.id, u.email, u.password, u.firstname, u.lastname, u.date_of_birth, u.avatar, u.nickname, u.about_me, u.is_public, u.created_at, u.updated_at FROM users u JOIN follows f ON u.id = f.follower_id WHERE f.followee_id = ?`
+	query := `SELECT u.id, u.email, u.password, u.firstname, u.lastname, u.date_of_birth, u.avatar, u.nickname, u.about_me, u.is_public, u.created_at, u.updated_at FROM users u JOIN follows f ON u.id = f.follower_id WHERE f.followee_id = ? AND f.status = 'accepted'`
 	rows, err := f.db.GetDB().Query(query, userID)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func (f *FollowRepoImpl) GetFollowers(userID uint) ([]*entity.User, error) {
 	defer func(rows *sql.Rows) {
 		err := rows.Close()
 		if err != nil {
-			utils.LoggerInfo.Println(err)
+			utils.LoggerError.Println(err, utils.Reset)
 			return
 		}
 	}(rows)
@@ -57,6 +57,7 @@ func (f *FollowRepoImpl) GetFollowers(userID uint) ([]*entity.User, error) {
 		if err != nil {
 			return nil, err
 		}
+		user.Password = ""
 		users = append(users, user)
 	}
 
@@ -72,7 +73,7 @@ func (f *FollowRepoImpl) GetPendingFollowRequest(id uint) ([]*entity.Follow, err
 	defer func(rows *sql.Rows) {
 		err := rows.Close()
 		if err != nil {
-			utils.LoggerInfo.Println(err)
+			utils.LoggerError.Println(err, utils.Reset)
 			return
 		}
 	}(rows)
@@ -91,7 +92,7 @@ func (f *FollowRepoImpl) GetPendingFollowRequest(id uint) ([]*entity.Follow, err
 }
 
 func (f *FollowRepoImpl) GetFollowings(userID uint) ([]*entity.User, error) {
-	query := `SELECT u.id, u.email, u.password, u.firstname, u.lastname, u.date_of_birth, u.avatar, u.nickname, u.about_me, u.is_public, u.created_at, u.updated_at FROM users u JOIN follows f ON u.id = f.followee_id WHERE f.follower_id = ?`
+	query := `SELECT u.id, u.email, u.password, u.firstname, u.lastname, u.date_of_birth, u.avatar, u.nickname, u.about_me, u.is_public, u.created_at, u.updated_at FROM users u JOIN follows f ON u.id = f.followee_id WHERE f.follower_id = ? AND f.status = 'accepted'`
 	rows, err := f.db.GetDB().Query(query, userID)
 	if err != nil {
 		return nil, err
@@ -99,7 +100,7 @@ func (f *FollowRepoImpl) GetFollowings(userID uint) ([]*entity.User, error) {
 	defer func(rows *sql.Rows) {
 		err := rows.Close()
 		if err != nil {
-			utils.LoggerInfo.Println(err)
+			utils.LoggerError.Println(err, utils.Reset)
 			return
 		}
 	}(rows)
@@ -111,17 +112,18 @@ func (f *FollowRepoImpl) GetFollowings(userID uint) ([]*entity.User, error) {
 		if err != nil {
 			return nil, err
 		}
+		user.Password = ""
 		users = append(users, user)
 	}
 
 	return users, nil
 }
 
-func (f *FollowRepoImpl) GetFollowerCount(userID uint) (int, error) {
-	query := `SELECT COUNT(*) FROM follows WHERE followee_id = ?`
+func (f *FollowRepoImpl) GetFollowerCount(userID uint) (uint, error) {
+	query := `SELECT COUNT(*) FROM follows WHERE followee_id = ? AND status = 'accepted'`
 	row := f.db.GetDB().QueryRow(query, userID)
 
-	var count int
+	var count uint
 	err := row.Scan(&count)
 	if err != nil {
 		return 0, err
@@ -130,11 +132,24 @@ func (f *FollowRepoImpl) GetFollowerCount(userID uint) (int, error) {
 	return count, nil
 }
 
-func (f *FollowRepoImpl) GetFollowingCount(userID uint) (int, error) {
-	query := `SELECT COUNT(*) FROM follows WHERE follower_id = ?`
+func (f *FollowRepoImpl) GetFollowingCount(userID uint) (uint, error) {
+	query := `SELECT COUNT(*) FROM follows WHERE follower_id = ? AND status = 'accepted'`
 	row := f.db.GetDB().QueryRow(query, userID)
 
-	var count int
+	var count uint
+	err := row.Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
+func (f *FollowRepoImpl) CountAllFollows() (uint, error) {
+	query := `SELECT COUNT(*) FROM follows`
+	row := f.db.GetDB().QueryRow(query)
+
+	var count uint
 	err := row.Scan(&count)
 	if err != nil {
 		return 0, err
@@ -146,6 +161,18 @@ func (f *FollowRepoImpl) GetFollowingCount(userID uint) (int, error) {
 func (f *FollowRepoImpl) FindFollow(followerID, followeeID uint) (*entity.Follow, error) {
 	follow := new(entity.Follow)
 	err := f.db.GetDB().QueryRow(`SELECT id, follower_id, followee_id, status, created_at FROM follows WHERE (follower_id = ? AND followee_id = ?) OR (follower_id = ? AND followee_id = ?)`, followerID, followeeID, followeeID, followerID).Scan(&follow.ID, &follow.FollowerID, &follow.FolloweeID, &follow.Status, &follow.CreatedAt)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil // No user found
+		}
+		return nil, err // Some error occurred
+	}
+	return follow, nil
+}
+
+func (f *FollowRepoImpl) FindByID(id uint) (*entity.Follow, error) {
+	follow := new(entity.Follow)
+	err := f.db.GetDB().QueryRow(`SELECT id, follower_id, followee_id, status, created_at FROM follows WHERE id = ?`, id).Scan(&follow.ID, &follow.FollowerID, &follow.FolloweeID, &follow.Status, &follow.CreatedAt)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, nil // No user found

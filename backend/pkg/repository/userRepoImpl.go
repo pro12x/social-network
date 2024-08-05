@@ -25,7 +25,8 @@ func NewUserRepoImpl(db sqlite.Database) *UserRepoImpl {
 // FindByID is a method to find a user by ID
 func (u *UserRepoImpl) FindByID(id uint) (*entity.User, error) {
 	user := new(entity.User)
-	err := u.db.GetDB().QueryRow("SELECT * FROM users WHERE id = ?", id).Scan(&user.ID, &user.Email, &user.Password, &user.Firstname, &user.Lastname, &user.Avatar, &user.Nickname, &user.AboutMe, &user.IsPublic, &user.CreatedAt, &user.UpdatedAt)
+	err := u.db.GetDB().QueryRow("SELECT * FROM users WHERE id = ?", id).Scan(&user.ID, &user.Email, &user.Password, &user.Firstname, &user.Lastname, &user.DateOfBirth, &user.Avatar, &user.Nickname, &user.AboutMe, &user.IsPublic, &user.CreatedAt, &user.UpdatedAt)
+	user.Password = ""
 
 	return user, err
 }
@@ -36,7 +37,7 @@ func (u *UserRepoImpl) FindByEmail(email string) (*entity.User, error) {
 	err := u.db.GetDB().QueryRow(`SELECT id, email, password, firstname, lastname, date_of_birth, avatar, nickname, about_me, is_public, created_at, updated_at FROM users WHERE email = ?`, email).Scan(&user.ID, &user.Email, &user.Password, &user.Firstname, &user.Lastname, &user.DateOfBirth, &user.Avatar, &user.Nickname, &user.AboutMe, &user.IsPublic, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			utils.LoggerInfo.Println("No user found")
+			utils.LoggerInfo.Println(utils.Warn + "No user found" + utils.Reset)
 			return nil, nil // No user found
 		}
 		return nil, err // Some error occurred
@@ -48,7 +49,7 @@ func (u *UserRepoImpl) FindByEmail(email string) (*entity.User, error) {
 func (u *UserRepoImpl) Save(user *entity.User) error {
 	_, err := u.db.GetDB().Exec(`INSERT INTO users (email, password, firstname, lastname, date_of_birth, avatar, nickname, about_me) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, user.Email, user.Password, user.Firstname, user.Lastname, user.DateOfBirth, user.Avatar, user.Nickname, user.AboutMe)
 	if err != nil {
-		utils.LoggerInfo.Println("Error saving user")
+		utils.LoggerError.Println("Error saving user", utils.Reset)
 		return err
 	}
 
@@ -59,6 +60,16 @@ func (u *UserRepoImpl) Update(user *entity.User) error {
 	_, err := u.db.GetDB().Exec(`UPDATE users SET firstname = ?, lastname = ?, avatar = ?, nickname = ?, about_me = ?, updated_at = ? WHERE id = ?`, user.Firstname, user.Lastname, user.Avatar, user.Nickname, user.AboutMe, user.ID, time.Now())
 
 	return err
+}
+
+func (u *UserRepoImpl) CountUsers() (uint, error) {
+	var count uint
+	err := u.db.GetDB().QueryRow(`SELECT COUNT(*) FROM users`).Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
 
 //func (u *UserRepoImpl) Follow(followerID, followingID uint) error {
@@ -81,7 +92,7 @@ func (u *UserRepoImpl) FindAllUsers() ([]*entity.User, error) {
 	defer func(rows *sql.Rows) {
 		err := rows.Close()
 		if err != nil {
-			utils.LoggerInfo.Println("Error closing rows")
+			utils.LoggerError.Println("Error closing rows" + utils.Reset)
 			return
 		}
 	}(rows)

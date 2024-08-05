@@ -7,6 +7,7 @@ type UserRepo interface {
 	FindByEmail(email string) (*entity.User, error)
 	Save(user *entity.User) error
 	Update(user *entity.User) error
+	CountUsers() (uint, error)
 	FindAllUsers() ([]*entity.User, error)
 	StoreSession(token string, userID uint)
 	GetUserID(token string) (uint, bool)

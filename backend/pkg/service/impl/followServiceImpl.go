@@ -14,12 +14,12 @@ type FollowServiceImpl struct {
 
 func (f *FollowServiceImpl) FollowUser(followerID, followeeID uint) error {
 	// Check if the follow already exists
-	isExisted, err := f.Repository.FindFollow(followerID, followeeID)
+	isExists, err := f.Repository.FindFollow(followerID, followeeID)
 	if err != nil {
 		return err
 	}
 
-	if isExisted != nil {
+	if isExists != nil {
 		return errors.New("you already followed this user")
 	}
 
@@ -31,12 +31,12 @@ func (f *FollowServiceImpl) FollowUser(followerID, followeeID uint) error {
 }
 
 func (f *FollowServiceImpl) UnfollowUser(followerID, followeeID uint) error {
-	isExisted, err := f.Repository.FindFollow(followerID, followeeID)
+	isExists, err := f.Repository.FindFollow(followerID, followeeID)
 	if err != nil {
 		return err
 	}
 
-	if isExisted != nil {
+	if isExists != nil {
 		return errors.New("you already followed this user")
 	}
 
@@ -44,10 +44,30 @@ func (f *FollowServiceImpl) UnfollowUser(followerID, followeeID uint) error {
 }
 
 func (f *FollowServiceImpl) AcceptFollowRequest(id uint) error {
+	isExists, err := f.Repository.FindByID(id)
+	if err != nil {
+		return err
+	}
+	if isExists == nil {
+		return errors.New("follow request not found")
+	}
+	if isExists.Status == "accepted" {
+		return errors.New("follow request already accepted")
+	}
 	return f.Repository.UpdateFollowStatus(id, "accepted")
 }
 
 func (f *FollowServiceImpl) DeclineFollowRequest(id uint) error {
+	isExists, err := f.Repository.FindByID(id)
+	if err != nil {
+		return err
+	}
+	if isExists == nil {
+		return errors.New("follow request not found")
+	}
+	if isExists.Status == "rejected" {
+		return errors.New("follow request already rejected")
+	}
 	return f.Repository.UpdateFollowStatus(id, "rejected")
 }
 
@@ -88,10 +108,22 @@ func (f *FollowServiceImpl) GetFollowings(userID uint) ([]*dto.UserDTO, error) {
 	return userDTOs, nil
 }
 
-func (f *FollowServiceImpl) GetFollowerCount(userID uint) (int, error) {
+func (f *FollowServiceImpl) GetFollowerCount(userID uint) (uint, error) {
 	return f.Repository.GetFollowerCount(userID)
 }
 
-func (f *FollowServiceImpl) GetFollowingCount(userID uint) (int, error) {
+func (f *FollowServiceImpl) GetFollowingCount(userID uint) (uint, error) {
 	return f.Repository.GetFollowingCount(userID)
+}
+
+func (f *FollowServiceImpl) CountAllFollows() (uint, error) {
+	return f.Repository.CountAllFollows()
+}
+
+func (f *FollowServiceImpl) FindFollow(followerID, followeeID uint) (*entity.Follow, error) {
+	return f.Repository.FindFollow(followerID, followeeID)
+}
+
+func (f *FollowServiceImpl) FindByID(id uint) (*entity.Follow, error) {
+	return f.Repository.FindByID(id)
 }

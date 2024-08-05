@@ -27,12 +27,12 @@ func InitLogger() {
 	}
 
 	LoggerInfo = log.New(logFile, "INFO: ", log.LstdFlags|log.Ldate|log.Ltime|log.Lshortfile|log.Llongfile)
-	LoggerError = log.New(logFile, Error+"ERROR: ", log.LstdFlags|log.Ldate|log.Ltime|log.Lshortfile|log.Llongfile)
+	LoggerError = log.New(logFile, "ERROR: ", log.LstdFlags|log.Ldate|log.Ltime|log.Lshortfile|log.Llongfile)
 }
 
 func RotateLogFile() {
 	if stat, err := logFile.Stat(); err == nil {
-		if stat.Size() > maxFileSize {
+		if stat.Size() >= maxFileSize {
 			err := logFile.Close()
 			if err != nil {
 				log.Println("Error closing file: " + err.Error())
@@ -77,4 +77,8 @@ func Close() {
 	LoggerInfo.Println(Warn + " / /   / / __ \\/ ___/ _ \\/ __  / " + Reset)
 	LoggerInfo.Println(Warn + "/ /___/ / /_/ (__  )  __/ /_/ /  " + Reset)
 	LoggerInfo.Println(Warn + "\\____/_/\\____/____/\\___/\\__,_/   " + Reset)
+	LoggerInfo.Println("Database closed")
+	LoggerInfo.Println("Server closed")
+	LoggerInfo.Println("Logger closed")
+	LoggerInfo.Println("Goodbye!")
 }
