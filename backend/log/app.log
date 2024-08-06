@@ -1,19 +1,33 @@
-INFO: 2024/08/05 14:22:03 log.go:66: [33m       __                 __   __                               [0m
-INFO: 2024/08/05 14:22:03 log.go:67: [33m      / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____[0m
-INFO: 2024/08/05 14:22:03 log.go:68: [33m __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/[0m
-INFO: 2024/08/05 14:22:03 log.go:69: [33m/ /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    [0m
-INFO: 2024/08/05 14:22:03 log.go:70: [33m\____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     [0m
-INFO: 2024/08/05 14:22:03 log.go:71: [33m                                       /____//____/             [0m
-INFO: 2024/08/05 14:22:03 server.go:23: Starting the server...
-INFO: 2024/08/05 14:22:03 sqlite.go:52: [34mConnected to the database[0m
-INFO: 2024/08/05 14:22:03 sqlite.go:78: Database migrated
-INFO: 2024/08/05 14:22:03 server.go:122: [34mThe server is listening at http://localhost:1111[0m
-INFO: 2024/08/05 14:22:14 log.go:75: [33m   ________                    __[0m
-INFO: 2024/08/05 14:22:14 log.go:76: [33m  / ____/ /___  ________  ____/ /[0m
-INFO: 2024/08/05 14:22:14 log.go:77: [33m / /   / / __ \/ ___/ _ \/ __  / [0m
-INFO: 2024/08/05 14:22:14 log.go:78: [33m/ /___/ / /_/ (__  )  __/ /_/ /  [0m
-INFO: 2024/08/05 14:22:14 log.go:79: [33m\____/_/\____/____/\___/\__,_/   [0m
-INFO: 2024/08/05 14:22:14 log.go:80: Database closed
-INFO: 2024/08/05 14:22:14 log.go:81: Server closed
-INFO: 2024/08/05 14:22:14 log.go:82: Logger closed
-INFO: 2024/08/05 14:22:14 log.go:83: Goodbye!
+INFO: 2024/08/06 04:37:07 sqlite.go:52: [34mConnected to the database[0m
+INFO: 2024/08/06 04:37:07 sqlite.go:78: Database migrated
+INFO: 2024/08/06 04:37:07 server.go:122: [34mThe server is listening at http://localhost:1111[0m
+INFO: 2024/08/06 04:37:15 log.go:75: [33m   ________                    __[0m
+INFO: 2024/08/06 04:37:15 log.go:76: [33m  / ____/ /___  ________  ____/ /[0m
+INFO: 2024/08/06 04:37:15 log.go:77: [33m / /   / / __ \/ ___/ _ \/ __  / [0m
+INFO: 2024/08/06 04:37:15 log.go:78: [33m/ /___/ / /_/ (__  )  __/ /_/ /  [0m
+INFO: 2024/08/06 04:37:15 log.go:79: [33m\____/_/\____/____/\___/\__,_/   [0m
+INFO: 2024/08/06 04:37:15 log.go:80: Database closed
+INFO: 2024/08/06 04:37:15 log.go:81: Server closed
+INFO: 2024/08/06 04:37:15 log.go:82: Logger closed
+INFO: 2024/08/06 04:37:15 log.go:83: Goodbye!
+INFO: 2024/08/06 04:41:30 log.go:66: [33m       __                 __   __                               [0m
+INFO: 2024/08/06 04:41:30 log.go:67: [33m      / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____[0m
+INFO: 2024/08/06 04:41:30 log.go:68: [33m __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/[0m
+INFO: 2024/08/06 04:41:30 log.go:69: [33m/ /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    [0m
+INFO: 2024/08/06 04:41:30 log.go:70: [33m\____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     [0m
+INFO: 2024/08/06 04:41:30 log.go:71: [33m                                       /____//____/             [0m
+INFO: 2024/08/06 04:41:30 server.go:23: Starting the server...
+INFO: 2024/08/06 04:41:30 sqlite.go:52: [34mConnected to the database[0m
+INFO: 2024/08/06 04:41:30 sqlite.go:78: Database migrated
+INFO: 2024/08/06 04:41:30 server.go:122: [34mThe server is listening at http://localhost:1111[0m
+INFO: 2024/08/06 04:41:41 middleware.go:13: [34mRequest from [::1]:38908 to /api/v1/social-network/follower-count/1 [0m
+INFO: 2024/08/06 04:41:41 followController.go:479: [34m 200 - Follower count get[0m
+INFO: 2024/08/06 04:44:54 log.go:75: [33m   ________                    __[0m
+INFO: 2024/08/06 04:44:54 log.go:76: [33m  / ____/ /___  ________  ____/ /[0m
+INFO: 2024/08/06 04:44:54 log.go:77: [33m / /   / / __ \/ ___/ _ \/ __  / [0m
+INFO: 2024/08/06 04:44:54 log.go:78: [33m/ /___/ / /_/ (__  )  __/ /_/ /  [0m
+INFO: 2024/08/06 04:44:54 log.go:79: [33m\____/_/\____/____/\___/\__,_/   [0m
+INFO: 2024/08/06 04:44:54 log.go:80: Database closed
+INFO: 2024/08/06 04:44:54 log.go:81: Server closed
+INFO: 2024/08/06 04:44:54 log.go:82: Logger closed
+INFO: 2024/08/06 04:44:54 log.go:83: Goodbye!

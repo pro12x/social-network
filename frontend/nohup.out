@@ -1,0 +1,16 @@
+- Building...
+
+Initial chunk files | Names         |  Raw size
+polyfills.js        | polyfills     |  90.23 kB | 
+styles.css          | styles        |  76.44 kB | 
+main.js             | main          |  25.46 kB | 
+
+                    | Initial total | 192.13 kB
+
+Application bundle generation complete. [1.871 seconds]
+
+Watch mode enabled. Watching for file changes...
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+  ➜  Local:   http://localhost:1112/
+Node packages may not be installed. Try installing with 'npm install'.
+Error: Could not find the '@angular-devkit/build-angular:dev-server' builder's node package.

@@ -19,6 +19,7 @@ func (f *FollowServiceImpl) FollowUser(followerID, followeeID uint) error {
 		return err
 	}
 
+	// Check if follow is exists
 	if isExists != nil {
 		return errors.New("you already followed this user")
 	}
@@ -36,8 +37,14 @@ func (f *FollowServiceImpl) UnfollowUser(followerID, followeeID uint) error {
 		return err
 	}
 
-	if isExists != nil {
-		return errors.New("you already followed this user")
+	// Check if the follow exists
+	if isExists == nil {
+		return errors.New("requested follow not found")
+	}
+
+	// Check if the follow is pending
+	if isExists.Status == "pending" {
+		return errors.New("cannot unfollow a pending follow request")
 	}
 
 	return f.Repository.DeleteFollow(followerID, followeeID)
@@ -48,12 +55,15 @@ func (f *FollowServiceImpl) AcceptFollowRequest(id uint) error {
 	if err != nil {
 		return err
 	}
+
 	if isExists == nil {
 		return errors.New("follow request not found")
 	}
+
 	if isExists.Status == "accepted" {
 		return errors.New("follow request already accepted")
 	}
+
 	return f.Repository.UpdateFollowStatus(id, "accepted")
 }
 
@@ -62,12 +72,20 @@ func (f *FollowServiceImpl) DeclineFollowRequest(id uint) error {
 	if err != nil {
 		return err
 	}
+
 	if isExists == nil {
 		return errors.New("follow request not found")
 	}
+
 	if isExists.Status == "rejected" {
 		return errors.New("follow request already rejected")
 	}
+
+	err = f.Repository.DeleteFollow(isExists.FollowerID, isExists.FolloweeID)
+	if err != nil {
+		return err
+	}
+
 	return f.Repository.UpdateFollowStatus(id, "rejected")
 }
 

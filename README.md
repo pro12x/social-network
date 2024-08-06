@@ -25,12 +25,23 @@ Our goal is to create a social network that allows users to create private post 
 #### Backend
 1. Go to the backend directory `cd backend`
 2. Run the main script to add dependencies `bash main.sh`
-3. Run the server `bash run.sh`
+3. Run the server `go run .` or `go build . && ./[project-name]`
 4. The server will be running on `http://localhost:${PORT}`
 
 #### Frontend
 1. Go to the frontend directory `cd frontend`
 2. Run the server `ng serve` or `npm start`
+
+### Run all
+1. Go to the project directory `cd [project-name]`
+2. Make sure you have Make installed `make --version`
+3. Run the main script `make run-all`
+
+### Technologies
+- [Golang](https://golang.org/)
+- [Angular](https://angular.io/)
+- [Sqlite3](https://www.sqlite.org/index.html)
+- [Docker](https://www.docker.com/)
 
 ### Contributors
 - [Franchis Janel MOKOMBA](https://learn.zone01dakar.sn/git/fmokomba)
