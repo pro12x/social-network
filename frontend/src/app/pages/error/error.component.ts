@@ -19,4 +19,5 @@ import {NgOptimizedImage} from "@angular/common";
 })
 export class ErrorComponent {
     error = true
+    title = 'Opps! Something went wrong'
 }
