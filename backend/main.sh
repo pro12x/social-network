@@ -1,8 +1,9 @@
 # Initialize the project module
-#go mod init backend
+go mod download
 
 # Import the necessary packages
 go mod tidy
 
 # Adding environment variables
-bash script.sh
+chmod +x script.sh
+./script.sh
