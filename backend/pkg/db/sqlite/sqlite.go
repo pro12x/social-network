@@ -37,7 +37,7 @@ func Connect() (*Database, error) {
 	err1 := utils.Environment()
 	db, err := sql.Open(os.Getenv("DB_DRIVER"), os.Getenv("DB_CONNECTION"))
 	if err != nil || err1 != nil {
-		return nil, err
+		return nil, errors.New("error connecting to the database: " + err.Error())
 	}
 	err = db.Ping()
 	if err != nil {
@@ -49,7 +49,7 @@ func Connect() (*Database, error) {
 		return nil, err
 	}
 	log.Println("Connected to the database")
-	utils.LoggerInfo.Println(utils.Info + "Connected to the database" + utils.Reset)
+	utils.LoggerInfo.Println(utils.Info + "Connected to the database " + utils.Reset)
 	return &Database{db: db}, nil
 }
 
@@ -57,21 +57,21 @@ func Connect() (*Database, error) {
 func Migrate(db *sql.DB) error {
 	driver, err := sqlite3.WithInstance(db, &sqlite3.Config{})
 	if err != nil {
-		return err
+		return errors.New("error creating sqlite3 driver: " + err.Error())
 	}
 
 	//
 	m, err := migrate.NewWithDatabaseInstance("file://"+os.Getenv("DB_MIGRATION_PATH"), "sqlite3", driver)
 	if err != nil {
-		return err
+		return errors.New("error creating migration instance: " + err.Error())
 	}
 
 	if err := m.Down(); err != nil && !errors.Is(err, migrate.ErrNoChange) {
-		return err
+		return errors.New("error rolling back migration: " + err.Error())
 	}
 
 	if err := m.Up(); err != nil && !errors.Is(err, migrate.ErrNoChange) {
-		return err
+		return errors.New("error applying migration: " + err.Error())
 	}
 
 	log.Println("Database migrated")

@@ -13,9 +13,7 @@ type FollowRepoImpl struct {
 }
 
 func NewFollowRepoImpl(db sqlite.Database) *FollowRepoImpl {
-	return &FollowRepoImpl{
-		db: db,
-	}
+	return &FollowRepoImpl{db}
 }
 
 func (f *FollowRepoImpl) CreateFollow(follow *entity.Follow) error {

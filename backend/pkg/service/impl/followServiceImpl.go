@@ -19,7 +19,7 @@ func (f *FollowServiceImpl) FollowUser(followerID, followeeID uint) error {
 		return err
 	}
 
-	// Check if follow is exists
+	// Check if follow is existing
 	if isExists != nil {
 		return errors.New("you already followed this user")
 	}

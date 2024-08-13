@@ -16,10 +16,7 @@ type UserRepoImpl struct {
 }
 
 func NewUserRepoImpl(db sqlite.Database) *UserRepoImpl {
-	return &UserRepoImpl{
-		db:           db,
-		sessionStore: session.NewSessionStore(),
-	}
+	return &UserRepoImpl{db, session.NewSessionStore()}
 }
 
 // FindByID is a method to find a user by ID
@@ -49,8 +46,7 @@ func (u *UserRepoImpl) FindByEmail(email string) (*entity.User, error) {
 func (u *UserRepoImpl) Save(user *entity.User) error {
 	_, err := u.db.GetDB().Exec(`INSERT INTO users (email, password, firstname, lastname, date_of_birth, avatar, nickname, about_me) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, user.Email, user.Password, user.Firstname, user.Lastname, user.DateOfBirth, user.Avatar, user.Nickname, user.AboutMe)
 	if err != nil {
-		utils.LoggerError.Println("Error saving user", utils.Reset)
-		return err
+		return errors.New("error saving user")
 	}
 
 	return nil

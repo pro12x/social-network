@@ -7,7 +7,7 @@ run_command() {
     PID=$(pgrep -P $$)         # Find the process ID of the command
     echo "Command PID: $PID"   # Print the process ID of the command
 }
-# Initialize variables with default values
+# Initialize globale with default values
 COMMAND="go run ."
 DIRECTORY="./"
 EXCLUDE=""
