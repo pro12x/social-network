@@ -283,7 +283,7 @@ func (p *PostController) GetAllPosts(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	w.WriteHeader(http.StatusOK)
-	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Posts found"+utils.Reset)
+	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Found"+utils.Reset)
 	if posts != nil {
 		err = json.NewEncoder(w).Encode(map[string]interface{}{
 			"status": http.StatusOK,
@@ -292,7 +292,7 @@ func (p *PostController) GetAllPosts(w http.ResponseWriter, r *http.Request) {
 	} else {
 		err = json.NewEncoder(w).Encode(map[string]interface{}{
 			"status": http.StatusOK,
-			"posts":  "No posts found",
+			"posts":  "No found",
 		})
 	}
 	if err != nil {

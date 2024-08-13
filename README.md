@@ -9,7 +9,7 @@ Our goal is to create a social network that allows users to create private post 
 - [x] User profile
 - [ ] User search
 - [x] User follow/unfollow
-- [ ] User posts
+- [x] User posts
 - [ ] User notifications
 - [ ] User groups
 - [ ] User chat
