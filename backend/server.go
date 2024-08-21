@@ -107,24 +107,28 @@ func Routes(routes *http.ServeMux) *http.ServeMux {
 	followRepo := repository.NewFollowRepoImpl(*globale.DB)
 	catRepo := repository.NewCategoryRepoImpl(*globale.DB)
 	postRepo := repository.NewPostRepoImpl(*globale.DB)
+	commentRepo := repository.NewCommentRepoImpl(*globale.DB)
 
 	// Initializing services
 	userService := impl.UserServiceImpl{Repository: userRepo}
 	followService := impl.FollowServiceImpl{Repository: followRepo}
 	catService := impl.CategoryServiceImpl{Repository: catRepo}
 	postService := impl.PostServiceImpl{Repository: postRepo}
+	commentService := impl.CommentServiceImpl{Repository: commentRepo}
 
 	// Initializing controllers
 	userController := web.UserController{UserService: userService}
 	followController := web.FollowController{FollowService: followService}
 	categoryController := web.CategoryController{CategoryService: catService}
 	postController := web.PostController{PostService: postService}
+	commentController := web.CommentController{CommentService: commentService}
 
 	// Routes
 	routes = userController.UsersRoutes(routes)
 	routes = followController.FollowsRoutes(routes)
 	routes = categoryController.CategoriesRoutes(routes)
 	routes = postController.PostsRoutes(routes)
+	routes = commentController.CommentsRoutes(routes)
 
 	return routes
 }

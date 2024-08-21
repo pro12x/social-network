@@ -6,6 +6,12 @@
 
 button {
     background: #B8DAFF;
+    width: 12rem;
+    gap: 10px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
 .error {

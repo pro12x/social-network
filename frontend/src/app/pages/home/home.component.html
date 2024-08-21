@@ -1,43 +1,5 @@
-<h1>Home Component</h1>
-<div class="posts" *ngFor="let post of posts">
-    <mat-card class="example-card" appearance="outlined">
-        <mat-card-header>
-            <!--<div mat-card-avatar class="example-header-image"></div>-->
-            <img routerLink="/profile/{{id}}" mat-card-avatar src="profile.png" width="64" height="64" alt="profile">
-            <mat-card-title routerLink="/profile/{{id}}">{{ users[post.userID-1].name }}</mat-card-title>
-            <mat-card-subtitle routerLink="/profile/{{id}}">&#64;{{ users[post.userID-1].username }}</mat-card-subtitle>
-        </mat-card-header>
-        <img class="post-image" mat-card-image src="{{ post.image }}" alt="Photo of a Shiba Inu" height="300">
-        <mat-card-content>
-            <p>{{ post.content }}</p>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-icon-button>
-                <span>{{ post.likes }}</span>
-                <mat-icon>thumb_up_outilne</mat-icon>
-            </button>
-            <button mat-icon-button>
-                <span>{{ post.dislikes }}</span>
-                <mat-icon>thumb_down</mat-icon>
-            </button>
-            <button mat-icon-button>
-                <span>{{ post.comments.length }}</span>
-                <mat-icon>forum</mat-icon>
-            </button>
-            <span class="comment-form">
-                <form>
-                    <input matInput placeholder="Comment">
-                    <button class="send" mat-icon-button>
-                        <mat-icon>send</mat-icon>
-                    </button>
-                </form>
-            </span>
-            <span class="spacer"></span>
-            <button mat-icon-button>
-                <span>{{ post.shares }}</span>
-                <mat-icon>share</mat-icon>
-            </button>
-        </mat-card-actions>
-    </mat-card>
-</div>
+<h1>Home page {{ error }}</h1>
 
+
+<span *ngIf="error">I can see an error</span>
+<span *ngIf="!error">I cannot see an error</span>

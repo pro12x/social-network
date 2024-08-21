@@ -1,7 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {MatDrawer, MatDrawerContainer, MatSidenavModule} from "@angular/material/sidenav";
+import {NgIf} from "@angular/common";
 import {ToolbarComponent} from "./pages/nav/toolbar/toolbar.component";
+import {HomeComponent} from "./pages/home/home.component";
+import {ErrorService} from "./service/error.service";
 import {SidenavComponent} from "./pages/nav/sidenav/sidenav.component";
 
 @Component({
@@ -9,15 +11,24 @@ import {SidenavComponent} from "./pages/nav/sidenav/sidenav.component";
     standalone: true,
     imports: [
         RouterOutlet,
-        MatSidenavModule,
-        MatDrawerContainer,
-        MatDrawer,
+        NgIf,
         ToolbarComponent,
+        HomeComponent,
         SidenavComponent
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     title = 'frontend';
+    error!: boolean
+
+    constructor(private errorService: ErrorService) {}
+
+    ngOnInit() {
+        this.errorService.error$.subscribe(error => {
+            this.error = error
+            console.log('Error:', this.error)
+        })
+    }
 }

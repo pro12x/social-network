@@ -1,42 +1,29 @@
-import {Component} from '@angular/core';
-import {
-    MatDrawer,
-    MatDrawerContainer,
-    MatDrawerContent,
-    MatSidenav,
-    MatSidenavContainer
-} from "@angular/material/sidenav";
-import {RouterLink, RouterOutlet} from "@angular/router";
-import {MatListModule} from "@angular/material/list";
-import {MatIcon} from "@angular/material/icon";
-import {NgForOf, NgIf} from "@angular/common";
-import {MatFabAnchor} from "@angular/material/button";
+import {Component, OnInit} from '@angular/core';
+import {RouterOutlet} from "@angular/router";
+import {ErrorService} from "../../../service/error.service";
+import {ToolbarComponent} from "../toolbar/toolbar.component";
+import {NgIf} from "@angular/common";
 
 @Component({
-    selector: 'app-sidenav',
-    standalone: true,
+  selector: 'app-sidenav',
+  standalone: true,
     imports: [
-        MatDrawer,
-        MatDrawerContainer,
-        MatDrawerContent,
         RouterOutlet,
-        MatListModule,
-        MatIcon,
-        NgForOf,
-        MatFabAnchor,
-        RouterLink,
-        NgIf,
-        MatSidenavContainer,
-        MatSidenav
+        ToolbarComponent,
+        NgIf
     ],
-    templateUrl: './sidenav.component.html',
-    styleUrl: './sidenav.component.scss'
+  templateUrl: './sidenav.component.html',
+  styleUrl: './sidenav.component.scss'
 })
-export class SidenavComponent {
-    menuItems = [
-        {name: 'Home', route: '/', icon: 'home'},
-        {name: 'Profile', route: '/profile', icon: 'person'},
-        {name: 'Friends', route: '/followers', icon: 'person_add'},
-        {name: 'Groups', route: '/groups', icon: 'group'},
-    ]
+export class SidenavComponent implements OnInit{
+    error!: boolean
+
+    constructor(private errorService: ErrorService) {}
+
+    ngOnInit(): void {
+        this.errorService.error$.subscribe(error => {
+            this.error = error
+            console.log('Error:', this.error)
+        })
+    }
 }

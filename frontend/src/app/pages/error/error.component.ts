@@ -1,23 +1,34 @@
-import {Component} from '@angular/core';
-import {MatFabAnchor, MatMiniFabButton} from "@angular/material/button";
+import {Component, Injectable, OnInit} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {MatIconModule} from "@angular/material/icon";
-import {NgOptimizedImage} from "@angular/common";
+import {MatMiniFabButton} from "@angular/material/button";
+import {ErrorService} from "../../service/error.service";
 
 @Component({
     selector: 'app-error',
     standalone: true,
     imports: [
-        MatIconModule,
-        MatFabAnchor,
         RouterLink,
-        MatMiniFabButton,
-        NgOptimizedImage
+        MatIconModule,
+        MatMiniFabButton
     ],
     templateUrl: './error.component.html',
     styleUrl: './error.component.scss'
 })
-export class ErrorComponent {
-    error = true
-    title = 'Opps! Something went wrong'
+@Injectable({
+    providedIn: 'root'
+})
+export class ErrorComponent implements OnInit {
+    error!: boolean
+    title = 'Opps!'
+    message = 'Sorry, an error occurred.'
+
+    constructor(private errorService: ErrorService) {}
+
+    ngOnInit(): void {
+        this.errorService.error$.subscribe(() => {
+            this.error = !this.error
+            console.log('Error:', this.error)
+        })
+    }
 }

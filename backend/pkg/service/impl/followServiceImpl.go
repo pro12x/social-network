@@ -126,6 +126,18 @@ func (f *FollowServiceImpl) GetFollowings(userID uint) ([]*dto.UserDTO, error) {
 	return userDTOs, nil
 }
 
+func (f *FollowServiceImpl) GetFriends(userID uint) ([]*dto.UserDTO, error) {
+	users, err := f.Repository.GetFriends(userID)
+	if err != nil {
+		return nil, err
+	}
+	var userDTOs []*dto.UserDTO
+	for _, user := range users {
+		userDTOs = append(userDTOs, mapper.UserToDTO(user))
+	}
+	return userDTOs, nil
+}
+
 func (f *FollowServiceImpl) GetFollowerCount(userID uint) (uint, error) {
 	return f.Repository.GetFollowerCount(userID)
 }

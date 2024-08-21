@@ -10,11 +10,11 @@ import (
 	"strings"
 )
 
-type CategoryController struct {
-	CategoryService impl.CategoryServiceImpl
+type CommentController struct {
+	CommentService impl.CommentServiceImpl
 }
 
-func (cc *CategoryController) CreateCategory(w http.ResponseWriter, r *http.Request) {
+func (cc *CommentController) CreateComment(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
@@ -28,35 +28,34 @@ func (cc *CategoryController) CreateCategory(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/category" {
+	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/comment" {
 		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
 	}
 
-	category := new(entity.Category)
-	if err := json.NewDecoder(r.Body).Decode(category); err != nil {
+	comment := new(entity.Comment)
+	if err := json.NewDecoder(r.Body).Decode(comment); err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	if !utils.CheckCategory(category) {
+	if !utils.CheckComment(comment) {
 		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", os.Getenv("BAD_REQUEST")+utils.Reset)
 		http.Error(w, os.Getenv("BAD_REQUEST"), http.StatusBadRequest)
 		return
 	}
 
-	err = cc.CategoryService.CreateCategory(category)
+	err = cc.CommentService.CreateComment(comment)
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
-	utils.LoggerInfo.Println(utils.Info, http.StatusCreated, "-", "Category created"+utils.Reset)
-	_, err = w.Write([]byte("Category created"))
+	utils.LoggerInfo.Println(utils.Info, http.StatusCreated, "-", "Comment created"+utils.Reset)
+	_, err = w.Write([]byte("Comment created"))
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -64,7 +63,7 @@ func (cc *CategoryController) CreateCategory(w http.ResponseWriter, r *http.Requ
 	}
 }
 
-func (cc *CategoryController) UpdateCategory(w http.ResponseWriter, r *http.Request) {
+func (cc *CommentController) UpdateComment(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
@@ -78,7 +77,7 @@ func (cc *CategoryController) UpdateCategory(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	if !strings.HasPrefix(r.URL.Path, os.Getenv("DEFAULT_API_LINK")+"/category-update/") {
+	if !strings.HasPrefix(r.URL.Path, os.Getenv("DEFAULT_API_LINK")+"/comment-update/") {
 		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
@@ -91,7 +90,7 @@ func (cc *CategoryController) UpdateCategory(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	limit, err := cc.CategoryService.CountAllCategories()
+	limit, err := cc.CommentService.CountAllComments()
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -104,14 +103,14 @@ func (cc *CategoryController) UpdateCategory(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	category := new(entity.Category)
-	if err := json.NewDecoder(r.Body).Decode(category); err != nil {
+	comment := new(entity.Comment)
+	if err := json.NewDecoder(r.Body).Decode(comment); err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	err = cc.CategoryService.UpdateCategory(category, id)
+	err = cc.CommentService.UpdateComment(comment, id)
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -119,8 +118,8 @@ func (cc *CategoryController) UpdateCategory(w http.ResponseWriter, r *http.Requ
 	}
 
 	w.WriteHeader(http.StatusOK)
-	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Category updated"+utils.Reset)
-	_, err = w.Write([]byte("Category updated"))
+	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Comment updated"+utils.Reset)
+	_, err = w.Write([]byte("Comment updated"))
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -128,7 +127,7 @@ func (cc *CategoryController) UpdateCategory(w http.ResponseWriter, r *http.Requ
 	}
 }
 
-func (cc *CategoryController) DeleteCategory(w http.ResponseWriter, r *http.Request) {
+func (cc *CommentController) DeleteComment(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
@@ -142,7 +141,7 @@ func (cc *CategoryController) DeleteCategory(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	if !strings.HasPrefix(r.URL.Path, os.Getenv("DEFAULT_API_LINK")+"/category-delete/") {
+	if !strings.HasPrefix(r.URL.Path, os.Getenv("DEFAULT_API_LINK")+"/comment-delete/") {
 		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
@@ -155,7 +154,7 @@ func (cc *CategoryController) DeleteCategory(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	limit, err := cc.CategoryService.CountAllCategories()
+	limit, err := cc.CommentService.CountAllComments()
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -168,7 +167,7 @@ func (cc *CategoryController) DeleteCategory(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	err = cc.CategoryService.DeleteCategory(id)
+	err = cc.CommentService.DeleteComment(id)
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -176,8 +175,8 @@ func (cc *CategoryController) DeleteCategory(w http.ResponseWriter, r *http.Requ
 	}
 
 	w.WriteHeader(http.StatusOK)
-	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Category deleted"+utils.Reset)
-	_, err = w.Write([]byte("Category deleted"))
+	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Comment deleted"+utils.Reset)
+	_, err = w.Write([]byte("Comment deleted"))
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -185,7 +184,7 @@ func (cc *CategoryController) DeleteCategory(w http.ResponseWriter, r *http.Requ
 	}
 }
 
-func (cc *CategoryController) FindCategoryByID(w http.ResponseWriter, r *http.Request) {
+func (cc *CommentController) FindCommentByID(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
@@ -199,7 +198,7 @@ func (cc *CategoryController) FindCategoryByID(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	if !strings.HasPrefix(r.URL.Path, os.Getenv("DEFAULT_API_LINK")+"/category-get/") {
+	if !strings.HasPrefix(r.URL.Path, os.Getenv("DEFAULT_API_LINK")+"/comment-get/") {
 		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
@@ -212,24 +211,25 @@ func (cc *CategoryController) FindCategoryByID(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	category, err := cc.CategoryService.FindCategoryByID(id)
+	comment, err := cc.CommentService.FindCommentByID(id)
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	if category == nil {
+	if comment == nil {
 		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
 	}
 
+	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	w.WriteHeader(http.StatusOK)
-	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Category found"+utils.Reset)
+	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Comment found"+utils.Reset)
 	err = json.NewEncoder(w).Encode(map[string]interface{}{
-		"status":   http.StatusOK,
-		"category": category,
+		"comment": comment,
+		"status":  http.StatusOK,
 	})
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
@@ -238,7 +238,7 @@ func (cc *CategoryController) FindCategoryByID(w http.ResponseWriter, r *http.Re
 	}
 }
 
-func (cc *CategoryController) FindAllCategories(w http.ResponseWriter, r *http.Request) {
+func (cc *CommentController) FindCommentsByPostID(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
@@ -252,13 +252,20 @@ func (cc *CategoryController) FindAllCategories(w http.ResponseWriter, r *http.R
 		return
 	}
 
-	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/categories" {
+	if !strings.HasPrefix(r.URL.Path, os.Getenv("DEFAULT_API_LINK")+"/comments-post/") {
 		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
 	}
 
-	categories, err := cc.CategoryService.FindAllCategories()
+	postID, err := utils.ExtractIDFromRequest(r)
+	if err != nil {
+		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", err.Error(), utils.Reset)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	comments, err := cc.CommentService.FindCommentsByPostID(postID)
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -267,16 +274,16 @@ func (cc *CategoryController) FindAllCategories(w http.ResponseWriter, r *http.R
 
 	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	w.WriteHeader(http.StatusOK)
-	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Categories found"+utils.Reset)
-	if categories != nil {
+	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Comments found"+utils.Reset)
+	if comments != nil {
 		err = json.NewEncoder(w).Encode(map[string]interface{}{
-			"status":     http.StatusOK,
-			"categories": categories,
+			"comments": comments,
+			"status":   http.StatusOK,
 		})
 	} else {
 		err = json.NewEncoder(w).Encode(map[string]interface{}{
-			"status":     http.StatusOK,
-			"categories": "No categories found",
+			"message": "No comments found for this post",
+			"status":  http.StatusOK,
 		})
 	}
 	if err != nil {
@@ -286,7 +293,7 @@ func (cc *CategoryController) FindAllCategories(w http.ResponseWriter, r *http.R
 	}
 }
 
-func (cc *CategoryController) FindCategoryByName(w http.ResponseWriter, r *http.Request) {
+func (cc *CommentController) CountAllComments(w http.ResponseWriter, r *http.Request) {
 	err := utils.Environment()
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
@@ -300,60 +307,13 @@ func (cc *CategoryController) FindCategoryByName(w http.ResponseWriter, r *http.
 		return
 	}
 
-	if !strings.HasPrefix(r.URL.Path, os.Getenv("DEFAULT_API_LINK")+"/category-name/") {
+	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/comments-count" {
 		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
 		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
 		return
 	}
 
-	name := strings.TrimPrefix(r.URL.Path, os.Getenv("DEFAULT_API_LINK")+"/category-name/")
-	category, err := cc.CategoryService.FindCategoryByName(name)
-	if err != nil {
-		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	if category == nil {
-		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
-		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
-		return
-	}
-
-	w.WriteHeader(http.StatusOK)
-	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Category found"+utils.Reset)
-	err = json.NewEncoder(w).Encode(map[string]interface{}{
-		"status":   http.StatusOK,
-		"category": category,
-	})
-	if err != nil {
-		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-}
-
-func (cc *CategoryController) CountAllCategories(w http.ResponseWriter, r *http.Request) {
-	err := utils.Environment()
-	if err != nil {
-		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	if r.Method != http.MethodGet {
-		utils.LoggerError.Println(utils.Error, http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED")+utils.Reset)
-		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED"), http.StatusMethodNotAllowed)
-		return
-	}
-
-	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/categories-count" {
-		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
-		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
-		return
-	}
-
-	count, err := cc.CategoryService.CountAllCategories()
+	count, err := cc.CommentService.CountAllComments()
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -362,10 +322,10 @@ func (cc *CategoryController) CountAllCategories(w http.ResponseWriter, r *http.
 
 	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	w.WriteHeader(http.StatusOK)
-	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Categories count found"+utils.Reset)
+	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Comments count found"+utils.Reset)
 	err = json.NewEncoder(w).Encode(map[string]interface{}{
-		"status": http.StatusOK,
 		"count":  count,
+		"status": http.StatusOK,
 	})
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
@@ -374,20 +334,19 @@ func (cc *CategoryController) CountAllCategories(w http.ResponseWriter, r *http.
 	}
 }
 
-func (cc *CategoryController) CategoriesRoutes(routes *http.ServeMux) *http.ServeMux {
+func (cc *CommentController) CommentsRoutes(routes *http.ServeMux) *http.ServeMux {
 	err := utils.Environment()
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		return routes
 	}
 
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/category", cc.CreateCategory)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/category-update/", cc.UpdateCategory)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/category-delete/", cc.DeleteCategory)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/category-get/", cc.FindCategoryByID)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/categories", cc.FindAllCategories)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/category-name/", cc.FindCategoryByName)
-	routes.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/categories-count", cc.CountAllCategories)
+	http.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/comment", cc.CreateComment)
+	http.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/comment-update/", cc.UpdateComment)
+	http.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/comment-delete/", cc.DeleteComment)
+	http.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/comment-get/", cc.FindCommentByID)
+	http.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/comments-post/", cc.FindCommentsByPostID)
+	http.HandleFunc(os.Getenv("DEFAULT_API_LINK")+"/comments-count", cc.CountAllComments)
 
 	return routes
 }

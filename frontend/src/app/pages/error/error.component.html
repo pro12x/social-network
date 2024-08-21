@@ -1,15 +1,15 @@
 <div class="error">
     <div class="left">
-        <h1>Oops!</h1>
-        <p>Sorry, an error occurred.</p>
+        <h1>{{ title }}</h1>
+        <p>{{ message }}</p>
         <div class="example-button-container">
-            <button routerLink="" mat-mini-fab aria-label="Example icon button with a home icon">
+            <button aria-label="Example icon button with a home icon" mat-mini-fab routerLink="">
                 <mat-icon>home</mat-icon>
+                Back to Home
             </button>
         </div>
     </div>
     <div class="right">
-        <img src="error.png" width="350" height="350" alt="Error Image">
+        <img alt="Error Image" height="350" src="error.png" width="350">
     </div>
-
 </div>

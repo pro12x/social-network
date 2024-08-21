@@ -90,7 +90,7 @@ func (f *FollowRepoImpl) GetPendingFollowRequest(id uint) ([]*entity.Follow, err
 }
 
 func (f *FollowRepoImpl) GetFollowings(userID uint) ([]*entity.User, error) {
-	query := `SELECT u.id, u.email, u.password, u.firstname, u.lastname, u.date_of_birth, u.avatar, u.nickname, u.about_me, u.is_public, u.created_at, u.updated_at FROM users u JOIN follows f ON u.id = f.followee_id WHERE f.follower_id = ? AND f.status = 'accepted'`
+	query := `SELECT u.id, u.email, u.password, u.firstname, u.lastname, u.date_of_birth, u.avatar, u.nickname, u.about_me, u.is_public, u.created_at, u.updated_at FROM users u JOIN follows f ON u.id = f.followee_id WHERE f.follower_id = ?`
 	rows, err := f.db.GetDB().Query(query, userID)
 	if err != nil {
 		return nil, err
@@ -118,7 +118,7 @@ func (f *FollowRepoImpl) GetFollowings(userID uint) ([]*entity.User, error) {
 }
 
 func (f *FollowRepoImpl) GetFollowerCount(userID uint) (uint, error) {
-	query := `SELECT COUNT(*) FROM follows WHERE followee_id = ? AND status = 'accepted'`
+	query := `SELECT COUNT(*) FROM follows WHERE followee_id = ?`
 	row := f.db.GetDB().QueryRow(query, userID)
 
 	var count uint
@@ -128,6 +128,34 @@ func (f *FollowRepoImpl) GetFollowerCount(userID uint) (uint, error) {
 	}
 
 	return count, nil
+}
+
+func (f *FollowRepoImpl) GetFriends(userID uint) ([]*entity.User, error) {
+	query := `SELECT u.id, u.email, u.password, u.firstname, u.lastname, u.date_of_birth, u.avatar, u.nickname, u.about_me, u.is_public, u.created_at, u.updated_at FROM users u JOIN follows f ON u.id = f.followee_id WHERE f.follower_id = ? AND f.status = 'accepted'`
+	rows, err := f.db.GetDB().Query(query, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer func(rows *sql.Rows) {
+		err := rows.Close()
+		if err != nil {
+			utils.LoggerError.Println(utils.Error, err, utils.Reset)
+			return
+		}
+	}(rows)
+
+	users := make([]*entity.User, 0)
+	for rows.Next() {
+		user := new(entity.User)
+		err := rows.Scan(&user.ID, &user.Email, &user.Password, &user.Firstname, &user.Lastname, &user.DateOfBirth, &user.Avatar, &user.Nickname, &user.AboutMe, &user.IsPublic, &user.CreatedAt, &user.UpdatedAt)
+		if err != nil {
+			return nil, err
+		}
+		user.Password = ""
+		users = append(users, user)
+	}
+
+	return users, nil
 }
 
 func (f *FollowRepoImpl) GetFollowingCount(userID uint) (uint, error) {

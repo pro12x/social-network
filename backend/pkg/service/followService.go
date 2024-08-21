@@ -13,6 +13,7 @@ type FollowService interface {
 	GetPendingFollowRequest(userID uint) ([]*entity.Follow, error)
 	GetFollowers(userID uint) ([]*dto.UserDTO, error)
 	GetFollowings(userID uint) ([]*dto.UserDTO, error)
+	GetFriends(userID uint) ([]*dto.UserDTO, error)
 	GetFollowerCount(userID uint) (uint, error)
 	GetFollowingCount(userID uint) (uint, error)
 	CountAllFollows() (uint, error)
