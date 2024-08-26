@@ -1,5 +1,55 @@
-<h1>Home page {{ error }}</h1>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container justify-content-between">
+        <a class="navbar-brand" routerLink="/">Social Network</a>
+        <div *ngIf="activeUser.id" class="profile">
+            <div class="profile-name">
+                <span class="name text-primary">{{ activeUser.firstname }} {{activeUser.lastname}}</span>
+                <span class="status text-success">online</span>
+            </div>
+            <div class="dropdown">
+                <img src="{{ activeUser.avatar }}" alt="{{ activeUser.firstname }} {{activeUser.lastname}}" style="width:40px;" class="rounded-pill" data-bs-toggle="dropdown">
+                <ul class="dropdown-menu">
+                    <li><span class="dropdown-header">Account</span></li>
+                    <li><a class="dropdown-item" routerLink="/profile/{{userID}}">My Profile</a></li>
+                    <li><a class="dropdown-item" routerLink="/friends/{{userID}}">Friends</a></li>
+                    <li><a class="dropdown-item" routerLink="">Messages</a></li>
+                    <li><span class="dropdown-header">Other</span></li>
+                    <li><a class="dropdown-item text-danger" (click)="onLoggout()">Logout</a></li>
+                </ul>
+            </div>
 
+        </div>
+    </div>
+</nav>
 
-<span *ngIf="error">I can see an error</span>
-<span *ngIf="!error">I cannot see an error</span>
+<div class="container">
+    <h1>Welcome to the home page</h1>
+    <p class="d-flex" style="gap: 10px">
+        <button class="btn btn-success" routerLink="login">Login</button>
+        <button class="btn btn-primary" routerLink="register">Register</button>
+    </p>
+    <p class="d-flex" style="gap: 10px">
+        <a class="btn btn-secondary" routerLink="profile/">My profile</a>
+        <button type="submit" class="btn btn-danger" (click)="onLoggout()">Logout</button>
+    </p>
+
+    <div class="mt-5 list">
+        <div class="row">
+            <ng-container *ngFor="let user of users">
+                <div class="col-sm-3 mb-4">
+                    <div class="card">
+                        <div class="img">
+                            <img src="{{user.avatar}}" alt="{{user.firstname}} {{user.lastname}}" style="width: 100%">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{user.firstname}} {{user.lastname}}</h5>
+                            <p class="d-flex" style="gap: 7px">
+                                <a class="btn btn-warning" routerLink="/profile/{{user.id}}">Follow</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

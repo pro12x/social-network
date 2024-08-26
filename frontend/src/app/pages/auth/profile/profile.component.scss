@@ -1,0 +1,47 @@
+$lightBlue: #B8DAFF;
+$danger: #f44336;
+$primaryColor: #005cbb;
+$background: #DEF3FF;
+$side: #2388FF;
+
+.header {
+    border-radius: 0 0 24px 24px;
+    height: 400px;
+    background-image: url("https://cdn.pixabay.com/photo/2017/03/31/16/11/banner-2191712_1280.jpg");
+    background-size: cover;
+    background-position: center;
+    border: none;
+}
+
+.img {
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+}
+
+.picture-infos {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+
+    .info {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+    }
+}
+
+.buttons-info {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    gap: 10px;
+
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+}

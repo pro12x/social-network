@@ -1,0 +1,32 @@
+<div class="container form">
+    <h3 class="text-primary">{{title}}</h3>
+
+    <form [formGroup]="user">
+        <div class="row mt-2">
+            <div class="col-md-12 form-group">
+                <label for="email">Email <span class="text-danger">*</span></label>
+                <input type="email" formControlName="email" class="form-control" id="email" autocomplete="off" placeholder="Enter email">
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-12 form-group">
+                <label for="password">Password <span class="text-danger">*</span></label>
+                <input type="password" formControlName="password" class="form-control" id="password" autocomplete="off" placeholder="Enter password">
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 form-group">
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()">{{btnText}}</button>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 form-group d-flex justify-content-center">
+                Don't have an account?&nbsp;
+                <a type="submit" class="link" routerLink="/register">Sign up</a>
+            </div>
+        </div>
+    </form>
+</div>

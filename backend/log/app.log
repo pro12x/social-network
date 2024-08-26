@@ -1,130 +1,57 @@
-INFO: 2024/08/14 04:21:23 sqlite.go:52: [34mConnected to the database [0m
-INFO: 2024/08/14 04:21:23 sqlite.go:78: Database migrated
-INFO: 2024/08/14 04:21:23 server.go:99: [34mThe server is listening at http://localhost:1111[0m
-INFO: 2024/08/14 04:21:27 middleware.go:13: [34mRequest from [::1]:45396 to /swagger [0m
-INFO: 2024/08/15 09:29:12 log.go:84: [33m   ________                    __[0m
-INFO: 2024/08/15 09:29:12 log.go:85: [33m  / ____/ /___  ________  ____/ /[0m
-INFO: 2024/08/15 09:29:12 log.go:86: [33m / /   / / __ \/ ___/ _ \/ __  / [0m
-INFO: 2024/08/15 09:29:12 log.go:87: [33m/ /___/ / /_/ (__  )  __/ /_/ /  [0m
-INFO: 2024/08/15 09:29:12 log.go:88: [33m\____/_/\____/____/\___/\__,_/   [0m
-INFO: 2024/08/15 09:29:12 log.go:89: Database closed
-INFO: 2024/08/15 09:29:12 log.go:90: Server closed
-INFO: 2024/08/15 09:29:12 log.go:91: Logger closed
-INFO: 2024/08/15 09:29:12 log.go:92: Goodbye!
-INFO: 2024/08/15 09:29:17 log.go:75: [33m       __                 __   __                               [0m
-INFO: 2024/08/15 09:29:17 log.go:76: [33m      / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____[0m
-INFO: 2024/08/15 09:29:17 log.go:77: [33m __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/[0m
-INFO: 2024/08/15 09:29:17 log.go:78: [33m/ /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    [0m
-INFO: 2024/08/15 09:29:17 log.go:79: [33m\____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     [0m
-INFO: 2024/08/15 09:29:17 log.go:80: [33m                                       /____//____/             [0m
-INFO: 2024/08/15 09:29:17 server.go:24: Starting the server...
-INFO: 2024/08/15 09:29:17 sqlite.go:52: [34mConnected to the database [0m
-INFO: 2024/08/15 09:29:18 sqlite.go:78: Database migrated
-INFO: 2024/08/15 09:29:18 server.go:99: [34mThe server is listening at http://localhost:1111[0m
-INFO: 2024/08/15 09:29:24 middleware.go:13: [34mRequest from [::1]:34080 to /swagger [0m
-INFO: 2024/08/15 09:29:27 middleware.go:13: [34mRequest from [::1]:34080 to /swagger [0m
-INFO: 2024/08/15 09:29:29 middleware.go:13: [34mRequest from [::1]:34080 to /swagger [0m
-INFO: 2024/08/15 09:31:52 log.go:84: [33m   ________                    __[0m
-INFO: 2024/08/15 09:31:52 log.go:85: [33m  / ____/ /___  ________  ____/ /[0m
-INFO: 2024/08/15 09:31:52 log.go:86: [33m / /   / / __ \/ ___/ _ \/ __  / [0m
-INFO: 2024/08/15 09:31:52 log.go:87: [33m/ /___/ / /_/ (__  )  __/ /_/ /  [0m
-INFO: 2024/08/15 09:31:52 log.go:88: [33m\____/_/\____/____/\___/\__,_/   [0m
-INFO: 2024/08/15 09:31:52 log.go:89: Database closed
-INFO: 2024/08/15 09:31:52 log.go:90: Server closed
-INFO: 2024/08/15 09:31:52 log.go:91: Logger closed
-INFO: 2024/08/15 09:31:52 log.go:92: Goodbye!
-INFO: 2024/08/15 09:31:55 log.go:75: [33m       __                 __   __                               [0m
-INFO: 2024/08/15 09:31:55 log.go:76: [33m      / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____[0m
-INFO: 2024/08/15 09:31:55 log.go:77: [33m __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/[0m
-INFO: 2024/08/15 09:31:55 log.go:78: [33m/ /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    [0m
-INFO: 2024/08/15 09:31:55 log.go:79: [33m\____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     [0m
-INFO: 2024/08/15 09:31:55 log.go:80: [33m                                       /____//____/             [0m
-INFO: 2024/08/15 09:31:55 server.go:24: Starting the server...
-INFO: 2024/08/15 09:31:55 sqlite.go:52: [34mConnected to the database [0m
-INFO: 2024/08/15 09:31:56 sqlite.go:78: Database migrated
-INFO: 2024/08/15 09:31:56 server.go:99: [34mThe server is listening at http://localhost:1111[0m
-INFO: 2024/08/15 09:32:02 middleware.go:13: [34mRequest from [::1]:40212 to /swagger [0m
-INFO: 2024/08/15 09:32:03 middleware.go:13: [34mRequest from [::1]:40212 to /swagger [0m
-INFO: 2024/08/15 09:36:56 log.go:84: [33m   ________                    __[0m
-INFO: 2024/08/15 09:36:56 log.go:85: [33m  / ____/ /___  ________  ____/ /[0m
-INFO: 2024/08/15 09:36:56 log.go:86: [33m / /   / / __ \/ ___/ _ \/ __  / [0m
-INFO: 2024/08/15 09:36:56 log.go:87: [33m/ /___/ / /_/ (__  )  __/ /_/ /  [0m
-INFO: 2024/08/15 09:36:56 log.go:88: [33m\____/_/\____/____/\___/\__,_/   [0m
-INFO: 2024/08/15 09:36:56 log.go:89: Database closed
-INFO: 2024/08/15 09:36:56 log.go:90: Server closed
-INFO: 2024/08/15 09:36:56 log.go:91: Logger closed
-INFO: 2024/08/15 09:36:56 log.go:92: Goodbye!
-INFO: 2024/08/15 09:37:00 log.go:75: [33m       __                 __   __                               [0m
-INFO: 2024/08/15 09:37:00 log.go:76: [33m      / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____[0m
-INFO: 2024/08/15 09:37:00 log.go:77: [33m __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/[0m
-INFO: 2024/08/15 09:37:00 log.go:78: [33m/ /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    [0m
-INFO: 2024/08/15 09:37:00 log.go:79: [33m\____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     [0m
-INFO: 2024/08/15 09:37:00 log.go:80: [33m                                       /____//____/             [0m
-INFO: 2024/08/15 09:37:00 server.go:24: Starting the server...
-INFO: 2024/08/15 09:37:00 sqlite.go:52: [34mConnected to the database [0m
-INFO: 2024/08/15 09:37:00 sqlite.go:78: Database migrated
-INFO: 2024/08/15 09:37:00 server.go:99: [34mThe server is listening at http://localhost:1111[0m
-INFO: 2024/08/15 09:37:04 middleware.go:13: [34mRequest from [::1]:50784 to /swagger [0m
-INFO: 2024/08/15 09:37:06 middleware.go:13: [34mRequest from [::1]:50784 to /swagger [0m
-INFO: 2024/08/15 09:38:42 log.go:84: [33m   ________                    __[0m
-INFO: 2024/08/15 09:38:42 log.go:85: [33m  / ____/ /___  ________  ____/ /[0m
-INFO: 2024/08/15 09:38:42 log.go:86: [33m / /   / / __ \/ ___/ _ \/ __  / [0m
-INFO: 2024/08/15 09:38:42 log.go:87: [33m/ /___/ / /_/ (__  )  __/ /_/ /  [0m
-INFO: 2024/08/15 09:38:42 log.go:88: [33m\____/_/\____/____/\___/\__,_/   [0m
-INFO: 2024/08/15 09:38:42 log.go:89: Database closed
-INFO: 2024/08/15 09:38:42 log.go:90: Server closed
-INFO: 2024/08/15 09:38:42 log.go:91: Logger closed
-INFO: 2024/08/15 09:38:42 log.go:92: Goodbye!
-INFO: 2024/08/15 09:38:46 log.go:75: [33m       __                 __   __                               [0m
-INFO: 2024/08/15 09:38:46 log.go:76: [33m      / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____[0m
-INFO: 2024/08/15 09:38:46 log.go:77: [33m __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/[0m
-INFO: 2024/08/15 09:38:46 log.go:78: [33m/ /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    [0m
-INFO: 2024/08/15 09:38:46 log.go:79: [33m\____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     [0m
-INFO: 2024/08/15 09:38:46 log.go:80: [33m                                       /____//____/             [0m
-INFO: 2024/08/15 09:38:46 server.go:24: Starting the server...
-INFO: 2024/08/15 09:38:46 sqlite.go:52: [34mConnected to the database [0m
-INFO: 2024/08/15 09:38:47 sqlite.go:78: Database migrated
-INFO: 2024/08/15 09:38:47 server.go:99: [34mThe server is listening at http://localhost:1111[0m
-INFO: 2024/08/15 09:38:54 middleware.go:13: [34mRequest from [::1]:57670 to /swagger [0m
-INFO: 2024/08/15 09:38:56 middleware.go:13: [34mRequest from [::1]:57670 to /swagger [0m
-INFO: 2024/08/15 09:38:57 middleware.go:13: [34mRequest from [::1]:57670 to /swagger [0m
-INFO: 2024/08/15 09:38:58 middleware.go:13: [34mRequest from [::1]:57670 to /swagger [0m
-INFO: 2024/08/15 09:38:59 middleware.go:13: [34mRequest from [::1]:57670 to /swagger [0m
-INFO: 2024/08/15 09:39:00 middleware.go:13: [34mRequest from [::1]:57670 to /swagger [0m
-INFO: 2024/08/15 09:39:02 middleware.go:13: [34mRequest from [::1]:57670 to /swagger [0m
-INFO: 2024/08/15 09:39:03 middleware.go:13: [34mRequest from [::1]:57670 to /swagger [0m
-INFO: 2024/08/15 09:39:05 middleware.go:13: [34mRequest from [::1]:57670 to /swagger [0m
-INFO: 2024/08/15 09:39:05 middleware.go:13: [34mRequest from [::1]:57670 to /favicon.ico [0m
-INFO: 2024/08/15 10:06:31 log.go:84: [33m   ________                    __[0m
-INFO: 2024/08/15 10:06:31 log.go:85: [33m  / ____/ /___  ________  ____/ /[0m
-INFO: 2024/08/15 10:06:31 log.go:86: [33m / /   / / __ \/ ___/ _ \/ __  / [0m
-INFO: 2024/08/15 10:06:31 log.go:87: [33m/ /___/ / /_/ (__  )  __/ /_/ /  [0m
-INFO: 2024/08/15 10:06:31 log.go:88: [33m\____/_/\____/____/\___/\__,_/   [0m
-INFO: 2024/08/15 10:06:31 log.go:89: Database closed
-INFO: 2024/08/15 10:06:31 log.go:90: Server closed
-INFO: 2024/08/15 10:06:31 log.go:91: Logger closed
-INFO: 2024/08/15 10:06:31 log.go:92: Goodbye!
-INFO: 2024/08/15 10:06:34 log.go:75: [33m       __                 __   __                               [0m
-INFO: 2024/08/15 10:06:34 log.go:76: [33m      / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____[0m
-INFO: 2024/08/15 10:06:34 log.go:77: [33m __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/[0m
-INFO: 2024/08/15 10:06:34 log.go:78: [33m/ /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    [0m
-INFO: 2024/08/15 10:06:34 log.go:79: [33m\____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     [0m
-INFO: 2024/08/15 10:06:34 log.go:80: [33m                                       /____//____/             [0m
-INFO: 2024/08/15 10:06:34 server.go:24: Starting the server...
-INFO: 2024/08/15 10:06:34 sqlite.go:52: [34mConnected to the database [0m
-INFO: 2024/08/15 10:06:35 sqlite.go:78: Database migrated
-INFO: 2024/08/15 10:06:35 server.go:99: [34mThe server is listening at http://localhost:1111[0m
-INFO: 2024/08/15 10:06:48 middleware.go:13: [34mRequest from [::1]:52994 to /swagger [0m
-INFO: 2024/08/15 10:06:49 middleware.go:13: [34mRequest from [::1]:52994 to /favicon.ico [0m
-INFO: 2024/08/17 19:02:54 log.go:75: [33m       __                 __   __                               [0m
-INFO: 2024/08/17 19:02:54 log.go:76: [33m      / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____[0m
-INFO: 2024/08/17 19:02:54 log.go:77: [33m __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/[0m
-INFO: 2024/08/17 19:02:54 log.go:78: [33m/ /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    [0m
-INFO: 2024/08/17 19:02:54 log.go:79: [33m\____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     [0m
-INFO: 2024/08/17 19:02:54 log.go:80: [33m                                       /____//____/             [0m
-INFO: 2024/08/17 19:02:54 server.go:24: Starting the server...
-INFO: 2024/08/17 19:02:54 sqlite.go:52: [34mConnected to the database [0m
-INFO: 2024/08/17 19:02:54 sqlite.go:78: Database migrated
-INFO: 2024/08/17 19:02:54 server.go:99: [34mThe server is listening at http://localhost:1111[0m
-INFO: 2024/08/17 19:04:52 middleware.go:13: [34mRequest from [::1]:53502 to / [0m
-INFO: 2024/08/17 19:04:52 middleware.go:13: [34mRequest from [::1]:53502 to /favicon.ico [0m
+INFO: 2024/08/26 11:55:32 sqlite.go:52: [34mConnected to the database [0m
+INFO: 2024/08/26 11:55:33 sqlite.go:78: Database migrated
+INFO: 2024/08/26 11:55:33 server.go:99: [34mThe server is listening at http://localhost:1111[0m
+INFO: 2024/08/26 11:55:47 middleware.go:13: [34mRequest from [::1]:52384 to /swagger [0m
+INFO: 2024/08/26 12:32:59 middleware.go:13: [34mRequest from [::1]:39520 to /api/v1/social-network/login [0m
+INFO: 2024/08/26 12:33:00 userController.go:105: 200 - User logged in successfully
+INFO: 2024/08/26 12:33:00 middleware.go:13: [34mRequest from [::1]:39536 to /api/v1/social-network/users [0m
+INFO: 2024/08/26 12:33:00 userController.go:381: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/08/26 12:33:00 middleware.go:13: [34mRequest from [::1]:39520 to /api/v1/social-network/profile/3 [0m
+INFO: 2024/08/26 12:33:00 userController.go:211: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/08/26 12:33:00 middleware.go:13: [34mRequest from [::1]:39536 to /api/v1/social-network/is_online [0m
+INFO: 2024/08/26 12:33:00 userController.go:281: [34m 200 - User is online[0m
+INFO: 2024/08/26 12:34:29 middleware.go:13: [34mRequest from [::1]:39536 to /api/v1/social-network/profile/3 [0m
+INFO: 2024/08/26 12:34:29 userController.go:211: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/08/26 12:34:29 middleware.go:13: [34mRequest from [::1]:39552 to /api/v1/social-network/users [0m
+INFO: 2024/08/26 12:34:29 userController.go:381: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/08/26 12:34:29 middleware.go:13: [34mRequest from [::1]:39552 to /api/v1/social-network/is_online [0m
+INFO: 2024/08/26 12:34:29 userController.go:281: [34m 200 - User is online[0m
+INFO: 2024/08/26 14:39:22 middleware.go:13: [34mRequest from [::1]:51888 to /api/v1/social-network/profile/3 [0m
+INFO: 2024/08/26 14:39:22 middleware.go:13: [34mRequest from [::1]:51880 to /api/v1/social-network/is_online [0m
+INFO: 2024/08/26 14:39:22 userController.go:211: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/08/26 14:39:22 userController.go:281: [34m 200 - User is online[0m
+INFO: 2024/08/26 14:39:22 middleware.go:13: [34mRequest from [::1]:51890 to /api/v1/social-network/users [0m
+INFO: 2024/08/26 14:39:22 userController.go:381: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/08/26 14:39:48 log.go:84: [33m   ________                    __[0m
+INFO: 2024/08/26 14:39:48 log.go:85: [33m  / ____/ /___  ________  ____/ /[0m
+INFO: 2024/08/26 14:39:48 log.go:86: [33m / /   / / __ \/ ___/ _ \/ __  / [0m
+INFO: 2024/08/26 14:39:48 log.go:87: [33m/ /___/ / /_/ (__  )  __/ /_/ /  [0m
+INFO: 2024/08/26 14:39:48 log.go:88: [33m\____/_/\____/____/\___/\__,_/   [0m
+INFO: 2024/08/26 14:39:48 log.go:89: Database closed
+INFO: 2024/08/26 14:39:48 log.go:90: Server closed
+INFO: 2024/08/26 14:39:48 log.go:91: Logger closed
+INFO: 2024/08/26 14:39:48 log.go:92: Goodbye!
+INFO: 2024/08/26 14:39:51 log.go:75: [33m       __                 __   __                               [0m
+INFO: 2024/08/26 14:39:51 log.go:76: [33m      / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____[0m
+INFO: 2024/08/26 14:39:51 log.go:77: [33m __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/[0m
+INFO: 2024/08/26 14:39:51 log.go:78: [33m/ /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    [0m
+INFO: 2024/08/26 14:39:51 log.go:79: [33m\____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     [0m
+INFO: 2024/08/26 14:39:51 log.go:80: [33m                                       /____//____/             [0m
+INFO: 2024/08/26 14:39:51 server.go:24: Starting the server...
+INFO: 2024/08/26 14:39:51 sqlite.go:52: [34mConnected to the database [0m
+INFO: 2024/08/26 14:39:51 sqlite.go:78: Database migrated
+INFO: 2024/08/26 14:39:51 server.go:99: [34mThe server is listening at http://localhost:1111[0m
+INFO: 2024/08/26 14:39:56 middleware.go:13: [34mRequest from [::1]:45730 to /api/v1/social-network/profile/3 [0m
+INFO: 2024/08/26 14:39:56 userController.go:211: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/08/26 14:39:56 middleware.go:13: [34mRequest from [::1]:45728 to /api/v1/social-network/is_online [0m
+INFO: 2024/08/26 14:39:56 middleware.go:13: [34mRequest from [::1]:45730 to /api/v1/social-network/users [0m
+INFO: 2024/08/26 14:39:56 userController.go:381: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/08/26 14:39:56 userController.go:271: [33m 401 - session not found [0m
+INFO: 2024/08/26 14:40:14 middleware.go:13: [34mRequest from [::1]:45728 to /api/v1/social-network/login [0m
+INFO: 2024/08/26 14:40:15 userController.go:105: 200 - User logged in successfully
+INFO: 2024/08/26 14:40:15 middleware.go:13: [34mRequest from [::1]:45730 to /api/v1/social-network/profile/3 [0m
+INFO: 2024/08/26 14:40:15 userController.go:211: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/08/26 14:40:15 middleware.go:13: [34mRequest from [::1]:45728 to /api/v1/social-network/users [0m
+INFO: 2024/08/26 14:40:15 userController.go:381: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/08/26 14:40:15 middleware.go:13: [34mRequest from [::1]:45730 to /api/v1/social-network/is_online [0m
+INFO: 2024/08/26 14:40:15 userController.go:281: [34m 200 - User is online[0m

@@ -53,6 +53,7 @@ func (s *UserServiceImpl) Connection(email, password string) (*dto.UserDTO, erro
 	if err != nil {
 		return nil, errors.New("invalid credentials")
 	}
+	user.Password = ""
 
 	return mapper.UserToDTO(user), nil
 }
@@ -120,7 +121,7 @@ func (s *UserServiceImpl) GetFollowers(userID uint) ([]*dto.UserDTO, error) {
 }*/
 
 func (s *UserServiceImpl) CreateSession(user *dto.UserDTO) (string, error) {
-	return session.CreateSession(user.ID)
+	return session.CreateSession(*user)
 }
 
 func (s *UserServiceImpl) Logout(token string) error {

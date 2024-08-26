@@ -1,9 +1,12 @@
 package session
 
 import (
+	"backend/pkg/dto"
+	"backend/pkg/utils"
 	"errors"
-	"github.com/google/uuid"
+	"fmt"
 	"net/http"
+	"os"
 	"sync"
 	"time"
 )
@@ -38,13 +41,18 @@ func (s *StoreSessions) StoreSession(token string, userID uint) {
 	s.mu.Unlock()
 }
 
-func CreateSession(userID uint) (string, error) {
-	sessionToken := uuid.NewString()
+func CreateSession(user dto.UserDTO) (string, error) {
+	err := utils.Environment()
+	if err != nil {
+		return "", err
+	}
+
+	sessionToken := generateJWT(os.Getenv("SECRET_KEY"), user)
 	expiresAt := time.Now().Add(sessionDuration)
 
 	mutex.Lock()
 	sessionStore[sessionToken] = &Session{
-		UserID:    userID,
+		UserID:    user.ID,
 		ExpiresAt: expiresAt,
 	}
 	mutex.Unlock()
@@ -90,6 +98,7 @@ func (s *StoreSessions) GetUserID(token string) (uint, bool) {
 
 func (s *StoreSessions) ClearSession(token string) {
 	s.mu.Lock()
+	fmt.Println(s.session)
 	defer s.mu.Unlock()
 	delete(s.session, token)
 }
@@ -109,21 +118,4 @@ func GetSessionTokenFromRequest(r *http.Request) (string, error) {
 		return "", err
 	}
 	return cookie.Value, nil
-}
-
-func GetSessionCookie(r *http.Request) (string, error) {
-	cookie, err := r.Cookie(sessionName)
-	if err != nil {
-		return "", err
-	}
-	return cookie.Value, nil
-}
-
-func ClearSessionCookie(w http.ResponseWriter) {
-	http.SetCookie(w, &http.Cookie{
-		Name:    sessionName,
-		Value:   "",
-		Expires: time.Now().Add(-1 * time.Hour),
-		Path:    "/",
-	})
 }

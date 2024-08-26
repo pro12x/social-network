@@ -106,8 +106,8 @@ func (c *UserController) Login(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
 	// json.NewEncoder(w).Encode(userDTO)
 	err = json.NewEncoder(w).Encode(map[string]interface{}{
-		"token":  sessionToken,
 		"status": "success",
+		"token":  sessionToken,
 		"user":   userDTO,
 	})
 	if err != nil {
@@ -237,7 +237,7 @@ func (c *UserController) IsUserOnline(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.Method != http.MethodGet {
+	if r.Method != http.MethodPost {
 		utils.LoggerError.Println(utils.Error, http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED")+utils.Reset)
 		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED"), http.StatusMethodNotAllowed)
 		return
@@ -249,25 +249,41 @@ func (c *UserController) IsUserOnline(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := session.GetSessionTokenFromRequest(r)
+	var token struct {
+		Token string `json:"token"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&token); err != nil {
+		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", err.Error(), utils.Reset)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	/*token, err := session.GetSessionTokenFromRequest(r)
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusUnauthorized, "-", "Unauthorized"+utils.Reset)
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
-	}
+	}*/
 
-	isOnline, err := c.UserService.IsUserOnline(token)
+	isOnline, err := c.UserService.IsUserOnline(token.Token)
 	if err != nil {
 		utils.LoggerInfo.Println(utils.Warn, http.StatusUnauthorized, "-", err.Error(), utils.Reset)
-		http.Error(w, err.Error(), http.StatusUnauthorized)
+		err = json.NewEncoder(w).Encode(map[string]interface{}{
+			"status":    "offline",
+			"is_online": isOnline,
+			"message":   err.Error(),
+		})
 		return
 	}
 
-	response := map[string]bool{"is_online": isOnline}
 	w.WriteHeader(http.StatusOK)
 	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "User is online"+utils.Reset)
 	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
-	err = json.NewEncoder(w).Encode(response)
+	err = json.NewEncoder(w).Encode(map[string]interface{}{
+		"status":    "online",
+		"is_online": isOnline,
+	})
 	if err != nil {
 		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -276,15 +292,39 @@ func (c *UserController) IsUserOnline(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *UserController) Logout(w http.ResponseWriter, r *http.Request) {
-	token, err := session.GetSessionTokenFromRequest(r)
+	err := utils.Environment()
 	if err != nil {
-		utils.LoggerError.Println(utils.Error, http.StatusUnauthorized, "-", "Unauthorized"+utils.Reset)
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	err = c.UserService.Logout(token)
+	if r.Method != http.MethodPost {
+		utils.LoggerError.Println(utils.Error, http.StatusMethodNotAllowed, "-", os.Getenv("METHOD_NOT_ALLOWED")+utils.Reset)
+		http.Error(w, os.Getenv("METHOD_NOT_ALLOWED"), http.StatusMethodNotAllowed)
+		return
+	}
+
+	if r.URL.Path != os.Getenv("DEFAULT_API_LINK")+"/logout" {
+		utils.LoggerError.Println(utils.Error, http.StatusNotFound, "-", os.Getenv("NOT_FOUND")+utils.Reset)
+		http.Error(w, os.Getenv("NOT_FOUND"), http.StatusNotFound)
+		return
+	}
+
+	var token struct {
+		Token string `json:"token"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&token); err != nil {
+		utils.LoggerError.Println(utils.Error, http.StatusBadRequest, "-", err.Error(), utils.Reset)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	err = c.UserService.Logout(token.Token)
 	if err != nil {
+		utils.LoggerError.Println(utils.Error, http.StatusUnauthorized, "-", err.Error(), utils.Reset)
+		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
@@ -298,9 +338,14 @@ func (c *UserController) Logout(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	utils.LoggerInfo.Println(utils.Info, http.StatusOK, "-", "Logged out successfully"+utils.Reset)
-	_, err = w.Write([]byte("Logged out successfully"))
+	w.Header().Set(os.Getenv("CONTENT_TYPE"), os.Getenv("APPLICATION_JSON"))
+	err = json.NewEncoder(w).Encode(map[string]interface{}{
+		"status":  "success",
+		"message": "Logged out successfully",
+	})
 	if err != nil {
-		utils.LoggerError.Println(utils.Error, "Logged out failed"+utils.Reset)
+		utils.LoggerError.Println(utils.Error, http.StatusInternalServerError, "-", err.Error(), utils.Reset)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
@@ -338,12 +383,12 @@ func (c *UserController) Users(w http.ResponseWriter, r *http.Request) {
 	// err = json.NewEncoder(w).Encode(users)
 	if len(users) != 0 {
 		err = json.NewEncoder(w).Encode(map[string]interface{}{
-			"status": http.StatusOK,
+			"status": "success",
 			"users":  users,
 		})
 	} else {
 		err = json.NewEncoder(w).Encode(map[string]interface{}{
-			"status":  http.StatusNoContent,
+			"status":  "empty",
 			"message": "No users found",
 		})
 	}

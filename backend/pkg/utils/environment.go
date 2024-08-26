@@ -19,6 +19,10 @@ func Environment() error {
 	for lines.Scan() {
 		line := lines.Text()
 
+		if strings.HasPrefix(line, "#") || strings.TrimSpace(line) == "" {
+			continue
+		}
+
 		// Interpreting each line
 		parts := strings.SplitN(line, "=", 2)
 		if len(parts) == 2 {

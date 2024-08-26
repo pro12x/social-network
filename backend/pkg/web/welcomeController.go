@@ -13,12 +13,18 @@ type Data struct {
 	Email    string
 	Github   string
 	Linkedin string
-	Endpoint []Endpoint
+	Endpoint []Formats
+	Form     []Formats
 }
 
 type Endpoint struct {
-	Name string
-	Urls []string
+	Name    string
+	Formats []globale.Format
+}
+
+type Formats struct {
+	Name    string
+	Formats []globale.Format
 }
 
 func HomeController(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +49,14 @@ func HomeController(w http.ResponseWriter, r *http.Request) {
 				a {
 					text-decoration: none !important;
 				}
+				/*ul li {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+				.container {
+					margin: auto auto 50px auto !important;
+				}*/
 			</style>
 		</head>
 		<body>
@@ -63,7 +77,7 @@ func HomeController(w http.ResponseWriter, r *http.Request) {
 				</ul>
 			</nav>
 			
-			<div class="container mb-5">
+			<div class="container">
 				<h1 class="mt-4 p-2 bg-primary text-white rounded">About</h1>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item"><b>Author:</b>&nbsp;<a class="btn btn-link badge bg-secondary" href="https://www.google.com/search?q=%22franchis+janel+mokomba%22" target="_blanc">{{.Author}}</a></li>
@@ -85,8 +99,11 @@ func HomeController(w http.ResponseWriter, r *http.Request) {
                         <div id="{{.Name}}" class="collapse" data-bs-parent="#accordion">
                         	<div class="card-body">
 								<ul class="list-group list-group-flush">
-									{{range .Urls}}
-									<li class="list-group-item fw-bold list-group-item-info rounded">{{.}}</li>
+									{{range .Formats}}
+									<li class="list-group-item d-flex justify-content-between align-items-center">
+										<span class="fw-bold rounded p-2">{{.URL}}</span>
+										<span class='badge fw-bold {{if eq .Method "POST"}}bg-success{{else if eq .Method "GET"}}bg-primary{{else if eq .Method "PUT"}}bg-warning{{else if eq .Method "DELETE"}}bg-danger{{end}} text-white p-3'>{{.Method}}</span>
+									</li>
 									{{end}}
 								</ul>
                           	</div>
@@ -96,7 +113,7 @@ func HomeController(w http.ResponseWriter, r *http.Request) {
                 </div>
 			</div>
 
-			<div class="mt-2 p-2 text-white text-center">
+			<div class="mt-2 p-2 text-white text-center footer bg-dark navbar-dark">
 				<p>&copy; 2024 by Franchis Janel MOKOMBA. All Rights Reserved. Social Network is Powered by Zone01 Dakar</p>
 			</div>
 
@@ -110,7 +127,8 @@ func HomeController(w http.ResponseWriter, r *http.Request) {
 		Email:    "janelaffranchis@gmail.com",
 		Github:   "@pro12x",
 		Linkedin: "@franchisjanelmokomba",
-		Endpoint: convert(globale.Endpoints),
+		Endpoint: Convert(globale.Endpoint),
+		// Form:     Convert(globale.Endpoint),
 	}
 
 	t, err := template.New("webpage").Parse(page)
@@ -128,7 +146,7 @@ func HomeController(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func convert(endpoints map[string][]interface{}) []Endpoint {
+/*func convert(endpoints map[string][]interface{}) []Endpoint {
 	var endpointsList []Endpoint
 	for k, v := range endpoints {
 		var urls []string
@@ -136,6 +154,14 @@ func convert(endpoints map[string][]interface{}) []Endpoint {
 			urls = append(urls, u.(string))
 		}
 		endpointsList = append(endpointsList, Endpoint{Name: k, Urls: urls})
+	}
+	return endpointsList
+}*/
+
+func Convert(endpoints map[string][]globale.Format) []Formats {
+	var endpointsList []Formats
+	for k, v := range endpoints {
+		endpointsList = append(endpointsList, Formats{Name: k, Formats: v})
 	}
 	return endpointsList
 }
