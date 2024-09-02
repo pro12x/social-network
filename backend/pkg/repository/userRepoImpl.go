@@ -35,7 +35,7 @@ func (u *UserRepoImpl) FindByEmail(email string) (*entity.User, error) {
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			utils.LoggerInfo.Println(utils.Warn + "No user found" + utils.Reset)
-			return nil, errors.New("no user found") // No user found
+			return nil, nil // No user found
 		}
 		return nil, err // Some error occurred
 	}

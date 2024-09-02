@@ -62,11 +62,7 @@ export class RegisterComponent implements OnInit {
             this.utilsService.onSnackBar('Please fill in the form correctly', 'warning');
             return;
         } else {
-            this.authService.register(data).subscribe((response: any) => {
-                if (response.status !== 201) {
-                    this.utilsService.onSnackBar(response.message, 'error');
-                    return;
-                }
+            this.authService.register(data).subscribe(() => {
                 this.utilsService.onSnackBar('You are now registered', 'success');
                 this.router.navigateByUrl('/login').then();
             }, (error) => {
