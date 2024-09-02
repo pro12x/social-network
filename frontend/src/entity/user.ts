@@ -4,7 +4,7 @@ export class User {
     password!: string //
     firstname!: string //
     lastname!: string //
-    date_of_birth!: string //
+    date_of_birth!: Date //
     avatar!: string //
     nickname!: string //
     about_me!: string

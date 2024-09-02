@@ -1,57 +1,267 @@
-INFO: 2024/08/26 11:55:32 sqlite.go:52: [34mConnected to the database [0m
-INFO: 2024/08/26 11:55:33 sqlite.go:78: Database migrated
-INFO: 2024/08/26 11:55:33 server.go:99: [34mThe server is listening at http://localhost:1111[0m
-INFO: 2024/08/26 11:55:47 middleware.go:13: [34mRequest from [::1]:52384 to /swagger [0m
-INFO: 2024/08/26 12:32:59 middleware.go:13: [34mRequest from [::1]:39520 to /api/v1/social-network/login [0m
-INFO: 2024/08/26 12:33:00 userController.go:105: 200 - User logged in successfully
-INFO: 2024/08/26 12:33:00 middleware.go:13: [34mRequest from [::1]:39536 to /api/v1/social-network/users [0m
-INFO: 2024/08/26 12:33:00 userController.go:381: [34m 200 - Users retrieved successfully[0m
-INFO: 2024/08/26 12:33:00 middleware.go:13: [34mRequest from [::1]:39520 to /api/v1/social-network/profile/3 [0m
-INFO: 2024/08/26 12:33:00 userController.go:211: [34m 200 - User profile retrieved successfully[0m
-INFO: 2024/08/26 12:33:00 middleware.go:13: [34mRequest from [::1]:39536 to /api/v1/social-network/is_online [0m
-INFO: 2024/08/26 12:33:00 userController.go:281: [34m 200 - User is online[0m
-INFO: 2024/08/26 12:34:29 middleware.go:13: [34mRequest from [::1]:39536 to /api/v1/social-network/profile/3 [0m
-INFO: 2024/08/26 12:34:29 userController.go:211: [34m 200 - User profile retrieved successfully[0m
-INFO: 2024/08/26 12:34:29 middleware.go:13: [34mRequest from [::1]:39552 to /api/v1/social-network/users [0m
-INFO: 2024/08/26 12:34:29 userController.go:381: [34m 200 - Users retrieved successfully[0m
-INFO: 2024/08/26 12:34:29 middleware.go:13: [34mRequest from [::1]:39552 to /api/v1/social-network/is_online [0m
-INFO: 2024/08/26 12:34:29 userController.go:281: [34m 200 - User is online[0m
-INFO: 2024/08/26 14:39:22 middleware.go:13: [34mRequest from [::1]:51888 to /api/v1/social-network/profile/3 [0m
-INFO: 2024/08/26 14:39:22 middleware.go:13: [34mRequest from [::1]:51880 to /api/v1/social-network/is_online [0m
-INFO: 2024/08/26 14:39:22 userController.go:211: [34m 200 - User profile retrieved successfully[0m
-INFO: 2024/08/26 14:39:22 userController.go:281: [34m 200 - User is online[0m
-INFO: 2024/08/26 14:39:22 middleware.go:13: [34mRequest from [::1]:51890 to /api/v1/social-network/users [0m
-INFO: 2024/08/26 14:39:22 userController.go:381: [34m 200 - Users retrieved successfully[0m
-INFO: 2024/08/26 14:39:48 log.go:84: [33m   ________                    __[0m
-INFO: 2024/08/26 14:39:48 log.go:85: [33m  / ____/ /___  ________  ____/ /[0m
-INFO: 2024/08/26 14:39:48 log.go:86: [33m / /   / / __ \/ ___/ _ \/ __  / [0m
-INFO: 2024/08/26 14:39:48 log.go:87: [33m/ /___/ / /_/ (__  )  __/ /_/ /  [0m
-INFO: 2024/08/26 14:39:48 log.go:88: [33m\____/_/\____/____/\___/\__,_/   [0m
-INFO: 2024/08/26 14:39:48 log.go:89: Database closed
-INFO: 2024/08/26 14:39:48 log.go:90: Server closed
-INFO: 2024/08/26 14:39:48 log.go:91: Logger closed
-INFO: 2024/08/26 14:39:48 log.go:92: Goodbye!
-INFO: 2024/08/26 14:39:51 log.go:75: [33m       __                 __   __                               [0m
-INFO: 2024/08/26 14:39:51 log.go:76: [33m      / /___ _____  ___  / /  / /   ____  ____ _____ ____  _____[0m
-INFO: 2024/08/26 14:39:51 log.go:77: [33m __  / / __ `/ __ \/ _ \/ /  / /   / __ \/ __ `/ __ `/ _ \/ ___/[0m
-INFO: 2024/08/26 14:39:51 log.go:78: [33m/ /_/ / /_/ / / / /  __/ /  / /___/ /_/ / /_/ / /_/ /  __/ /    [0m
-INFO: 2024/08/26 14:39:51 log.go:79: [33m\____/\__,_/_/ /_/\___/_/  /_____/\____/\__, /\__, /\___/_/     [0m
-INFO: 2024/08/26 14:39:51 log.go:80: [33m                                       /____//____/             [0m
-INFO: 2024/08/26 14:39:51 server.go:24: Starting the server...
-INFO: 2024/08/26 14:39:51 sqlite.go:52: [34mConnected to the database [0m
-INFO: 2024/08/26 14:39:51 sqlite.go:78: Database migrated
-INFO: 2024/08/26 14:39:51 server.go:99: [34mThe server is listening at http://localhost:1111[0m
-INFO: 2024/08/26 14:39:56 middleware.go:13: [34mRequest from [::1]:45730 to /api/v1/social-network/profile/3 [0m
-INFO: 2024/08/26 14:39:56 userController.go:211: [34m 200 - User profile retrieved successfully[0m
-INFO: 2024/08/26 14:39:56 middleware.go:13: [34mRequest from [::1]:45728 to /api/v1/social-network/is_online [0m
-INFO: 2024/08/26 14:39:56 middleware.go:13: [34mRequest from [::1]:45730 to /api/v1/social-network/users [0m
-INFO: 2024/08/26 14:39:56 userController.go:381: [34m 200 - Users retrieved successfully[0m
-INFO: 2024/08/26 14:39:56 userController.go:271: [33m 401 - session not found [0m
-INFO: 2024/08/26 14:40:14 middleware.go:13: [34mRequest from [::1]:45728 to /api/v1/social-network/login [0m
-INFO: 2024/08/26 14:40:15 userController.go:105: 200 - User logged in successfully
-INFO: 2024/08/26 14:40:15 middleware.go:13: [34mRequest from [::1]:45730 to /api/v1/social-network/profile/3 [0m
-INFO: 2024/08/26 14:40:15 userController.go:211: [34m 200 - User profile retrieved successfully[0m
-INFO: 2024/08/26 14:40:15 middleware.go:13: [34mRequest from [::1]:45728 to /api/v1/social-network/users [0m
-INFO: 2024/08/26 14:40:15 userController.go:381: [34m 200 - Users retrieved successfully[0m
-INFO: 2024/08/26 14:40:15 middleware.go:13: [34mRequest from [::1]:45730 to /api/v1/social-network/is_online [0m
-INFO: 2024/08/26 14:40:15 userController.go:281: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:40:26 sqlite.go:52: [34mConnected to the database [0m
+INFO: 2024/09/02 00:40:27 sqlite.go:78: Database migrated
+INFO: 2024/09/02 00:40:27 server.go:99: [34mThe server is listening at http://localhost:1111[0m
+INFO: 2024/09/02 00:41:00 middleware.go:13: [34mRequest from [::1]:33576 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:41:00 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:41:00 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:41:00 userController.go:285: [33m 401 - session not found [0m
+INFO: 2024/09/02 00:41:00 middleware.go:13: [34mRequest from [::1]:33576 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:41:00 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:41:00 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:41:00 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:41:00 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:41:00 userController.go:285: [33m 401 - session not found [0m
+INFO: 2024/09/02 00:41:12 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/login [0m
+INFO: 2024/09/02 00:41:12 userController.go:111: 200 - User logged in successfully
+INFO: 2024/09/02 00:41:12 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:41:12 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:41:12 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:41:12 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:41:12 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:41:12 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:42:37 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:42:37 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:42:37 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:42:37 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:42:37 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:42:37 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:42:37 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:42:37 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:42:37 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:42:37 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:42:45 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:42:45 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:42:45 middleware.go:13: [34mRequest from [::1]:33576 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:42:45 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:42:45 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:42:45 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:42:45 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:42:45 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:42:45 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:42:45 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:43:07 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:43:07 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:43:07 middleware.go:13: [34mRequest from [::1]:46880 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:43:07 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:43:07 middleware.go:13: [34mRequest from [::1]:46880 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:43:07 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:43:07 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:43:07 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:43:07 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:43:07 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:43:16 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:43:16 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:43:16 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:43:16 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:43:16 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:43:16 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:43:16 middleware.go:13: [34mRequest from [::1]:46880 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:43:16 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:43:16 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:43:16 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:44:26 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:44:26 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:44:26 middleware.go:13: [34mRequest from [::1]:46880 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:44:26 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:44:26 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:44:26 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:44:26 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:44:26 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:44:26 middleware.go:13: [34mRequest from [::1]:46880 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:44:26 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:44:41 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:44:41 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:44:41 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:44:41 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:44:41 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:44:41 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:44:41 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:44:41 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:44:41 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:44:41 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:47:13 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:47:13 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:47:13 middleware.go:13: [34mRequest from [::1]:46880 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:47:13 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:47:13 middleware.go:13: [34mRequest from [::1]:46880 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:47:13 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:47:13 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:47:13 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:47:13 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:47:13 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:47:58 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:47:58 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:47:58 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:47:58 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:47:58 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:47:58 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:47:58 middleware.go:13: [34mRequest from [::1]:46880 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:47:58 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:47:58 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:47:58 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:48:03 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/follow [0m
+INFO: 2024/09/02 00:48:03 followController.go:61: [34m 200 - Follow request sent[0m
+INFO: 2024/09/02 00:48:42 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:48:42 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:48:42 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/follower-count/5 [0m
+INFO: 2024/09/02 00:48:42 userController.go:614: [34m 200 - Follower count get[0m
+INFO: 2024/09/02 00:48:42 middleware.go:13: [34mRequest from [::1]:46880 to /api/v1/social-network/friends/5 [0m
+INFO: 2024/09/02 00:48:42 userController.go:560: [34m 200 - Friends get[0m
+INFO: 2024/09/02 00:48:42 middleware.go:13: [34mRequest from [::1]:33590 to /api/v1/social-network/following-count/5 [0m
+INFO: 2024/09/02 00:48:42 userController.go:661: [34m 200 - Following count get[0m
+INFO: 2024/09/02 00:48:42 middleware.go:13: [34mRequest from [::1]:49502 to /api/v1/social-network/followers/5 [0m
+INFO: 2024/09/02 00:48:42 middleware.go:13: [34mRequest from [::1]:49506 to /api/v1/social-network/followings/5 [0m
+INFO: 2024/09/02 00:48:42 userController.go:452: [34m 200 - Followers get[0m
+INFO: 2024/09/02 00:48:42 userController.go:506: [34m 200 - Followings get[0m
+INFO: 2024/09/02 00:48:42 middleware.go:13: [34mRequest from [::1]:49512 to /api/v1/social-network/friend-count/5 [0m
+INFO: 2024/09/02 00:48:42 userController.go:708: [34m 200 - Friend count get[0m
+INFO: 2024/09/02 00:48:42 middleware.go:13: [34mRequest from [::1]:33572 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:48:42 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:54:56 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:54:56 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:54:56 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:54:56 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:54:57 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:54:57 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:54:57 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:54:57 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:54:57 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/followers/5 [0m
+INFO: 2024/09/02 00:54:57 middleware.go:13: [34mRequest from [::1]:57404 to /api/v1/social-network/followings/5 [0m
+INFO: 2024/09/02 00:54:57 middleware.go:13: [34mRequest from [::1]:57418 to /api/v1/social-network/friends/5 [0m
+INFO: 2024/09/02 00:54:57 userController.go:452: [34m 200 - Followers get[0m
+INFO: 2024/09/02 00:54:57 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/follower-count/5 [0m
+INFO: 2024/09/02 00:54:57 userController.go:506: [34m 200 - Followings get[0m
+INFO: 2024/09/02 00:54:57 userController.go:560: [34m 200 - Friends get[0m
+INFO: 2024/09/02 00:54:57 userController.go:614: [34m 200 - Follower count get[0m
+INFO: 2024/09/02 00:54:57 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/following-count/5 [0m
+INFO: 2024/09/02 00:54:57 userController.go:661: [34m 200 - Following count get[0m
+INFO: 2024/09/02 00:54:57 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/friend-count/5 [0m
+INFO: 2024/09/02 00:54:57 userController.go:708: [34m 200 - Friend count get[0m
+INFO: 2024/09/02 00:55:13 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:55:13 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:55:13 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:55:13 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:55:13 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/followers/5 [0m
+INFO: 2024/09/02 00:55:13 userController.go:452: [34m 200 - Followers get[0m
+INFO: 2024/09/02 00:55:13 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:55:13 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:55:13 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/followings/5 [0m
+INFO: 2024/09/02 00:55:13 userController.go:506: [34m 200 - Followings get[0m
+INFO: 2024/09/02 00:55:13 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/friends/5 [0m
+INFO: 2024/09/02 00:55:13 userController.go:560: [34m 200 - Friends get[0m
+INFO: 2024/09/02 00:55:13 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/follower-count/5 [0m
+INFO: 2024/09/02 00:55:13 userController.go:614: [34m 200 - Follower count get[0m
+INFO: 2024/09/02 00:55:13 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/following-count/5 [0m
+INFO: 2024/09/02 00:55:13 userController.go:661: [34m 200 - Following count get[0m
+INFO: 2024/09/02 00:55:13 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/friend-count/5 [0m
+INFO: 2024/09/02 00:55:13 userController.go:708: [34m 200 - Friend count get[0m
+INFO: 2024/09/02 00:55:13 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:55:13 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:55:33 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:55:33 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:55:33 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:55:33 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:55:33 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/followers/5 [0m
+INFO: 2024/09/02 00:55:33 userController.go:452: [34m 200 - Followers get[0m
+INFO: 2024/09/02 00:55:33 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:55:33 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:55:33 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/followings/5 [0m
+INFO: 2024/09/02 00:55:33 userController.go:506: [34m 200 - Followings get[0m
+INFO: 2024/09/02 00:55:33 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/friends/5 [0m
+INFO: 2024/09/02 00:55:33 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/following-count/5 [0m
+INFO: 2024/09/02 00:55:33 userController.go:661: [34m 200 - Following count get[0m
+INFO: 2024/09/02 00:55:33 userController.go:560: [34m 200 - Friends get[0m
+INFO: 2024/09/02 00:55:33 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/follower-count/5 [0m
+INFO: 2024/09/02 00:55:33 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/friend-count/5 [0m
+INFO: 2024/09/02 00:55:33 userController.go:614: [34m 200 - Follower count get[0m
+INFO: 2024/09/02 00:55:33 userController.go:708: [34m 200 - Friend count get[0m
+INFO: 2024/09/02 00:55:33 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:55:33 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:57:49 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:57:49 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:57:49 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:57:49 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:57:49 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:57:49 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:57:49 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/followers/5 [0m
+INFO: 2024/09/02 00:57:49 userController.go:452: [34m 200 - Followers get[0m
+INFO: 2024/09/02 00:57:49 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/followings/5 [0m
+INFO: 2024/09/02 00:57:49 userController.go:506: [34m 200 - Followings get[0m
+INFO: 2024/09/02 00:57:49 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/follower-count/5 [0m
+INFO: 2024/09/02 00:57:49 userController.go:614: [34m 200 - Follower count get[0m
+INFO: 2024/09/02 00:57:49 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/friends/5 [0m
+INFO: 2024/09/02 00:57:49 userController.go:560: [34m 200 - Friends get[0m
+INFO: 2024/09/02 00:57:49 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/following-count/5 [0m
+INFO: 2024/09/02 00:57:49 userController.go:661: [34m 200 - Following count get[0m
+INFO: 2024/09/02 00:57:49 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/friend-count/5 [0m
+INFO: 2024/09/02 00:57:49 userController.go:708: [34m 200 - Friend count get[0m
+INFO: 2024/09/02 00:57:49 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:57:49 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:57:52 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:57:52 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:57:52 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:57:52 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:57:52 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:57:52 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:57:52 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 00:57:52 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 00:57:52 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 00:57:52 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 00:57:52 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 00:57:52 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 00:57:52 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 00:57:52 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 00:58:12 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:58:12 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:58:12 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:58:12 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:58:12 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:58:12 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:58:12 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:58:12 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:58:12 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:58:12 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:58:12 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 00:58:12 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 00:58:12 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 00:58:12 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 00:58:12 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 00:58:12 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 00:58:12 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 00:58:12 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 00:59:21 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:59:21 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:59:21 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:59:21 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:59:21 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 00:59:21 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 00:59:21 middleware.go:13: [34mRequest from [::1]:57432 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 00:59:21 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 00:59:21 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 00:59:21 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 00:59:22 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 00:59:22 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 00:59:22 middleware.go:13: [34mRequest from [::1]:57388 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 00:59:22 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 00:59:22 middleware.go:13: [34mRequest from [::1]:57378 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 00:59:22 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 00:59:22 middleware.go:13: [34mRequest from [::1]:57372 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 00:59:22 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 09:38:35 middleware.go:13: [34mRequest from [::1]:40118 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 09:38:35 middleware.go:13: [34mRequest from [::1]:40130 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 09:38:35 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 09:38:35 middleware.go:13: [34mRequest from [::1]:40130 to /api/v1/social-network/profile/5 [0m
+INFO: 2024/09/02 09:38:35 middleware.go:13: [34mRequest from [::1]:40142 to /api/v1/social-network/is_online [0m
+INFO: 2024/09/02 09:38:35 userController.go:232: [34m 200 - User profile retrieved successfully[0m
+INFO: 2024/09/02 09:38:35 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 09:38:35 middleware.go:13: [34mRequest from [::1]:40156 to /api/v1/social-network/users [0m
+INFO: 2024/09/02 09:38:35 userController.go:395: [34m 200 - Users retrieved successfully[0m
+INFO: 2024/09/02 09:38:35 userController.go:295: [34m 200 - User is online[0m
+INFO: 2024/09/02 09:38:35 middleware.go:13: [34mRequest from [::1]:40142 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 09:38:35 middleware.go:13: [34mRequest from [::1]:40130 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 09:38:35 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 09:38:35 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 09:38:35 middleware.go:13: [34mRequest from [::1]:40142 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 09:38:35 followController.go:401: [34m 200 - Are following get[0m
+INFO: 2024/09/02 09:38:35 middleware.go:13: [34mRequest from [::1]:40156 to /api/v1/social-network/are-following [0m
+INFO: 2024/09/02 09:38:35 followController.go:401: [34m 200 - Are following get[0m

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../../service/auth.service";
 import {Router, RouterLink} from "@angular/router";
+import {UtilsService} from "../../../service/utils.service";
 
 @Component({
     selector: 'app-register',
@@ -13,7 +14,7 @@ import {Router, RouterLink} from "@angular/router";
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss'
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
     title: string = 'Register';
     btnText: string = 'Register';
     age!: number
@@ -34,10 +35,12 @@ export class RegisterComponent implements OnInit{
     constructor(
         private fb: FormBuilder,
         private authService: AuthService,
+        private utilsService: UtilsService,
         private router: Router
-    ) {}
+    ) {
+    }
 
-    onSubmit() {
+    onRegister() {
         const data = {
             ...this.user.value,
             avatar: 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_960_720.png'
@@ -46,39 +49,42 @@ export class RegisterComponent implements OnInit{
         this.age = this.checkAge(data.date_of_birth)
 
         if (this.age < 12 || this.age > 120) {
-            alert('You must be between 12 and 120 years old to register')
+            this.utilsService.onSnackBar('You must be between 12 and 120 years old to register', 'warning');
             return
         }
 
         if (data.password !== data.password_confirmation) {
-            alert('Password and password confirmation do not match');
+            this.utilsService.onSnackBar('Password and password confirmation do not match', 'warning');
             return;
         }
 
         if (this.user.invalid) {
-            alert('Please fill all the required fields');
+            this.utilsService.onSnackBar('Please fill in the form correctly', 'warning');
             return;
         } else {
-            this.authService.register(data).subscribe(() => {
-                console.log("User registered")
+            this.authService.register(data).subscribe((response: any) => {
+                if (response.status !== 201) {
+                    this.utilsService.onSnackBar(response.message, 'error');
+                    return;
+                }
+                this.utilsService.onSnackBar('You are now registered', 'success');
                 this.router.navigateByUrl('/login').then();
             }, (error) => {
-                console.log(error)
+                this.utilsService.onSnackBar(error.error.message, 'error');
             })
         }
     }
 
-    checkAge(data: Date) : number {
+    checkAge(data: Date): number {
         return Math.floor(Math.abs(Date.now() - new Date(data).getTime()) / (1000 * 3600 * 24 * 365))
     }
 
     ngOnInit(): void {
+        this.utilsService.setTitle(this.title);
         if (this.authService.getToken()) {
             this.router.navigate(['/home']).then();
-            console.log('You are already logged in');
+            this.utilsService.onSnackBar('You are already logged in', 'info');
             return;
         }
-
-        console.log('Register component is running');
     }
 }

@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {RegisterComponent} from "./pages/auth/register/register.component";
+import {UtilsService} from "./service/utils.service";
+import {Title} from "@angular/platform-browser";
+import {ToolbarComponent} from "./pages/nav/toolbar/toolbar.component";
+import {AuthService} from "./service/auth.service";
 
 @Component({
     selector: 'app-root',
@@ -8,18 +12,22 @@ import {RegisterComponent} from "./pages/auth/register/register.component";
     imports: [
         RouterOutlet,
         RegisterComponent,
+        ToolbarComponent,
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-    title = 'frontend';
     error!: boolean
 
-    constructor() {
-    }
+    constructor(
+        private utilsService: UtilsService,
+        private title: Title,
+    ) {}
 
     ngOnInit() {
-        console.log('Your app is running');
+        this.utilsService.getTitle().subscribe((title: string) => {
+            this.title.setTitle(title)
+        })
     }
 }

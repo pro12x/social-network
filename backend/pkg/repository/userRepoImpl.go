@@ -35,7 +35,7 @@ func (u *UserRepoImpl) FindByEmail(email string) (*entity.User, error) {
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			utils.LoggerInfo.Println(utils.Warn + "No user found" + utils.Reset)
-			return nil, nil // No user found
+			return nil, errors.New("no user found") // No user found
 		}
 		return nil, err // Some error occurred
 	}
@@ -68,18 +68,6 @@ func (u *UserRepoImpl) CountUsers() (uint, error) {
 	return count, nil
 }
 
-//func (u *UserRepoImpl) Follow(followerID, followingID uint) error {
-//	_, err := u.db.GetDB().Exec(`INSERT INTO follows (follower_id, following_id, created_at) VALUES (?, ?, ?)`, followerID, followingID, time.Now())
-//
-//	return err
-//}
-//
-//func (u *UserRepoImpl) Unfollow(followerID, followingID uint) error {
-//	_, err := u.db.GetDB().Exec(`DELETE FROM follows WHERE follower_id = ? AND following_id = ?`, followerID, followingID)
-//
-//	return err
-//}
-
 func (u *UserRepoImpl) FindAllUsers() ([]*entity.User, error) {
 	rows, err := u.db.GetDB().Query("SELECT * FROM users")
 	if err != nil {
@@ -106,31 +94,128 @@ func (u *UserRepoImpl) FindAllUsers() ([]*entity.User, error) {
 	return users, nil
 }
 
-/*func (u *UserRepoImpl) GetFollowers(userID uint) ([]*entity.User, error) {
-	rows, err := u.db.GetDB().Query(`SELECT u.* FROM users u JOIN follows f ON u.id = f.follower_id WHERE f.following_id = ?`, userID)
+func (u *UserRepoImpl) GetFollowers(userID uint) ([]*entity.User, error) {
+	query := `SELECT u.id, u.email, u.password, u.firstname, u.lastname, u.date_of_birth, u.avatar, u.nickname, u.about_me, u.is_public, u.created_at, u.updated_at FROM users u JOIN follows f ON u.id = f.follower_id WHERE f.followee_id = ? AND f.status = 'pending' order by f.created_at desc`
+	rows, err := u.db.GetDB().Query(query, userID)
 	if err != nil {
 		return nil, err
 	}
 	defer func(rows *sql.Rows) {
 		err := rows.Close()
 		if err != nil {
-			log.Println("Error closing rows")
+			utils.LoggerError.Println(err, utils.Reset)
 			return
 		}
 	}(rows)
 
-	var users []*entity.User
+	users := make([]*entity.User, 0)
 	for rows.Next() {
 		user := new(entity.User)
-		err := rows.Scan(&user.ID, &user.Email, &user.Password, &user.Firstname, &user.Lastname, &user.Avatar, &user.Nickname, &user.AboutMe, &user.IsPublic, &user.CreatedAt, &user.UpdatedAt)
+		err := rows.Scan(&user.ID, &user.Email, &user.Password, &user.Firstname, &user.Lastname, &user.DateOfBirth, &user.Avatar, &user.Nickname, &user.AboutMe, &user.IsPublic, &user.CreatedAt, &user.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
+		user.Password = ""
 		users = append(users, user)
 	}
 
 	return users, nil
-}*/
+}
+
+func (u *UserRepoImpl) GetFollowings(userID uint) ([]*entity.User, error) {
+	query := `SELECT u.id, u.email, u.password, u.firstname, u.lastname, u.date_of_birth, u.avatar, u.nickname, u.about_me, u.is_public, u.created_at, u.updated_at FROM users u JOIN follows f ON u.id = f.followee_id WHERE f.follower_id = ? AND f.status = 'pending' order by f.created_at desc`
+	rows, err := u.db.GetDB().Query(query, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer func(rows *sql.Rows) {
+		err := rows.Close()
+		if err != nil {
+			utils.LoggerError.Println(err, utils.Reset)
+			return
+		}
+	}(rows)
+
+	users := make([]*entity.User, 0)
+	for rows.Next() {
+		user := new(entity.User)
+		err := rows.Scan(&user.ID, &user.Email, &user.Password, &user.Firstname, &user.Lastname, &user.DateOfBirth, &user.Avatar, &user.Nickname, &user.AboutMe, &user.IsPublic, &user.CreatedAt, &user.UpdatedAt)
+		if err != nil {
+			return nil, err
+		}
+		user.Password = ""
+		users = append(users, user)
+	}
+
+	return users, nil
+}
+
+func (u *UserRepoImpl) GetFollowerCount(userID uint) (uint, error) {
+	query := `SELECT COUNT(*) FROM follows WHERE followee_id = ?`
+	row := u.db.GetDB().QueryRow(query, userID)
+
+	var count uint
+	err := row.Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
+func (u *UserRepoImpl) GetFriends(userID uint) ([]*entity.User, error) {
+	query := `SELECT u.id, u.email, u.password, u.firstname, u.lastname, u.date_of_birth, u.avatar, u.nickname, u.about_me, u.is_public, u.created_at, u.updated_at FROM users u JOIN follows f ON u.id = f.followee_id WHERE f.follower_id = ? AND f.status = 'accepted'`
+	rows, err := u.db.GetDB().Query(query, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer func(rows *sql.Rows) {
+		err := rows.Close()
+		if err != nil {
+			utils.LoggerError.Println(utils.Error, err, utils.Reset)
+			return
+		}
+	}(rows)
+
+	users := make([]*entity.User, 0)
+	for rows.Next() {
+		user := new(entity.User)
+		err := rows.Scan(&user.ID, &user.Email, &user.Password, &user.Firstname, &user.Lastname, &user.DateOfBirth, &user.Avatar, &user.Nickname, &user.AboutMe, &user.IsPublic, &user.CreatedAt, &user.UpdatedAt)
+		if err != nil {
+			return nil, err
+		}
+		user.Password = ""
+		users = append(users, user)
+	}
+
+	return users, nil
+}
+
+func (u *UserRepoImpl) GetFriendsCount(userID uint) (uint, error) {
+	query := `SELECT COUNT(*) FROM follows WHERE follower_id = ? AND status = 'accepted'`
+	row := u.db.GetDB().QueryRow(query, userID)
+
+	var count uint
+	err := row.Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
+func (u *UserRepoImpl) GetFollowingCount(userID uint) (uint, error) {
+	query := `SELECT COUNT(*) FROM follows WHERE follower_id = ?`
+	row := u.db.GetDB().QueryRow(query, userID)
+
+	var count uint
+	err := row.Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
 
 func (u *UserRepoImpl) StoreSession(token string, userID uint) {
 	u.sessionStore.StoreSession(token, userID)

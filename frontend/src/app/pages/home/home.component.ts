@@ -3,8 +3,10 @@ import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../service/auth.service";
 import {User} from "../../../entity/user";
 import {NgForOf, NgIf} from "@angular/common";
-import {FormBuilder} from "@angular/forms";
 import {MatIcon} from "@angular/material/icon";
+import {FollowService} from "../../service/follow.service";
+import {UtilsService} from "../../service/utils.service";
+import {ToolbarComponent} from "../nav/toolbar/toolbar.component";
 
 @Component({
     selector: 'app-home',
@@ -18,50 +20,20 @@ import {MatIcon} from "@angular/material/icon";
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss'
 })
+
 export class HomeComponent implements OnInit {
     title: string = 'Home'
     users!: User[]
-    token!: string
-    activeUser: any = {}
     userID: number | null = this.authService.getUserID()
+    isFollowing: boolean = false
 
     constructor(
         private authService: AuthService,
+        private followService: FollowService,
+        private toolbar: ToolbarComponent,
         private router: Router,
-        private fb: FormBuilder
+        private utilsService: UtilsService
     ) {}
-
-    onLoggout() {
-        const data = {
-            token: this.token
-        }
-        this.authService.logout(data).subscribe((response) => {
-            if (!response.status || response.status !== 'success') {
-                console.log("Error logging out")
-                return
-            }
-
-            console.log(response)
-            localStorage.removeItem('token')
-            localStorage.removeItem('userID')
-            console.log('Logged out')
-            this.router.navigate(['/login']).then()
-        })
-    }
-
-    isOnline() {
-        this.authService.isLoggedIn().subscribe(response => {
-            if (response) {
-                console.log('You are online')
-                return
-            } else {
-                console.log('You are offline')
-                localStorage.removeItem('token')
-                localStorage.removeItem('userID')
-                this.router.navigate(['/login']).then()
-            }
-        })
-    }
 
     usersList() {
         this.authService.getAll().subscribe((response: any) => {
@@ -70,29 +42,52 @@ export class HomeComponent implements OnInit {
                 return
             } else {
                 this.users = response.users.filter((user: User) => user.id !== this.authService.getUserID())
+                this.users.forEach((user: User) => {
+                    this.existFollow(user.id)
+                })
             }
         })
     }
 
-    getUser(id: number): any {
-        return this.authService.getUser(id).subscribe((response: any) => {
-            this.activeUser = response.user
+    existFollow(id: number) {
+        const data = {
+            follower_id: this.authService.getUserID(),
+            followee_id: id
+        }
+
+        this.followService.checkFollow(data, "following").subscribe((response) => {
+            if (response.status !== 200) {
+                this.utilsService.onSnackBar(response.message, 'error')
+                return
+            }
+            this.isFollowing = response.is_following
+        })
+    }
+
+    onFollow(id: number) {
+        const data = {
+            follower_id: this.authService.getUserID(),
+            followee_id: id
+        }
+
+        this.followService.follow(data, "follow").subscribe((response) => {
+            if (response.status !== 200) {
+                this.utilsService.onSnackBar(response.message, 'error')
+                return
+            }
+            this.usersList()
         })
     }
 
     ngOnInit(): void {
+        this.utilsService.setTitle(this.title)
         if (!this.authService.getToken()) {
             this.router.navigate(['/login']).then()
-            console.log('You are not logged in')
             return
         }
+        this.toolbar.isOnline()
 
-        this.isOnline()
-
-        this.getUser(this.authService.getUserID()!)
-
-        this.token = this.authService.getToken()!
+        this.toolbar.getUser(this.userID!)
         this.usersList()
-        console.log('Home component is running')
     }
 }

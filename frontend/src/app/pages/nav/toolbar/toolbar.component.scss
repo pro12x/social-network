@@ -1,3 +1,4 @@
+/* You can add global styles to this file, and also import other style files */
 $lightBlue: #B8DAFF;
 $danger: #F44336;
 $primaryColor: #005CBB;
@@ -22,41 +23,33 @@ $borderPrimary: #9EC5FE;
 $dark: rgb(33,37,41);
 $white: #fefefe;
 
-.list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 7px;
+nav.navbar {
+    z-index: 1;
 }
 
-.card {
-    background: $side;
-}
-
-.card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-.profile, .profile-name {
+.profile {
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 5px;
 
     .profile-name {
         font-size: 12px;
-        color: lightgray;
-        flex-direction: column;
+        display: flex;
+        justify-content: center;
         align-items: end;
+        flex-direction: column;
+
+        .name {
+            color: $white;
+        }
     }
 
     .status {
         font-size: 11px;
+        color: $borderSuccess !important;
     }
 }
 

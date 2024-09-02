@@ -7,6 +7,7 @@ import (
 	"backend/pkg/session"
 	"backend/pkg/utils"
 	"errors"
+	"strings"
 )
 
 type UserServiceImpl struct {
@@ -22,7 +23,7 @@ func (s *UserServiceImpl) GetUserById(id uint) (*dto.UserDTO, error) {
 }
 
 func (s *UserServiceImpl) CreateUser(user *dto.UserDTO) error {
-	if user.Email == "" || user.Password == "" || user.Firstname == "" || user.Lastname == "" || user.DateOfBirth == "" {
+	if strings.TrimSpace(user.Email) == "" || strings.TrimSpace(user.Password) == "" || strings.TrimSpace(user.Firstname) == "" || strings.TrimSpace(user.Lastname) == "" || strings.TrimSpace(user.DateOfBirth) == "" {
 		return errors.New("missing required fields")
 	}
 
@@ -74,6 +75,15 @@ func (s *UserServiceImpl) GetAllUsers() ([]*dto.UserDTO, error) {
 }
 
 func (s *UserServiceImpl) UpdateProfile(id uint, userDTO *dto.UserDTO) error {
+	isExixts, err := s.Repository.FindByID(id)
+	if err != nil {
+		return err
+	}
+
+	if isExixts == nil {
+		return errors.New("user not found")
+	}
+
 	user := mapper.DTOToUser(userDTO)
 	user.ID = id
 	return s.Repository.Update(user)
@@ -89,36 +99,54 @@ func (s *UserServiceImpl) CountUsers() (uint, error) {
 	return s.Repository.CountUsers()
 }
 
-/*func (s *UserServiceImpl) Follow(followerID, followingID uint) error {
-	return s.Repository.Follow(followerID, followingID)
-}
-
-func (s *UserServiceImpl) Unfollow(followerID, followingID uint) error {
-	return s.Repository.Unfollow(followerID, followingID)
-}
-
 func (s *UserServiceImpl) GetFollowers(userID uint) ([]*dto.UserDTO, error) {
 	users, err := s.Repository.GetFollowers(userID)
 	if err != nil {
 		return nil, err
 	}
-
-	userDTOs := make([]*dto.UserDTO, len(users))
+	var userDTOs []*dto.UserDTO
 	for _, user := range users {
 		userDTOs = append(userDTOs, mapper.UserToDTO(user))
 	}
 
 	return userDTOs, nil
-}*/
+}
 
-/*func (s *UserServiceImpl) CreateSession(user *dto.UserDTO) (string, error) {
-	token, err := utils.GenerateToken()
+func (s *UserServiceImpl) GetFollowings(userID uint) ([]*dto.UserDTO, error) {
+	users, err := s.Repository.GetFollowings(userID)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-	s.Repository.StoreSession(token, user.ID)
-	return token, nil
-}*/
+	var userDTOs []*dto.UserDTO
+	for _, user := range users {
+		userDTOs = append(userDTOs, mapper.UserToDTO(user))
+	}
+	return userDTOs, nil
+}
+
+func (s *UserServiceImpl) GetFriends(userID uint) ([]*dto.UserDTO, error) {
+	users, err := s.Repository.GetFriends(userID)
+	if err != nil {
+		return nil, err
+	}
+	var userDTOs []*dto.UserDTO
+	for _, user := range users {
+		userDTOs = append(userDTOs, mapper.UserToDTO(user))
+	}
+	return userDTOs, nil
+}
+
+func (s *UserServiceImpl) GetFriendsCount(userID uint) (uint, error) {
+	return s.Repository.GetFriendsCount(userID)
+}
+
+func (s *UserServiceImpl) GetFollowerCount(userID uint) (uint, error) {
+	return s.Repository.GetFollowerCount(userID)
+}
+
+func (s *UserServiceImpl) GetFollowingCount(userID uint) (uint, error) {
+	return s.Repository.GetFollowingCount(userID)
+}
 
 func (s *UserServiceImpl) CreateSession(user *dto.UserDTO) (string, error) {
 	return session.CreateSession(*user)

@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../../service/auth.service";
 import {tap} from "rxjs";
 import {Router, RouterLink} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {UtilsService} from "../../../service/utils.service";
 
 @Component({
     selector: 'app-login',
@@ -14,6 +16,7 @@ import {Router, RouterLink} from "@angular/router";
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss'
 })
+
 export class LoginComponent implements OnInit {
     title = 'Login';
     btnText = 'Login';
@@ -26,45 +29,41 @@ export class LoginComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private authService: AuthService,
-        private router: Router
-    ) {}
-
-    onSubmit() {
-        if (this.user.invalid) {
-            alert('Please fill in the form correctly');
-            return;
-        }
-        console.log(this.user.value);
-        this.login(this.user.value).subscribe(() => {
-            console.log('Logged in');
-            this.router.navigateByUrl('/home').then();
-            // this.router.navigate(['/home']);
-        })
-        console.log('Form submitted');
+        private router: Router,
+        private utilsService: UtilsService
+    ) {
     }
 
-    login(credentials: {email: string, password: string}) {
+    onLogin() {
+        if (this.user.invalid) {
+            this.utilsService.onSnackBar('Please fill in the form correctly', 'warning');
+            return;
+        }
+
+        this.login(this.user.value).subscribe((response: any) => {
+            this.utilsService.onSnackBar('You are now logged in', 'success');
+            this.router.navigate(['/home']).then();
+        })
+    }
+
+    login(credentials: { email: string, password: string }) {
         return this.authService.login(credentials).pipe(
             tap((res: any) => {
-                console.log("Login response", res);
-                if (!res.status || res.status !== 'success') {
-                    alert(res.message);
+                if (!res.status || res.status !== 200) {
+                    this.utilsService.onSnackBar(res.message, 'error');
                     return;
                 }
-                localStorage.setItem("token", res.token)
-                localStorage.setItem("userID", res.user.id)
+                this.authService.createSession(res.token, res.user.id);
             })
         )
     }
 
     ngOnInit(): void {
-        if (this.authService.getToken()) {
+        this.utilsService.setTitle(this.title);
+        if (this.authService.getToken() && this.authService.getUserID()) {
+            this.utilsService.onSnackBar('You are already logged in', 'info');
             this.router.navigate(['/home']).then();
-            console.log('You are already logged in');
             return;
         }
-
-        // this.isLoggedIn().subscribe((res: any) => console.log(res))
-        console.log('Login component is running');
     }
 }

@@ -1,9 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 $lightBlue: #B8DAFF;
-$danger: #f44336;
-$primaryColor: #005cbb;
+$danger: #F44336;
+$primaryColor: #005CBB;
 $background: #DEF3FF;
 $side: #2388FF;
+$textSuccess: #0A3622;
+$bgSuccess: #D1E7DD;
+$borderSuccess: #A3CFBB;
+$textInfo: #055160;
+$bgInfo: #CFF4FC;
+$borderInfo: #9EEAF9;
+$textWarning: #664D03;
+$bgWarning: #fff3cd;
+$borderWarning: #FFE69C;
+$textDanger: #58151C;
+$bgDanger: #F8D7DA;
+$borderDanger: #F1AEB5;
+$textPrimary: #052C65;
+$bgPrimary: #CFE2FF;
+$borderPrimary: #9EC5FE;
 
 * {
     margin: 0;
@@ -33,4 +48,96 @@ html, body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.custom-snackbar {
+    .mat-mdc-snack-bar-container .mdc-snackbar__surface {
+        border-radius: 8px !important;
+        z-index: 2 !important;
+    }
+
+    .mdc-snackbar__label {
+        font-size: 14px !important;
+    }
+
+}
+
+.snackbar-primary {
+    .mdc-snackbar__surface {
+        background-color: $bgPrimary !important;
+        border: 1px solid $borderPrimary !important;
+    }
+
+    .mdc-snackbar__label {
+        color: $textPrimary !important;
+    }
+
+    .mat-mdc-button.mat-mdc-snack-bar-action {
+        background-color: $textPrimary !important;
+        color: $bgPrimary !important;
+    }
+}
+
+.snackbar-info {
+    .mdc-snackbar__surface {
+        background-color: $bgInfo !important;
+        border: 1px solid $borderInfo !important;
+    }
+
+    .mdc-snackbar__label {
+        color: $textInfo !important;
+    }
+
+    .mat-mdc-button.mat-mdc-snack-bar-action {
+        background-color: $textInfo !important;
+        color: $bgInfo !important;
+    }
+}
+
+.snackbar-warning {
+    .mdc-snackbar__surface {
+        background-color: $bgWarning !important;
+        border: 1px solid $borderWarning !important;
+    }
+
+    .mdc-snackbar__label {
+        color: $textWarning !important;
+    }
+
+    .mat-mdc-button.mat-mdc-snack-bar-action {
+        background-color: $textWarning !important;
+        color: $bgWarning !important;
+    }
+}
+
+.snackbar-success {
+    .mdc-snackbar__surface {
+        background-color: $bgSuccess !important;
+        border: 1px solid $borderSuccess !important;
+    }
+
+    .mdc-snackbar__label {
+        color: $textSuccess !important;
+    }
+
+    .mat-mdc-button.mat-mdc-snack-bar-action {
+        background-color: $textSuccess !important;
+        color: $bgSuccess !important;
+    }
+}
+
+.snackbar-error {
+    .mdc-snackbar__surface {
+        background-color: $bgDanger !important;
+        border: 1px solid $borderDanger !important;
+    }
+
+    .mdc-snackbar__label {
+        color: $textDanger !important;
+    }
+
+    .mat-mdc-button.mat-mdc-snack-bar-action {
+        background-color: $textDanger !important;
+        color: $bgDanger !important;
+    }
 }

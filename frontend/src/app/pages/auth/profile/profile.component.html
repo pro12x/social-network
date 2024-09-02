@@ -1,38 +1,277 @@
-<div class="container">
-    <div class="p-5 bg-primary text-white header">
+<div class="container mb-5">
+    <div class="row cover">
+        <div class="col-md-12 header">
+            <span>~ Social Network</span>
+        </div>
     </div>
-    <div class="row mt-3">
-        <div class="col-md-6 picture-infos">
-            <img src="profile.png" class="rounded-circle img-thumbnail" alt="Profile Picture" width="150" height="150">
+    <div class="row p-3 profile-basic">
+        <div class="col-lg-6 picture-infos">
+            <img alt="Profile Picture" class="rounded-circle avatar" height="150" src="{{user.avatar}}" width="150">
             <div class="info p-3">
-                <span>John DOE</span>
-                <span>John DOE</span>
-                <p class="firends">
-                    <span>Followers: 10.1k</span>
-                    <span>Followings: 799</span>
-                    <span>Followings: 9.44k</span>
-                </p>
+                <span class="name">
+                    {{ user.firstname }} {{ user.lastname }}
+                    <span *ngIf="user.is_public" class="material-icons">public</span>
+                    <span *ngIf="!user.is_public" class="material-icons text-danger">lock</span>
+                </span>
+                <span class="username">&#64;{{ user.nickname || "No nickname" }}</span>
+                <div class="firends">
+                    <span><strong>{{followersCount}}</strong>Followers</span>&#10072;
+                    <span><strong>{{followingCount}}</strong>Followings</span>&#10072;
+                    <span><strong>{{friendCount}}</strong>Friends</span>
+                </div>
+                <div class="last-friends">
+                    <span class="firend-avatar"><img alt="avatar-0" src="profile.png"></span>
+                    <span class="firend-avatar"><img alt="avatar-1" src="profile.png"></span>
+                    <span class="firend-avatar"><img alt="avatar-2" src="profile.png"></span>
+                </div>
             </div>
         </div>
-        <div class="col-md-6 buttons-info">
-            <button class="btn btn-primary">
-                <span class="material-icons">check_circle</span>
-                Friend
+        <div class="col-lg-6 buttons-info">
+            <button *ngIf="currentID !== user.id" class="btn btn-primary">
+                <span class="material-icons">person_add</span>
+                Follow
             </button>
-            <button class="btn btn-primary">Edit Profile</button>
-            <button class="btn btn-primary">Edit Profile</button>
+            <button *ngIf="currentID !== user.id" class="btn btn-secondary">
+                <span class="material-icons">how_to_reg</span>
+                Friends
+            </button>
+            <button *ngIf="currentID === user.id" class="btn btn-warning">
+                <span class="material-icons">edit</span>
+                Edit Profile
+            </button>
+            <button *ngIf="currentID !== user.id" class="btn btn-info">
+                <span class="material-icons">sms</span>
+                Send Message
+            </button>
         </div>
     </div>
 
-    <div class="row mt-5">
+    <div class="row divider">
         <div class="col-md-12">
-            I am here
+            <hr>
         </div>
     </div>
 
-    <div class="row mt-5">
-        <div class="col-md-12">
-            <a class="btn btn-danger" routerLink="/">Go back</a>
+    <div class="row">
+        <div class="col-md-12 profile-menu">
+            <mat-tab-group mat-align-tabs="start" mat-stretch-tabs="false" animationDuration="0ms">
+                <mat-tab>
+                    <div class="tab-title">
+                        <ng-template mat-tab-label>
+                            <span class="material-icons">article</span>
+                            <span class="title">Posts</span>
+                        </ng-template>
+                    </div>
+                    <div class="tab-content">
+                        <div class="row block">
+                            <div class="col-md.12 message" *ngIf="posts === undefined">
+                                <img src="fail.png" width="64" height="64">
+                                <span *ngIf="currentID == id">You have no posts</span>
+                                <span *ngIf="currentID != id">{{user.firstname}}&nbsp;has no posts</span>
+                            </div>
+                            <div class="col-md.12" *ngIf="posts">
+                                my posts here
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <div class="tab-title">
+                        <ng-template mat-tab-label>
+                            <span class="material-icons">person</span>
+                            <span class="title">Informations</span>
+                        </ng-template>
+                    </div>
+                    <div class="tab-content">
+                        <div class="row block">
+                            <div class="p-3 col-md-4 info-left border-end border-primary">
+                                <ul class="list-group list-group-flush side">
+                                    <li (click)="showSection('info')" class="list-group-item">Identify</li>
+                                    <li (click)="showSection('about')" class="list-group-item">Bio</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 col-md-8 info-right">
+                                <div class="content active" id="info">
+                                    <h5>Identity</h5>
+                                    <span class="d-flex"><strong>Firstname:</strong>&nbsp;{{ user.firstname }}</span>
+                                    <span class="d-flex"><strong>Lastname:</strong>&nbsp;{{ user.lastname }}</span>
+                                    <span
+                                        class="d-flex"><strong>Date of Birth:</strong>&nbsp;{{ user.date_of_birth }}</span>
+                                    <span
+                                        class="d-flex"><strong>Member since:</strong>&nbsp;{{ user.created_at }}</span>
+                                    <span class="d-flex"><strong>Age:</strong>&nbsp;{{ userAge }}</span>
+                                </div>
+
+                                <div class="content" id="about">
+                                    <h5>About me</h5>
+                                    <p>{{ user.about_me || "No information" }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row"></div>
+                        <div class="row"></div>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <div class="tab-title">
+                        <ng-template mat-tab-label>
+                            <span class="material-icons">diversity_3</span>
+                            <span class="title">Friends</span>
+                        </ng-template>
+                    </div>
+                    <div class="tab-content">
+                        <div class="row block">
+                            <div class="col-md.12 message" *ngIf="friends === undefined">
+                                <img src="fail.png" width="64" height="64">
+                                <span *ngIf="currentID == id">You have no friends</span>
+                                <span *ngIf="currentID != id">{{user.firstname}}&nbsp;has no friends</span>
+                            </div>
+                            <div class="col-md.12" *ngIf="friends">
+                                <ul class="list-group list-group-flush" *ngFor="let friend of friends">
+                                    <li class="list-group-item">
+                                        <div class="info">
+                                            <div class="avatar">
+                                                <img alt="avatar" src="{{friend.avatar || null}}" width="50" height="50">
+                                            </div>
+                                            <div class="info-profile">
+                                                <span class="name">{{friend.firstname}}&nbsp;{{friend.lastname}}</span>
+                                                <span class="username">&#64;{{friend.nickname || null}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="buttons">
+                                            <button class="btn btn-secondary dropdown rounded-pill" data-bs-toggle="dropdown">
+                                                <span class="material-icons">how_to_reg</span>
+                                                Friends
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" routerLink="/profile/{{friend.id}}">Profile</a></li>
+                                                    <li><a class="dropdown-item text-danger" routerLink="/unfollow">Unfollow</a></li>
+                                                </ul>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <div class="tab-title">
+                        <ng-template mat-tab-label>
+                            <span class="material-icons">diversity_1</span>
+                            <span class="title">Followers</span>
+                        </ng-template>
+                    </div>
+                    <div class="tab-content">
+                        <div class="row block">
+                            <div class="col-md.12 message" *ngIf="followers === undefined">
+                                <img src="fail.png" width="64" height="64">
+                                <span *ngIf="currentID == id">You have no followers</span>
+                                <span *ngIf="currentID != id">{{user.firstname}}&nbsp;has no followers</span>
+                            </div>
+                            <div class="col-md.12" *ngIf="followers">
+                                <ul class="list-group list-group-flush" *ngFor="let follower of followers">
+                                    <li class="list-group-item">
+                                        <div class="info">
+                                            <div class="avatar">
+                                                <img alt="avatar" src="{{follower.avatar || null}}" width="50" height="50">
+                                            </div>
+                                            <div class="info-profile">
+                                                <span class="name">{{follower.firstname}}&nbsp;{{follower.lastname}}</span>
+                                                <span class="username">&#64;{{follower.nickname || null}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="buttons">
+                                            <button class="btn btn-success" (click)="onAccept(follower.id)">
+                                                <span class="material-icons text-white">check_circle</span>
+                                                Accept
+                                            </button>
+                                            <button class="btn btn-danger" (click)="onDecline(follower.id)">
+                                                <span class="material-icons text-white">cancel</span>
+                                                Decline
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <div class="tab-title">
+                        <ng-template mat-tab-label>
+                            <span class="material-icons">group_add</span>
+                            <span class="title">Followings</span>
+                        </ng-template>
+                    </div>
+                    <div class="tab-content">
+                        <div class="row block">
+                            <div class="col-md.12 message" *ngIf="followings === undefined">
+                                <img src="fail.png" width="64" height="64">
+                                <span *ngIf="currentID == id">You follow no one</span>
+                                <span *ngIf="currentID != id">{{user.firstname}}&nbsp;follows no one</span>
+                            </div>
+                            <div class="col-md.12" *ngIf="followings">
+                                <ul class="list-group list-group-flush" *ngFor="let following of followings">
+                                    <li class="list-group-item">
+                                        <div class="info">
+                                            <div class="avatar">
+                                                <img alt="avatar" src="{{following.avatar || null}}" width="50" height="50">
+                                            </div>
+                                            <div class="info-profile">
+                                                <span class="name">{{following.firstname}}&nbsp;{{following.lastname}}</span>
+                                                <span class="username">&#64;{{following.nickname || null}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="buttons">
+                                            <button class="btn btn-danger" routerLink="r/decline/">
+                                                <span class="material-icons text-white">cancel</span>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <div class="tab-title">
+                        <ng-template mat-tab-label>
+                            <span class="material-icons">groups</span>
+                            <span class="title">Groups</span>
+                        </ng-template>
+                    </div>
+                    <div class="tab-content">
+                        <div class="row block">
+                            <div class="col-md.12 message" *ngIf="groups === undefined">
+                                <img src="fail.png" width="64" height="64">
+                                <span *ngIf="currentID == id">You have not created any groups</span>
+                                <span *ngIf="currentID != id">{{user.firstname}}&nbsp;has not created any groups</span>
+                            </div>
+                            <div class="col-md.12" *ngIf="groups">
+                                The Groups I Created Here
+                            </div>
+                        </div>
+
+                        <div class="row block">
+                            <div class="col-md.12 message" *ngIf="groups === undefined">
+                                <img src="fail.png" width="64" height="64">
+                                <span *ngIf="currentID == id">You do not belong to any group</span>
+                                <span *ngIf="currentID != id">{{user.firstname}}&nbsp;does not belong to any group</span>
+                            </div>
+                            <div class="col-md.12" *ngIf="groups">
+                                The Groups I Belong To Here
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
         </div>
     </div>
 </div>

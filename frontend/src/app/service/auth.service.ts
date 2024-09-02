@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
-import {map, Observable, of, tap} from "rxjs";
+import {map, Observable, of} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -9,8 +9,7 @@ import {map, Observable, of, tap} from "rxjs";
 export class AuthService {
     api: string = environment.api
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
     login(credentials: any): Observable<any> {
         return this.http.post(`${this.api}/login`, credentials)
@@ -30,15 +29,14 @@ export class AuthService {
 
     isLoggedIn(): Observable<boolean> {
         const data = {
-            token: localStorage.getItem('token')
+            token: this.getToken()
         }
 
-        if (!localStorage.getItem('token') || !localStorage.getItem('userID')) {
-            console.log('No token or user id')
+        if (!this.getToken() || !this.getUserID()) {
             return of(false)
         } else {
             return this.checkOnlineStatus(data).pipe(
-                map(response => response.is_online && response.status == 'online')
+                map(response => response.is_online && response.status == 200)
             )
         }
     }
@@ -57,6 +55,16 @@ export class AuthService {
 
     getUser(id: any) {
         return this.http.get(`${this.api}/profile/${id}`)
+    }
+
+    removeSession() {
+        localStorage.removeItem('token')
+        localStorage.removeItem('userID')
+    }
+
+    createSession(token: string, userID: any) {
+        localStorage.setItem('token', token)
+        localStorage.setItem('userID', userID)
     }
 
     updateUser(id: any, user: any) {

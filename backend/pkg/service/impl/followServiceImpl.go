@@ -1,9 +1,7 @@
 package impl
 
 import (
-	"backend/pkg/dto"
 	"backend/pkg/entity"
-	"backend/pkg/mapper"
 	"backend/pkg/repository/interfaces"
 	"errors"
 )
@@ -16,7 +14,7 @@ func (f *FollowServiceImpl) FollowUser(followerID, followeeID uint) error {
 	// Check if the follow already exists
 	isExists, err := f.Repository.FindFollow(followerID, followeeID)
 	if err != nil {
-		return err
+		return errors.New("error occurred while checking if follow exists")
 	}
 
 	// Check if follow is existing
@@ -101,51 +99,6 @@ func (f *FollowServiceImpl) GetPendingFollowRequest(userID uint) ([]*entity.Foll
 	return followDTOs, nil
 }
 
-func (f *FollowServiceImpl) GetFollowers(userID uint) ([]*dto.UserDTO, error) {
-	users, err := f.Repository.GetFollowers(userID)
-	if err != nil {
-		return nil, err
-	}
-	var userDTOs []*dto.UserDTO
-	for _, user := range users {
-		userDTOs = append(userDTOs, mapper.UserToDTO(user))
-	}
-
-	return userDTOs, nil
-}
-
-func (f *FollowServiceImpl) GetFollowings(userID uint) ([]*dto.UserDTO, error) {
-	users, err := f.Repository.GetFollowings(userID)
-	if err != nil {
-		return nil, err
-	}
-	var userDTOs []*dto.UserDTO
-	for _, user := range users {
-		userDTOs = append(userDTOs, mapper.UserToDTO(user))
-	}
-	return userDTOs, nil
-}
-
-func (f *FollowServiceImpl) GetFriends(userID uint) ([]*dto.UserDTO, error) {
-	users, err := f.Repository.GetFriends(userID)
-	if err != nil {
-		return nil, err
-	}
-	var userDTOs []*dto.UserDTO
-	for _, user := range users {
-		userDTOs = append(userDTOs, mapper.UserToDTO(user))
-	}
-	return userDTOs, nil
-}
-
-func (f *FollowServiceImpl) GetFollowerCount(userID uint) (uint, error) {
-	return f.Repository.GetFollowerCount(userID)
-}
-
-func (f *FollowServiceImpl) GetFollowingCount(userID uint) (uint, error) {
-	return f.Repository.GetFollowingCount(userID)
-}
-
 func (f *FollowServiceImpl) CountAllFollows() (uint, error) {
 	return f.Repository.CountAllFollows()
 }
@@ -156,4 +109,13 @@ func (f *FollowServiceImpl) FindFollow(followerID, followeeID uint) (*entity.Fol
 
 func (f *FollowServiceImpl) FindByID(id uint) (*entity.Follow, error) {
 	return f.Repository.FindByID(id)
+}
+
+func (f *FollowServiceImpl) AreFollowing(followerID, followeeID uint) (bool, error) {
+
+	return f.Repository.AreFollowing(followerID, followeeID)
+}
+
+func (f *FollowServiceImpl) AreWeFriends(userID, friendID uint) (bool, error) {
+	return f.Repository.AreWeFriends(userID, friendID)
 }

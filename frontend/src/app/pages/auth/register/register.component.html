@@ -1,69 +1,77 @@
 <div class="container form">
-    <h3 class="text-primary">{{title}}</h3>
+    <h3 class="text-primary">{{ title }}</h3>
     <p class="text-muted">Fields marked with <span class="text-danger">*</span> are required</p>
 
     <form [formGroup]="user">
         <div class="row">
             <div class="col-md-6 form-group">
                 <label for="firstname">Firstname <span class="text-danger">*</span></label>
-                <input type="text" formControlName="firstname" class="form-control" id="firstname" autocomplete="off" placeholder="Enter firstname">
+                <input autocomplete="off" class="form-control" formControlName="firstname" id="firstname" placeholder="Enter firstname"
+                       type="text">
             </div>
             <div class="col-md-6 form-group">
                 <label for="lastname">Lastname <span class="text-danger">*</span></label>
-                <input type="text" formControlName="lastname" class="form-control" id="lastname" autocomplete="off" placeholder="Enter lastname">
+                <input autocomplete="off" class="form-control" formControlName="lastname" id="lastname" placeholder="Enter lastname"
+                       type="text">
             </div>
         </div>
 
         <div class="row mt-2">
             <div class="col-md-6 form-group">
                 <label for="email">Email <span class="text-danger">*</span></label>
-                <input type="email" formControlName="email" class="form-control" id="email" autocomplete="off" placeholder="Enter email">
+                <input autocomplete="off" class="form-control" formControlName="email" id="email" placeholder="Enter email"
+                       type="email">
             </div>
             <div class="col-md-6 mt-6 form-group">
                 <label for="nickname">Nickname (Optional)</label>
-                <input type="text" formControlName="nickname" class="form-control" id="nickname" autocomplete="off" placeholder="Enter nickname">
+                <input autocomplete="off" class="form-control" formControlName="nickname" id="nickname" placeholder="Enter nickname"
+                       type="text">
             </div>
         </div>
 
         <div class="row mt-2">
             <div class="col-md-6 form-group">
                 <label for="password">Password <span class="text-danger">*</span></label>
-                <input type="password" formControlName="password" class="form-control" id="password" autocomplete="off" placeholder="Enter password">
+                <input autocomplete="off" class="form-control" formControlName="password" id="password" placeholder="Enter password"
+                       type="password">
             </div>
             <div class="col-md-6 mt-6 form-group">
                 <label for="password_confirmation">Confirm password <span class="text-danger">*</span></label>
-                <input type="password" formControlName="password_confirmation" class="form-control" id="password_confirmation" autocomplete="off" placeholder="Confirm your password">
+                <input autocomplete="off" class="form-control" formControlName="password_confirmation"
+                       id="password_confirmation" placeholder="Confirm your password" type="password">
             </div>
         </div>
 
         <div class="row mt-2">
             <div class="col-md-6 form-group">
                 <label for="date_of_birth">Date of birth <span class="text-danger">*</span></label>
-                <input type="date" formControlName="date_of_birth" class="form-control" id="date_of_birth">
+                <input class="form-control" formControlName="date_of_birth" id="date_of_birth" type="date">
             </div>
             <div class="col-md-6 mt-6 form-group">
                 <label for="avatar">Avatar (Optional)</label>
-                <input type="file" formControlName="avatar" class="form-control" id="avatar" autocomplete="off" placeholder="Upload image here">
+                <input autocomplete="off" class="form-control" formControlName="avatar" id="avatar" placeholder="Upload image here"
+                       type="file">
             </div>
         </div>
 
         <div class="row mt-2">
             <div class="col-md-12 form-group">
                 <label for="about_me">About me (Optional)</label>
-                <textarea formControlName="about_me" class="form-control" id="about_me" rows="3" style="resize: none"></textarea>
+                <textarea class="form-control" formControlName="about_me" id="about_me" rows="3"
+                          style="resize: none"></textarea>
             </div>
         </div>
 
         <div class="row mt-3">
             <div class="col-md-12 form-group">
-                <button type="submit" class="btn btn-primary" (click)="onSubmit()">{{btnText}}</button>
+                <button (click)="onRegister()" class="btn btn-primary" type="submit">{{ btnText }}</button>
             </div>
         </div>
 
         <div class="row mt-2">
             <div class="col-md-12 form-group d-flex justify-content-center">
                 Already have an account?&nbsp;
-                <a type="submit" class="link" routerLink="/login">Sign in</a>
+                <a class="link" routerLink="/login" type="submit">Sign in</a>
             </div>
         </div>
     </form>

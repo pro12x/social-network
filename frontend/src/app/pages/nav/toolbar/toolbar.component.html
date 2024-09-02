@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top" *ngIf='page !== "Login" && page !== "Register"'>
+    <div class="container justify-content-between">
+        <a class="navbar-brand" routerLink="/">Social Network</a>
+        <div *ngIf="activeUser.id" class="profile">
+            <div class="profile-name">
+                <span class="name">{{ activeUser.firstname }} {{ activeUser.lastname }}</span>
+                <span class="status">online</span>
+            </div>
+            <div class="dropdown">
+                <img alt="{{ activeUser.firstname }} {{activeUser.lastname}}" class="rounded-pill"
+                     data-bs-toggle="dropdown" src="{{ activeUser.avatar }}" style="width:40px;">
+                <ul class="dropdown-menu">
+                    <li><span class="dropdown-header">Account</span></li>
+                    <li><a class="dropdown-item" routerLink="/profile/{{userID}}">My Profile</a></li>
+                    <li><a class="dropdown-item" routerLink="/friends/{{userID}}">Friends</a></li>
+                    <li><a class="dropdown-item" routerLink="">Messages</a></li>
+                    <li><span class="dropdown-header">Other</span></li>
+                    <li><a (click)="onLogout()" class="dropdown-item text-danger">Logout</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</nav>
